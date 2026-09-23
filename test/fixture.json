@@ -1,0 +1,702 @@
+{
+ "source": "data/trial_results.json",
+ "roles": {
+  "provisional_a": "002",
+  "provisional_b": "004",
+  "g0_only": "007",
+  "g1_only": "003",
+  "g2_only_learnability": "001",
+  "g2_only_demonstrability": "013",
+  "multi_g1_g2": "020",
+  "multi_g0_g1_g2": "187"
+ },
+ "terms": [
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "medium",
+     "reasoning": "A bare verb naming an applied ability to improve processes or systems. Broadness is not a rejection ground; no signal places it in a non-skill type.",
+     "signals_against": [
+      "Bare, very broad single verb; not a non-skill type though"
+     ],
+     "status": "pass",
+     "term_type": "skill"
+    },
+    "market_pulse": {
+     "note": "Job-posting data not yet available",
+     "status": "pending"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "assessment",
+        "formal": true,
+        "provider": "EON Consulting & Training Pte Ltd (WSQ, SOA issued by SkillsFuture Singapore)",
+        "quote": "Upon successfully demonstrating competence in all the knowledge and skills requirements, you will be issued with a Statement of Attainment (SOA) from SkillsFuture Singapore",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "(WSQ) Leading Work and Process Improvement for Team Productivity",
+        "url": "https://eontraining.com.sg/leading-work-process-improvement-for-team-productivity/"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 2
+     },
+     "failure_reason": null,
+     "learnability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "SSA Academy (WSQ-funded, CRN TGS-2011500791)",
+        "quote": "Apply the process continuous improvement methodologies used by organisations",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "Manage Process Improvement (PRE-PIN-4006-1.1)",
+        "url": "https://ssa.academy/course/manage-process-improvement-2/"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Singapore Institute of Technology (SITLearn)",
+        "quote": "enables energy managers and plant facility engineers in process and petrochemical industries to identify energy-saving opportunities within their plants",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Energy Efficiency and Process Optimisation for Process Industries",
+        "url": "https://www.singaporetech.edu.sg/sitlearn/courses/engineering/energy-efficiency-process-optimisation-process-industries"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 2
+     },
+     "rationale": "The bare verb 'optimise' was assessed as described (improving processes or systems for efficiency), which maps to process improvement. SSA Academy's WSQ 'Manage Process Improvement' publishes process-improvement learning outcomes, and EON's WSQ process-improvement course is assessed by case study and written assessment leading to an SSG Statement of Attainment. Both sources are local and single-provider per criterion, so confidence is medium.",
+     "status": "pass"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "process improvement and optimisation",
+     "similarity": 0.589307308,
+     "status": "pass"
+    }
+   },
+   "data_quality_note": "single_word",
+   "description": "The skill of improving processes or systems to achieve maximum efficiency and effectiveness.",
+   "failed_checks": [],
+   "id": "002",
+   "overall": "PROVISIONAL",
+   "pending_checks": [
+    "market_pulse"
+   ],
+   "title": "optimise"
+  },
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "high",
+     "reasoning": "Visualising is an individual cognitive/creative ability with clear variation in proficiency. No non-skill signal.",
+     "signals_against": [],
+     "status": "pass",
+     "term_type": "skill"
+    },
+    "market_pulse": {
+     "note": "Job-posting data not yet available",
+     "status": "pending"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "low",
+      "evidence": [
+       {
+        "as_of": "2024-05-20",
+        "evidence_type": "test",
+        "formal": true,
+        "provider": "Spatial Intelligence and Learning Center (SILC) / Purdue (Guay 1976; revised Yoon 2011)",
+        "quote": "an instrument to measure spatial visualization ability in 3-D mental rotation of individuals aged 13 and over",
+        "region": "International",
+        "relevance": "direct",
+        "title": "Revised Purdue Spatial Visualization Test: Visualization of Rotations (Revised PSVT:R)",
+        "url": "https://www.spatiallearning.org/tools/revised-purdue-spatial-visualization-test-revised-psvtr-visualization-of-rotations"
+       },
+       {
+        "as_of": "2025-02-18",
+        "evidence_type": "certification",
+        "formal": true,
+        "provider": "Visual Facilitators (with IFVP, EVP, IAF input)",
+        "quote": "Go through assessment 1 – Submission of videos and documentation to assess practical skills.",
+        "region": "International",
+        "relevance": "adjacent",
+        "title": "Certified Master Visual Practitioner",
+        "url": "https://www.visualfacilitators.com/en/blog/visualization/certification-master-visual-practitioner/"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 3
+     },
+     "failure_reason": null,
+     "learnability": {
+      "confidence": "low",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Eva-Lotta Lamm",
+        "quote": "Express ideas and concepts through simple sketching",
+        "region": "International",
+        "relevance": "direct",
+        "title": "Sketching for Visual Thinking and Sketchnoting (full-day workshop)",
+        "url": "https://www.evalotta.net/workshop-visualthinking"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 2
+     },
+     "rationale": "Both criteria are met only on single international sources, each with low confidence: a published sketchnoting workshop whose outcomes include expressing ideas and concepts through sketching, and the Revised PSVT:R, a standardised test of spatial visualisation ability (a mental-imagery facet of the skill rather than visualising of ideas in general). No Singapore provision teaching or assessing visualising was found on either criterion; the visual-practitioner certification was kept as an adjacent near-miss because its quoted assessment step does not name visualising itself.",
+     "status": "pass"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "data visualisation",
+     "similarity": 0.499046206,
+     "status": "pass"
+    }
+   },
+   "data_quality_note": "redundant_variant; single_word",
+   "description": "The ability to create mental images or visual representations of ideas and concepts.",
+   "failed_checks": [],
+   "id": "004",
+   "overall": "PROVISIONAL",
+   "pending_checks": [
+    "market_pulse"
+   ],
+   "title": "visualising"
+  },
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "medium",
+     "reasoning": "The term and its description name organisational programmes/projects aimed at change, which is the subject area that skills like 'leading change initiatives' or 'change management' act upon, not the ability itself. Search of job postings and frameworks confirms the usage pattern 'lead/implement change initiatives', with the ability sitting in the verb. A reviewer may wish to redirect the submitter to 'change management' or 'leading change initiatives'.",
+     "signals_against": [
+      "concept_or_domain: the description defines the term as 'programs or projects designed to implement significant changes within an organization' - it names organisational undertakings (things an organisation runs and pursues toward an outcome), not an ability a person holds",
+      "'Able to change initiatives' does not read as an ability; in practice the term is the object of a skill ('lead/manage/implement change initiatives') rather than the skill itself",
+      "Alternative considered: task_or_activity - rejected because the term does not describe a single procedure being carried out, but a class of organisational programmes"
+     ],
+     "status": "fail",
+     "term_type": "concept_or_domain"
+    },
+    "market_pulse": {
+     "note": "Job-posting data not yet available",
+     "status": "pending"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "high",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "assessment",
+        "formal": true,
+        "provider": "Korn Ferry Academy (Singapore)",
+        "quote": "Attain a passing score on the post-course assessment, to be completed online within two days of the course.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "Leading and Managing Change - post-course assessment",
+        "url": "https://www.kornferryacademy.com/programmes/leading-and-managing-change"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "certification",
+        "formal": true,
+        "provider": "APMG International (delivered in Singapore by The Knowledge Academy)",
+        "quote": "managing this change effectively is paramount, making Change Management an indispensable discipline.",
+        "region": "International",
+        "relevance": "direct",
+        "title": "Change Management Foundation and Practitioner",
+        "url": "https://www.theknowledgeacademy.com/sg/courses/change-management-training/change-management-training/singapore/"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 1
+     },
+     "failure_reason": null,
+     "learnability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Korn Ferry Academy (Singapore)",
+        "quote": "Change is one of the defining challenges of leadership. While resistance is a natural response, it intensifies when change is imposed in a top-down way that ignores employee concerns and habits.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "Leading and Managing Change",
+        "url": "https://www.kornferryacademy.com/programmes/leading-and-managing-change"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 1
+     },
+     "rationale": "The term was assessed as the capability to plan and implement organisational change initiatives (change management). Korn Ferry Academy's Singapore course publishes outcomes such as applying Kotter's 8-step model and is followed by a scored post-course assessment. APMG's Change Management Foundation/Practitioner exams, delivered in Singapore, give a formal international credential. The title is a noun phrase, so a reviewer may want to confirm this reading.",
+     "status": "pass"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "organisational change management",
+     "similarity": 0.663468719,
+     "status": "pass"
+    }
+   },
+   "data_quality_note": "",
+   "description": "Programs or projects designed to implement significant changes within an organization to improve performance or adapt to new conditions.",
+   "failed_checks": [
+    "is_skill"
+   ],
+   "id": "007",
+   "overall": "FAIL",
+   "pending_checks": [
+    "market_pulse"
+   ],
+   "title": "change initiatives"
+  },
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "medium",
+     "reasoning": "The term names the act of implementing continuous improvement, which is an individual applied ability rather than the philosophy itself. No concrete non-skill signal.",
+     "signals_against": [
+      "'Continuous improvement' alone could be a concept/philosophy, but the term names implementing it"
+     ],
+     "status": "pass",
+     "term_type": "skill"
+    },
+    "market_pulse": {
+     "note": "Job-posting data not yet available",
+     "status": "pending"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "certification",
+        "formal": true,
+        "provider": "BSI Singapore / IASSC",
+        "quote": "3 hour 100 question proctored exam based on the IASSC Universally Accepted Lean Six Sigma Body of Knowledge",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "Certified Lean Six Sigma Green Belt (LSGB) - IASSC Certified Lean Six Sigma Green Belt Exam",
+        "url": "https://www.bsigroup.com/en-SG/training-courses/certified-lean-sigma-green-belt/"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 1
+     },
+     "failure_reason": null,
+     "learnability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "NTU Academy for Professional and Continuing Education (PACE)",
+        "quote": "Use the DMAIC model (Define-Measure-Analyze-Improve-Control) to improve productivity through case examples and problem resolution.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "Professional Certificate in Continuous Improvement Management and Tools",
+        "url": "https://www.ntu.edu.sg/pace/for-individuals/professional-certificates/professional-certificate-in-continuous-improvement-management-and-tools"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 2
+     },
+     "rationale": "NTU PACE's Professional Certificate in Continuous Improvement Management and Tools publishes learning outcomes on applying DMAIC/Lean Six Sigma to improve productivity, and BSI Singapore's Lean Six Sigma Green Belt course (which trains participants to lead departmental improvement projects) certifies via a proctored IASSC exam with a pass mark. Treating Lean Six Sigma Green Belt as a direct assessment of implementing continuous improvement initiatives is the main judgement call; confidence is medium.",
+     "status": "pass"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "continuous quality improvement",
+     "similarity": 0.79955554,
+     "status": "fail"
+    }
+   },
+   "data_quality_note": "",
+   "description": "Execute strategies aimed at consistently enhancing processes, products, or services.",
+   "failed_checks": [
+    "not_in_taxonomy"
+   ],
+   "id": "003",
+   "overall": "FAIL",
+   "pending_checks": [
+    "market_pulse"
+   ],
+   "title": "implementation of continuous improvement initiatives"
+  },
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "medium",
+     "reasoning": "The term names an applied ability to lead and execute trading strategy; 'Able to direct and implement strategic trading plans' reads naturally. No concrete non-skill signal.",
+     "signals_against": [
+      "Could be read as a manager's duty (task_or_activity or job_role_or_function), but it is an ongoing ability, not a single procedure or a job title"
+     ],
+     "status": "pass",
+     "term_type": "skill"
+    },
+    "market_pulse": {
+     "note": "Job-posting data not yet available",
+     "status": "pending"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "assessment",
+        "formal": true,
+        "provider": "EY (India)",
+        "quote": "Assessment would be MCQs based to be conducted on fourth Saturday of the month",
+        "region": "International",
+        "relevance": "adjacent",
+        "title": "Certificate in Commodity Risk Management",
+        "url": "https://www.ey.com/en_in/services/consulting/financial-services-risk-management/cafta/certificate-in-commodity-risk-management"
+       }
+      ],
+      "gap_note": "Singapore pass returned only generic WSQ system pages with no named Singapore credential or assessment for trading strategy direction, so no provider escalation was possible. International passes found trader credentials (NYIF Stock Trading Professional Certificate, CMT, CFOA, FINRA Series 3) and EY's Certificate in Commodity Risk Management, which assess technical analysis, trading/hedging knowledge or licensing, not the ability to direct and implement strategic trading plans; no credential for that management-level skill was found. Both regions searched.",
+      "met": false,
+      "searches": 3
+     },
+     "failure_reason": "Learnability not met",
+     "learnability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "SMU Academy (Singapore Management University)",
+        "quote": "Technical analysis is an established method and skill for making objective investment and trading decisions in the financial markets.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Certificate in Financial Trading - Introduction to Trading Using Technical Analysis",
+        "url": "https://academy.smu.edu.sg/courses/certificate-financial-trading-introduction-trading-using-technical-analysis"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Copex Training",
+        "quote": "align trading execution with marketing strategy",
+        "region": "International",
+        "relevance": "adjacent",
+        "title": "Trading and Marketing Training Courses",
+        "url": "https://copextraining.com/training-courses/trading-and-marketing"
+       }
+      ],
+      "gap_note": "Singapore pass: the SkillsFuture directory surfaced trading-strategy courses (algorithmic backtesting, e.g. Algorithmic Trading Essentials) and SMU Academy's Certificate in Financial Trading; the escalation search on the SMU certificate found modules on technical analysis, trading platforms and trade operations, which teach individual trading decisions/execution rather than directing and implementing an organisation's strategic trading plan (adjacent). International pass found retail/algorithmic strategy-design courses (Udemy, Coursera/ISB, Udacity) and a Copex trading-and-marketing course catalogue page with no course-level learning outcomes for directing trading strategy (adjacent). No course with published outcomes for leading/executing strategic trading plans to business objectives was found in either region.",
+      "met": false,
+      "searches": 3
+     },
+     "rationale": "Both Singapore and international passes found only adjacent provision: individual/technical trading courses (SMU Academy, algorithmic backtesting) and trading knowledge exams (EY commodity risk MCQ, NYIF, CMT). Nothing teaches or assesses directing and implementing strategic trading plans against business objectives. A reviewer could override if they accept trading-strategy design courses as covering this skill.",
+     "status": "fail"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "trading management",
+     "similarity": 0.640970588,
+     "status": "pass"
+    }
+   },
+   "data_quality_note": "",
+   "description": "Leading and executing comprehensive strategies to enhance trading activities and achieve business objectives.",
+   "failed_checks": [
+    "meets_definition"
+   ],
+   "id": "001",
+   "overall": "FAIL",
+   "pending_checks": [
+    "market_pulse"
+   ],
+   "title": "directs and implements strategic trading plans"
+  },
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "high",
+     "reasoning": "Co-designing names a practical collaborative design ability; 'Able to co-design' reads naturally. No non-skill signal.",
+     "signals_against": [
+      "Could be seen as a methodology (concept_or_domain), but the term names the doing"
+     ],
+     "status": "pass",
+     "term_type": "skill"
+    },
+    "market_pulse": {
+     "note": "Job-posting data not yet available",
+     "status": "pending"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "low",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "assessment",
+        "formal": true,
+        "provider": "Eindhoven University of Technology (Coursera)",
+        "quote": "What does co-design mean to you?",
+        "region": "International",
+        "relevance": "adjacent",
+        "title": "Co-design for All: doing co-design in practice",
+        "url": "https://www.coursera.org/learn/co-design-for-all"
+       }
+      ],
+      "gap_note": "Singapore pass ('co-design certification assessment Singapore certified co-design practitioner') found no Singapore co-design certification or assessment: results were general design and design-thinking courses (Equinet, DesignThinkers Academy, Wiley Design Thinking Practitioner) and an Australian 'Co-Design Practitioners' bootcamp (New Know How) whose page describes content and selection but not an assessment. Internationally, TU Eindhoven's Coursera course 'Co-design for All' has only one 5-minute reflective graded assignment, which is not an assessment of co-design competence. A search for university co-design unit assessment tasks returned literature on co-designing assessments, plus an NTNU participatory-planning/co-design course (AAR4820) whose page now says the code is not offered this year. A last search for university co-design unit handbooks with assessment weightings found only handbooks, research papers and the DESN3000 page again. The University of Sydney DESN3000 page says its assessment details sit in unit outlines that were not retrieved, so a reviewer could overturn this gap by finding a graded co-design unit outline or credential.",
+      "met": false,
+      "searches": 3
+     },
+     "failure_reason": "Demonstrability not met",
+     "learnability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "2026",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "The University of Sydney",
+        "quote": "understand how to co-create solutions that respond to stakeholder assets, values and needs",
+        "region": "International",
+        "relevance": "direct",
+        "title": "DESN3000: Co-Design and Participatory Approaches",
+        "url": "https://www.sydney.edu.au/units/DESN3000"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "NUS College of Design and Engineering",
+        "quote": "Collaborate with community members and stakeholders to ensure designs are culturally sensitive, contextually appropriate, and reflect community aspirations and values.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Innovation and Design for Communities (CDE2001)",
+        "url": "https://cde.nus.edu.sg/undergraduate/cdece/local-programme/idcm/"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 3
+     },
+     "rationale": "Learnability is met through the University of Sydney unit DESN3000 'Co-Design and Participatory Approaches', which publishes co-design learning outcomes. No certification, test or assessment of co-design competence was retrieved in either the Singapore or the international pass: the nearest item, TU Eindhoven's Coursera course, has only a short reflective graded assignment. Confidence in the gap is low, because a university co-design unit very likely has graded assessments that were not published on the pages retrieved.",
+     "status": "fail"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "project coordination",
+     "similarity": 0.558209538,
+     "status": "pass"
+    }
+   },
+   "data_quality_note": "redundant_variant",
+   "description": "Collaboratively creating and developing products, services, or solutions with input from multiple stakeholders.",
+   "failed_checks": [
+    "meets_definition"
+   ],
+   "id": "013",
+   "overall": "FAIL",
+   "pending_checks": [
+    "market_pulse"
+   ],
+   "title": "co designing"
+  },
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "medium",
+     "reasoning": "Names an applied procurement/supplier-management ability. Awkward phrasing is not a reason to reject.",
+     "signals_against": [
+      "Awkwardly combines two elements, but neither is a non-skill type"
+     ],
+     "status": "pass",
+     "term_type": "skill"
+    },
+    "market_pulse": {
+     "note": "Job-posting data not yet available",
+     "status": "pending"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "low",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "certification",
+        "formal": true,
+        "provider": "Singapore Institute of Purchasing and Materials Management (SIPMM)",
+        "quote": "Award 1 Certificate of Competency — counts towards a designation",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Effective Supplier Management - Certificate of Competency",
+        "url": "https://sipmm.edu.sg/workshops/managerial/esm/"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "test",
+        "formal": true,
+        "provider": "Chartered Institute of Procurement & Supply (CIPS)",
+        "quote": "Once you've become a CIPS member you can book your examinations online",
+        "region": "International",
+        "relevance": "adjacent",
+        "title": "Innovation in Procurement and Supply (L6M8) examination",
+        "url": "https://www.cips.org/qualifications/professional-diploma-in-procurement-supply/innovation-in-procurement-and-supply"
+       }
+      ],
+      "gap_note": "Singapore pass (WSQ supplier development / procurement assessment query) surfaced NTUC LearningHub WSQ Procurement Management and SMF CCL 'Apply Techniques in SCM to Procurement'. The escalation search on SMF CCL showed a procurement/SRM course that prepares for the ASCM Supply Chain Procurement Certificate, which is broader procurement, not supplier capability development. SIPMM's Effective Supplier Management awards a Certificate of Competency, but supplier development is only one of eight topics and the page does not say how competence is judged. The international pass found ASCM's Supplier Relationship Management certificate (page could not be retrieved) and generic supplier-capability audit pages that assess suppliers, not the practitioner. CIPS L6M8 teaches supplier development, but its page only says members can book examinations and does not describe how this module is assessed. Both regions covered.",
+      "met": false,
+      "searches": 3
+     },
+     "failure_reason": "Demonstrability not met",
+     "learnability": {
+      "confidence": "low",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Chartered Institute of Procurement & Supply (CIPS)",
+        "quote": "professional procurement and supply leaders are expected to identify areas that offer the opportunity to improve and innovate and to lead and implement the associated processes.",
+        "region": "International",
+        "relevance": "direct",
+        "title": "Innovation in Procurement and Supply (L6M8), CIPS Professional Diploma in Procurement and Supply",
+        "url": "https://www.cips.org/qualifications/professional-diploma-in-procurement-supply/innovation-in-procurement-and-supply"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Singapore Institute of Purchasing and Materials Management (SIPMM)",
+        "quote": "Develop Suppliers and Relationship Value Apply capability development, joint improvement, recognition, innovation and governance to strengthen outcomes.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Effective Supplier Management",
+        "url": "https://sipmm.edu.sg/workshops/managerial/esm/"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 3
+     },
+     "rationale": "Learnability is met, with low confidence, by the CIPS L6M8 module, whose published purpose is evaluating supplier development techniques and whose aim is to lead and implement them. No certification, test or assessment was found that specifically judges supplier capability development. SIPMM's Certificate of Competency and the CIPS examination are the nearest items: the first treats supplier development as one topic and publishes no assessment method, and the second's page does not say how the module is assessed. A reviewer who can confirm that CIPS L6M8 has its own examined assessment could overturn this.",
+     "status": "fail"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "supplier management and capability development",
+     "similarity": 0.844257832,
+     "status": "fail"
+    }
+   },
+   "data_quality_note": "",
+   "description": "Making strategic decisions and executing plans to enhance supplier capabilities.",
+   "failed_checks": [
+    "not_in_taxonomy",
+    "meets_definition"
+   ],
+   "id": "020",
+   "overall": "FAIL",
+   "pending_checks": [
+    "market_pulse"
+   ],
+   "title": "decision making and implements supplier capability development plans"
+  },
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "medium",
+     "reasoning": "The term and its description both name a category of challenges (staffing, scheduling, labour relations) rather than an ability to do something; it is a subject/problem area. The skill would be resolving or managing these issues, but the term as submitted does not name that action. A search found no established use of the phrase as a skill label.",
+     "signals_against": [
+      "concept_or_domain: the term names a set of 'issues' and the description defines it as 'Challenges related to workforce management' - a problem area, not an ability; 'Able to complex manpower issues' does not read as an ability",
+      "No verb or action names what the person does with the issues; the ability would require rewriting the term (e.g. 'resolve complex manpower issues'), which is out of scope",
+      "Alternative considered: discipline_or_field (workforce management) - rejected because the term names problems/challenges within that area rather than a branch of study",
+      "Search found no usage of the phrase as a named skill in frameworks or job postings"
+     ],
+     "status": "fail",
+     "term_type": "concept_or_domain"
+    },
+    "market_pulse": {
+     "note": "Job-posting data not yet available",
+     "status": "pending"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "low",
+      "evidence": [
+       {
+        "as_of": "2010-11-01",
+        "evidence_type": "certification",
+        "formal": true,
+        "provider": "NTUC Ong Teng Cheong Institute (OTCi) / WDA",
+        "quote": "Each module consists of a two-day course and one hour assessment on a separate day.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "WSQ Certified HR Professional (Industrial Relations)",
+        "url": "https://www.ntuc.org.sg/uportal/news/OTCi-promotes-Professionalsim-and-Know-how-in-Industrial-Relations-through-Inaugural-HR-WSQ/"
+       }
+      ],
+      "gap_note": "One Singapore search for certifications/assessments on manpower issues, workforce management and industrial relations. The nearest was the 2010 WSQ Certified HR Professional (Industrial Relations), which assesses industrial relations only (one part of the description) and is dated; SHRI employment-law courses and IHRP certification are broader HR credentials. No international search was run because learnability had already failed and the budget was prioritised there.",
+      "met": false,
+      "searches": 1
+     },
+     "failure_reason": "Learnability not met",
+     "learnability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Singapore University of Social Sciences (SUSS)",
+        "quote": "Identify organizational implications of implementation of national manpower initiatives",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "HRM257 Labour and Manpower Policies in Singapore",
+        "url": "https://sims1.suss.edu.sg/eservice/Public/ViewCourse/ViewCourse.aspx?crsecd=HRM257&viewtype=pdf&isft=0"
+       }
+      ],
+      "gap_note": "Searched MySkillsFuture/SkillsFuture for manpower-issue courses (Singapore), escalated to the named SUSS HRM257 course, then searched internationally for courses on complex workforce/manpower issues. The closest is SUSS HRM257, which teaches national manpower policy responses rather than handling complex staffing, scheduling and labour-relations issues as such; international results were general HR/labour-relations degree pages and workforce-management blogs with no course dedicated to the skill. Both regions covered; the term reads as a problem domain rather than a discrete skill, so provision exists only for broader parent skills (HR management, labour relations).",
+      "met": false,
+      "searches": 3
+     },
+     "rationale": "No course was found that teaches 'complex manpower issues' itself; SUSS HRM257 (national manpower policy) is the closest and is adjacent. Demonstrability also fails, with only a dated WSQ industrial-relations credential as a near-miss. The term describes a problem area rather than a skill, which likely explains the gap.",
+     "status": "fail"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "workforce planning",
+     "similarity": 0.730818629,
+     "status": "fail"
+    }
+   },
+   "data_quality_note": "",
+   "description": "Challenges related to workforce management, including staffing, scheduling, and labor relations.",
+   "failed_checks": [
+    "is_skill",
+    "not_in_taxonomy",
+    "meets_definition"
+   ],
+   "id": "187",
+   "overall": "FAIL",
+   "pending_checks": [
+    "market_pulse"
+   ],
+   "title": "complex manpower issues"
+  }
+ ]
+}

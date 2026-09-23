@@ -1,0 +1,287 @@
+{
+  "roles": {
+    "provisional_a": "002",
+    "provisional_b": "004",
+    "g0_only": "007",
+    "g1_only": "003",
+    "g2_only_learnability": "001",
+    "g2_only_demonstrability": "013",
+    "multi_g1_g2": "020",
+    "multi_g0_g1_g2": "187"
+  },
+  "terms": [
+    {
+      "id": "002",
+      "title": "optimise",
+      "machineStatus": [
+        "pass",
+        "pass",
+        "pass",
+        "pending"
+      ],
+      "g0detail": "Skill",
+      "g1matched": "",
+      "g1closest": "process improvement and optimisation",
+      "g1similarity": 0.589307308,
+      "learnable": true,
+      "demonstrable": true,
+      "g2failureReason": "",
+      "status": "PROVISIONAL",
+      "failedChecks": [],
+      "pendingChecks": [
+        3
+      ],
+      "decisive": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "failReason": ""
+    },
+    {
+      "id": "004",
+      "title": "visualising",
+      "machineStatus": [
+        "pass",
+        "pass",
+        "pass",
+        "pending"
+      ],
+      "g0detail": "Skill",
+      "g1matched": "",
+      "g1closest": "data visualisation",
+      "g1similarity": 0.499046206,
+      "learnable": true,
+      "demonstrable": true,
+      "g2failureReason": "",
+      "status": "PROVISIONAL",
+      "failedChecks": [],
+      "pendingChecks": [
+        3
+      ],
+      "decisive": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "failReason": ""
+    },
+    {
+      "id": "007",
+      "title": "change initiatives",
+      "machineStatus": [
+        "fail",
+        "pass",
+        "pass",
+        "pending"
+      ],
+      "g0detail": "Concept / domain",
+      "g1matched": "",
+      "g1closest": "organisational change management",
+      "g1similarity": 0.663468719,
+      "learnable": true,
+      "demonstrable": true,
+      "g2failureReason": "",
+      "status": "FAIL",
+      "failedChecks": [
+        0
+      ],
+      "pendingChecks": [
+        3
+      ],
+      "decisive": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "failReason": "Non-skill term — Concept / domain"
+    },
+    {
+      "id": "003",
+      "title": "implementation of continuous improvement initiatives",
+      "machineStatus": [
+        "pass",
+        "fail",
+        "pass",
+        "pending"
+      ],
+      "g0detail": "Skill",
+      "g1matched": "continuous quality improvement",
+      "g1closest": "continuous quality improvement",
+      "g1similarity": 0.79955554,
+      "learnable": true,
+      "demonstrable": true,
+      "g2failureReason": "",
+      "status": "FAIL",
+      "failedChecks": [
+        1
+      ],
+      "pendingChecks": [
+        3
+      ],
+      "decisive": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "failReason": "Duplicate of existing taxonomy skill “continuous quality improvement”"
+    },
+    {
+      "id": "001",
+      "title": "directs and implements strategic trading plans",
+      "machineStatus": [
+        "pass",
+        "pass",
+        "fail",
+        "pending"
+      ],
+      "g0detail": "Skill",
+      "g1matched": "",
+      "g1closest": "trading management",
+      "g1similarity": 0.640970588,
+      "learnable": false,
+      "demonstrable": false,
+      "g2failureReason": "Learnability not met",
+      "status": "FAIL",
+      "failedChecks": [
+        2
+      ],
+      "pendingChecks": [
+        3
+      ],
+      "decisive": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "failReason": "Learnability not met"
+    },
+    {
+      "id": "013",
+      "title": "co designing",
+      "machineStatus": [
+        "pass",
+        "pass",
+        "fail",
+        "pending"
+      ],
+      "g0detail": "Skill",
+      "g1matched": "",
+      "g1closest": "project coordination",
+      "g1similarity": 0.558209538,
+      "learnable": true,
+      "demonstrable": false,
+      "g2failureReason": "Demonstrability not met",
+      "status": "FAIL",
+      "failedChecks": [
+        2
+      ],
+      "pendingChecks": [
+        3
+      ],
+      "decisive": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "failReason": "Demonstrability not met"
+    },
+    {
+      "id": "020",
+      "title": "decision making and implements supplier capability development plans",
+      "machineStatus": [
+        "pass",
+        "fail",
+        "fail",
+        "pending"
+      ],
+      "g0detail": "Skill",
+      "g1matched": "supplier management and capability development",
+      "g1closest": "supplier management and capability development",
+      "g1similarity": 0.844257832,
+      "learnable": true,
+      "demonstrable": false,
+      "g2failureReason": "Demonstrability not met",
+      "status": "FAIL",
+      "failedChecks": [
+        1,
+        2
+      ],
+      "pendingChecks": [
+        3
+      ],
+      "decisive": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "failReason": "Duplicate of existing taxonomy skill “supplier management and capability development”; Demonstrability not met"
+    },
+    {
+      "id": "187",
+      "title": "complex manpower issues",
+      "machineStatus": [
+        "fail",
+        "fail",
+        "fail",
+        "pending"
+      ],
+      "g0detail": "Concept / domain",
+      "g1matched": "workforce planning",
+      "g1closest": "workforce planning",
+      "g1similarity": 0.730818629,
+      "learnable": false,
+      "demonstrable": false,
+      "g2failureReason": "Learnability not met",
+      "status": "FAIL",
+      "failedChecks": [
+        0,
+        1,
+        2
+      ],
+      "pendingChecks": [
+        3
+      ],
+      "decisive": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "failReason": "Non-skill term — Concept / domain; Duplicate of existing taxonomy skill “workforce planning”; Learnability not met"
+    }
+  ],
+  "summary": {
+    "PASS": 0,
+    "PROVISIONAL": 2,
+    "FAIL": 6
+  },
+  "metrics": {
+    "total": 8,
+    "passed": 0,
+    "provisional": 2,
+    "failed": 6,
+    "overridden": 0,
+    "f0": 2,
+    "f1": 3,
+    "f2": 4,
+    "f3": 0,
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "p3": 8,
+    "fc1": 4,
+    "fc2": 1,
+    "fc3": 1,
+    "fc4": 0,
+    "singleFail": 4,
+    "anyPending": 8
+  }
+}
