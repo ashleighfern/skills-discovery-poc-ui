@@ -860,34 +860,23 @@
     },
     "meets_definition": {
      "demonstrability": {
-      "confidence": "medium",
+      "confidence": "low",
       "evidence": [
        {
         "as_of": "2024-12-18",
         "evidence_type": "certification",
         "formal": true,
         "provider": "CompTIA",
-        "quote": "Performance-based items test your ability to solve problems in a simulated environment.",
+        "quote": "The CompTIA A+ Core 1 V14 exam includes the following domains and topics: Mobile devices (15%) Networking (20%) Hardware (25%) Virtualization and Cloud Computing (11%) Hardware and Network Troubleshooting (29%)",
         "region": "International",
         "relevance": "direct",
-        "title": "CompTIA A+ (Core 1 and Core 2 exams)",
-        "url": "https://www.comptia.org/en/blog/what-is-on-the-comptia-a-exam/"
-       },
-       {
-        "as_of": "unknown",
-        "evidence_type": "assessment",
-        "formal": true,
-        "provider": "ASK Training (Singapore)",
-        "quote": "Total Training Hours: 32 hours, including a 2-hour assessment",
-        "region": "Local",
-        "relevance": "adjacent",
-        "title": "Advanced Hardware and Software Troubleshooting - course assessment",
-        "url": "https://asktraining.com.sg/it-courses/advanced-hardware-and-software-troubleshooting/"
+        "title": "CompTIA A+ (Core 1 V14 exam)",
+        "url": "https://www.comptia.org/en-us/blog/what-is-on-the-comptia-a-exam/"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 2
+      "searches": 3
      },
      "failure_reason": null,
      "learnability": {
@@ -897,19 +886,30 @@
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "ASK Training (Singapore)",
-        "quote": "Evaluate the significance of advanced troubleshooting techniques and methodologies for resolving common hardware and software challenges.",
-        "region": "Local",
+        "provider": "Microsoft (via Coursera)",
+        "quote": "After completing this course, you’ll be able to: • Apply a systematic approach to diagnose technical issues across different hardware and software environments • Implement troubleshooting skills to resolve problems effectively",
+        "region": "International",
         "relevance": "direct",
-        "title": "Advanced Hardware and Software Troubleshooting",
-        "url": "https://asktraining.com.sg/it-courses/advanced-hardware-and-software-troubleshooting/"
+        "title": "Technical Diagnostics and Troubleshooting Techniques",
+        "url": "https://www.coursera.org/learn/technical-diagnostics-and-troubleshooting-techniques"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Institute of Technical Education (ITE)",
+        "quote": "You will also learn how to troubleshoot electrical systems using a multimeter and make wiring connections.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Home Electrical Safety and Basic Electrical Maintenance",
+        "url": "https://www.ite.edu.sg/course-finder/short-course-home-electrical-safety-and-basic-electrical-maintenance/"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 1
+      "searches": 3
      },
-     "rationale": "Read as troubleshooting (resolving problems and restoring functionality to systems). ASK Training's Singapore course publishes troubleshooting learning outcomes, and CompTIA A+ certifies troubleshooting through dedicated weighted domains and simulated performance-based items. The local search turned up no Singapore certification: ASK's own 2-hour assessment is kept as adjacent because the page does not say what it assesses. All evidence is IT-specific, so a reviewer should confirm whether a domain-general 'rectify issues' can be evidenced by IT troubleshooting.",
+     "rationale": "Learnability rests on an international Microsoft/Coursera troubleshooting course whose published outcomes include resolving technical problems; demonstrability rests on CompTIA A+ Core 1, whose exam lists Hardware and Network Troubleshooting as a named domain (29%). Both are IT-domain instances of a generic skill, and the Singapore pass found no retrievable direct item (Daikin's WSQ 'Diagnose and Rectify Faults' pages now return 404; ITE's electrical course lists troubleshooting without learning outcomes), so confidence is modest.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -1743,12 +1743,23 @@
         "as_of": "unknown",
         "evidence_type": "assessment",
         "formal": true,
-        "provider": "Singapore Institute of Technology (SITLearn)",
-        "quote": "Through real-world, performance-based tasks, learners will discover how to transform traditional supply chain practices into innovative, digitally enabled solutions.",
+        "provider": "Nanyang Technological University (NTU PACE)",
+        "quote": "Assessment(s) will be conducted during every course and learners will be graded based on their performance in the assessment(s).",
         "region": "Local",
         "relevance": "direct",
-        "title": "Supply Chain Essentials micro-credential - Specialist Certificate (competency-based assessment)",
-        "url": "https://www.singaporetech.edu.sg/sitlearn/courses/engineering/supply-chain-essentials-microcredentials"
+        "title": "FlexiMasters in Smart Supply Chain Management (course assessments)",
+        "url": "https://www.ntu.edu.sg/pace/for-individuals/fleximasters/fleximasters-mae/fleximasters-in-smart-supply-chain-management"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "assessment",
+        "formal": true,
+        "provider": "SMF Centre for Corporate Learning",
+        "quote": "Supply Chain Solutioning-PRE-SPM- 5005-1.1 ... Trainees who attended at least 75% of the scheduled class, demonstrated competency in the WSQ assessment, and participated during the scheduled class will receive these two e-certificates with the aforementioned skills under the SSG Skills Framework.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Manage Strategic Resources For Supply Chain (APICS CSCP) - WSQ assessment",
+        "url": "https://smfccl.sg/programmes/apics-certified-supply-chain-professional-cscp/"
        }
       ],
       "gap_note": "",
@@ -1757,25 +1768,36 @@
      },
      "failure_reason": null,
      "learnability": {
-      "confidence": "low",
+      "confidence": "medium",
       "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Nanyang Technological University (NTU PACE)",
+        "quote": "this programme equips learners with in-demand skills in end-to-end supply chain management, logistics strategy and data-driven decision-making",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "FlexiMasters in Smart Supply Chain Management",
+        "url": "https://www.ntu.edu.sg/pace/for-individuals/fleximasters/fleximasters-mae/fleximasters-in-smart-supply-chain-management"
+       },
        {
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Singapore Institute of Technology (SITLearn)",
-        "quote": "This micro-credential equips learners with the competencies to design, analyse, and optimise end-to-end supply chain processes",
+        "provider": "Singapore Management University",
+        "quote": "This module seeks to develop a foundational understanding of logistics and supply chain management in Asia and its impact on the global logistics and supply chain industry.",
         "region": "Local",
-        "relevance": "direct",
-        "title": "Supply Chain Essentials (micro-credential)",
-        "url": "https://www.singaporetech.edu.sg/sitlearn/courses/engineering/supply-chain-essentials-microcredentials"
+        "relevance": "adjacent",
+        "title": "Advanced Certificate in Logistics and Supply Chain Management Module 1: Fundamentals of Supply Chain Management",
+        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2020512903"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 2
      },
-     "rationale": "SIT's Supply Chain Essentials micro-credential says it builds competencies to design, analyse and optimise end-to-end supply chain processes, and awards a Specialist Certificate through performance-based tasks. Confidence is low: the SIT page is bot-protected, so the outcomes and assessment wording come from search-result text rather than the page body. ASCM's CLTD certification, which covers logistics network design, was surfaced internationally but none of its pages could be retrieved to quote, so it is not recorded as evidence.",
+     "rationale": "Learnability rests on NTU PACE's FlexiMasters in Smart Supply Chain Management, which publishes outcomes on designing transport networks, planning systems and inventory policies across the end-to-end supply chain; demonstrability rests on the same programme's graded course assessments and final examinations. The SIT 'Supply Chain Essentials' micro-credential (design of end-to-end supply chain processes) could not be retrieved (bot-blocked) and was not used; the SMF CCL WSQ course assessing the 'Supply Chain Solutioning' TSC and the ASCM CLTD network-design module (only a chapter prep page retrieved) are near-misses. Demonstrability confidence is low because the assessment is programme-level rather than an assessment named for logistics solution design.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -2316,29 +2338,29 @@
     },
     "meets_definition": {
      "demonstrability": {
-      "confidence": "low",
+      "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2026",
-        "evidence_type": "test",
+        "as_of": "unknown",
+        "evidence_type": "certification",
         "formal": true,
-        "provider": "Elevate Outcomes (Elevate Strategic Outcomes, LLC)",
-        "quote": "80% Required on All Quizzes prior to Unlocking Final Exam 2 Hour Final Exam; 80% Required to Pass",
-        "region": "International",
+        "provider": "BSI Singapore (IASSC-accredited)",
+        "quote": "you’ll be introduced to intermediate level tools and techniques to analyse and improve processes using the Lean Six Sigma approach. Upon successful completion of the exam you will receive the internationally recognized Certified Green Belt qualification.",
+        "region": "Local",
         "relevance": "direct",
-        "title": "Data Driven Continuous Improvement - Final Exam",
-        "url": "https://www.elevate-outcomes.com/arcc-courses/data-driven-continuous-improvement"
+        "title": "Certified Lean Six Sigma Green Belt (LSGB) / IASSC Certified Lean Six Sigma Green Belt Exam",
+        "url": "https://www.bsigroup.com/en-SG/training-courses/certified-lean-sigma-green-belt/"
        },
        {
-        "as_of": "2026",
-        "evidence_type": "assessment",
+        "as_of": "unknown",
+        "evidence_type": "certification",
         "formal": true,
-        "provider": "Tertiary Infotech Academy / SkillsFuture Singapore (WSQ, TSC Continuous Process Improvement ELE-PIN-4001-1.1)",
-        "quote": "Assessment Written Exam Practical Exam",
+        "provider": "Nanyang Technological University (NTU PACE)",
+        "quote": "The certification will require learners to complete an online assessment and a Lean Six Sigma Green Belt project.",
         "region": "Local",
         "relevance": "adjacent",
-        "title": "WSQ - Continuous Process Improvement with FMEA assessment",
-        "url": "https://www.tertiarycourses.com.sg/wsq-continuous-process-improvement-with-fmea.html"
+        "title": "Lean Six Sigma Green Belt Certification (optional add-on to Professional Certificate in Continuous Improvement Management and Tools)",
+        "url": "https://www.ntu.edu.sg/pace/for-individuals/professional-certificates/professional-certificate-in-continuous-improvement-management-and-tools"
        }
       ],
       "gap_note": "",
@@ -2347,36 +2369,36 @@
      },
      "failure_reason": null,
      "learnability": {
-      "confidence": "low",
+      "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2026",
+        "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Elevate Outcomes (Elevate Strategic Outcomes, LLC)",
-        "quote": "Key Takeaways: Recognizing the Impact of Properly Focused Improvements Gaining Insight & Understanding of the Current State Process(es) Collecting Data on Performance & Obstacles",
-        "region": "International",
+        "provider": "Nanyang Technological University (NTU PACE)",
+        "quote": "Learner will also be able to apply continuous improvement strategies to improve products, services and/or processes across the organisation.",
+        "region": "Local",
         "relevance": "direct",
-        "title": "Data Driven Continuous Improvement",
-        "url": "https://www.elevate-outcomes.com/arcc-courses/data-driven-continuous-improvement"
+        "title": "Professional Certificate in Continuous Improvement Management and Tools",
+        "url": "https://www.ntu.edu.sg/pace/for-individuals/professional-certificates/professional-certificate-in-continuous-improvement-management-and-tools"
        },
        {
-        "as_of": "2026",
+        "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Tertiary Infotech Academy (Tertiary Courses Singapore), WSQ",
-        "quote": "LO4: Identify and direct improvement opportunities",
+        "provider": "NTUC LearningHub",
+        "quote": "Evaluate Analysis Outcomes for potential impact and opportunities, potential limitations, and improvements on data analysis techniques",
         "region": "Local",
         "relevance": "adjacent",
-        "title": "WSQ - Continuous Process Improvement with FMEA",
-        "url": "https://www.tertiarycourses.com.sg/wsq-continuous-process-improvement-with-fmea.html"
+        "title": "Data Analytics for Presentation (AIC)",
+        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2024051685"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 3
+      "searches": 2
      },
-     "rationale": "Both criteria rest on one small international provider: Elevate Outcomes' 'Data Driven Continuous Improvement' course publishes data-collection and improvement-focused takeaways and requires a 2-hour final exam with an 80% pass mark. Singapore provision found (Tertiary Courses WSQ Continuous Process Improvement with FMEA, with written and practical exams; SQI Lean Six Sigma Green Belt with project assessment) covers continuous improvement via root-cause/FMEA or Six Sigma rather than data analytics, research and innovation as a whole, so it is recorded as adjacent. Neither source covers the 'research and innovation' element explicitly, so confidence is low; a reviewer may judge the compound term only partly evidenced.",
+     "rationale": "Both criteria met from Singapore sources: NTU PACE's continuous-improvement certificate publishes outcomes on applying data analysis techniques to drive process improvement, and BSI Singapore's Lean Six Sigma Green Belt leads to a proctored IASSC exam certifying data-driven process analysis and improvement. The judgement call is treating Lean Six Sigma (data-driven continuous improvement) as this skill rather than a parent; the 'research and innovation' element of the title is only partly covered (NTU adds Lean Startup/Design Thinking content).",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -3161,53 +3183,22 @@
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2025",
+        "as_of": "2026",
         "evidence_type": "assessment",
         "formal": true,
         "provider": "Bangor University",
-        "quote": "develop a working prototype solution made of cardboard, tape and glue.",
+        "quote": "Develop a prototype solution using CAD, 3D printing, kit parts and laser cutting. The manufactured artefact should be of high quality, be fully functional and solve the chosen problem.",
         "region": "International",
         "relevance": "direct",
-        "title": "ICE-4502 Prototyping and Fabrication - module assessment",
-        "url": "https://www.bangor.ac.uk/courses/postgraduate-modules/ICE-4502/202526"
+        "title": "ICE-4502 Prototyping and Fabrication (module assessment)",
+        "url": "https://www.bangor.ac.uk/courses/postgraduate-modules/ICE-4502"
        },
        {
         "as_of": "unknown",
         "evidence_type": "assessment",
         "formal": true,
-        "provider": "Tertiary Infotech Academy / SkillsFuture Singapore (WSQ)",
-        "quote": "OpenCerts from SkillsFuture Singapore, certifying that they have achieved the Competency Standard(s) in the above Skills Framework.",
-        "region": "Local",
-        "relevance": "adjacent",
-        "title": "WSQ - Innovating Product Development with 3D Printing and Additive Manufacturing - assessment",
-        "url": "https://www.tertiarycourses.com.sg/wsq-innovating-product-development-with-3d-printing-and-additive-manufacturing.html"
-       }
-      ],
-      "gap_note": "",
-      "met": true,
-      "searches": 3
-     },
-     "failure_reason": null,
-     "learnability": {
-      "confidence": "medium",
-      "evidence": [
-       {
-        "as_of": "2024",
-        "evidence_type": "course_syllabus",
-        "formal": true,
-        "provider": "University of Warwick (WMG)",
-        "quote": "Apply technical skills as a part of a team to prototype a product that is functional, efficient and manufacturable",
-        "region": "International",
-        "relevance": "direct",
-        "title": "WM9N5-15 Product Design",
-        "url": "https://courses.warwick.ac.uk/modules/2024/WM9N5-15"
-       },
-       {
-        "as_of": "unknown",
-        "evidence_type": "training_programme",
-        "formal": true,
-        "provider": "AMTA (A*STAR SIMTech course listing)",
-        "quote": "This course covers the process of product development and trains the use of state-of-art computer tools with fabrication facilities to generate new models and new prototypes.",
+        "provider": "AMTA / SIMTech",
+        "quote": "Participants shall learn how to generate innovative product concepts and further build mechanical and electrical prototypes.",
         "region": "Local",
         "relevance": "adjacent",
         "title": "Innovative Product Design and Prototyping",
@@ -3216,9 +3207,40 @@
       ],
       "gap_note": "",
       "met": true,
-      "searches": 2
+      "searches": 3
      },
-     "rationale": "Warwick's WM9N5 Product Design module publishes outcomes on generating and building functional, manufacturable product prototypes. Bangor's ICE-4502 Prototyping and Fabrication grades students on building prototypes (projects weighted 50% and 25%). Singapore provision found (SIMTech/AMTA prototyping course, Tertiary Infotech WSQ additive-manufacturing and Fusion 360 courses) had no readable outcomes or assessed only neighbouring CAD/AM competencies, so it is adjacent. Confidence is medium.",
+     "failure_reason": null,
+     "learnability": {
+      "confidence": "high",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Hustle Institute Pte. Ltd. (SSG-WSQ)",
+        "quote": "This course equips learners with the essential knowledge and practical skills to design, develop, and test functional prototypes in real-world conditions.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "Product Prototyping",
+        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2025061094"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Singapore Institute of Manufacturing Technology (SIMTech)",
+        "quote": "They develop multiple prototypes throughout the course, iterating and refining their design.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "Innovative Product Design and Prototyping",
+        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2020513189"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 1
+     },
+     "rationale": "Learnability is well evidenced locally (Hustle Institute's WSQ Product Prototyping and SIMTech's Innovative Product Design and Prototyping, which includes DFMA). Demonstrability comes from Bangor University's ICE-4502 module, whose summative coursework grades a functional prototype built with CAD, 3D printing and laser cutting. The Singapore listings retrieved did not publish how competence is assessed (the SIMTech page stating a pass requirement was bot-blocked), so the local demonstrability pass ended with only a near-miss.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -4931,14 +4953,25 @@
       "evidence": [
        {
         "as_of": "unknown",
-        "evidence_type": "assessment",
+        "evidence_type": "certification",
         "formal": true,
-        "provider": "SMU Academy (Singapore Management University)",
-        "quote": "An assessment will be conducted at the end of each module.",
+        "provider": "Technical Analysts Society (Singapore) / IFTA",
+        "quote": "This two-stage education and testing program in technical analysis is offered to members of IFTA-affiliated societies worldwide. Upon successful completion of both levels, the candidate is awarded the \"Certified Financial Technician\" designation",
         "region": "Local",
         "relevance": "direct",
-        "title": "Certificate in Financial Trading - Introduction to Trading Using Technical Analysis (module assessments)",
-        "url": "https://academy.smu.edu.sg/courses/certificate-financial-trading-introduction-trading-using-technical-analysis"
+        "title": "Certified Financial Technician (CFTe) Level-1 and Level-2",
+        "url": "https://www.tass.org.sg/education-certification"
+       },
+       {
+        "as_of": "2026",
+        "evidence_type": "certification",
+        "formal": true,
+        "provider": "International Federation of Technical Analysts (IFTA)",
+        "quote": "This exam incorporates questions requiring an essay-based analysis and answers. For this, the candidate should demonstrate a depth of knowledge and experience in applying various methods of technical analysis. The exam provides current charts covering one specific market (often an equity) to be analyzed, as though for a Fund Manager.",
+        "region": "International",
+        "relevance": "direct",
+        "title": "Certified Financial Technician (CFTe)",
+        "url": "https://www.ifta.org/certified-financial-technician-cfte-"
        }
       ],
       "gap_note": "",
@@ -4953,19 +4986,30 @@
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "SMU Academy (Singapore Management University)",
-        "quote": "Delve into the Dow Theory and Concepts of Trend",
+        "provider": "Singapore Management University",
+        "quote": "Technical Analysis is an established method and skill that one can learn to give make objective investment and trading decisions in the Financial Markets. ... Concepts of Trend",
         "region": "Local",
         "relevance": "direct",
         "title": "Certificate in Financial Trading - Introduction to Trading Using Technical Analysis",
-        "url": "https://academy.smu.edu.sg/courses/certificate-financial-trading-introduction-trading-using-technical-analysis"
+        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2023021262"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Nanyang Technological University",
+        "quote": "Learners will be equipped with the basic understanding and tools to conduct portfolio analysis, make investment decisions, and manage portfolios.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Investments (Classroom and Asynchronous e-learning)",
+        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2021008784"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 1
      },
-     "rationale": "SMU Academy's technical-analysis certificate teaches market trend concepts (Dow Theory, trend, patterns, moving averages) for trading decisions and states an assessment is conducted at the end of each module. Evidence is a single local provider and the assessment format is not published, so confidence is medium; technical analysis is the market-trend reading the term describes, though a reviewer may note it does not cover fundamental/macro trend analysis.",
+     "rationale": "Both criteria are met by treating technical analysis (the analysis of market price trends) as this skill: SMU's SkillsFuture-listed technical-analysis certificate teaches trend concepts for investment decisions, and the IFTA CFTe (administered in Singapore via TASS) examines it, with CFTe II requiring analysis of current market charts. A reviewer should confirm that technical analysis is an acceptable match; fundamental/macro investment-trend analysis was not separately evidenced.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -7405,14 +7449,14 @@
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2025-07",
+        "as_of": "unknown",
         "evidence_type": "assessment",
         "formal": true,
-        "provider": "Equinet Academy (WSQ Statement of Attainment, SkillsFuture Singapore)",
-        "quote": "will be awarded to candidates who have demonstrated competency in the course assessment and achieved at least 75% attendance",
+        "provider": "Equinet Academy (SkillsFuture WSQ)",
+        "quote": "A SkillsFuture WSQ Statement of Attainment (SOA) – User Experience Design under the Skills Framework TSC and Certification of Completion by Equinet Academy will be awarded to candidates who have demonstrated competency in the WSQ User Experience & User Interface (UX UI) Design Essentials course assessment",
         "region": "Local",
         "relevance": "direct",
-        "title": "SkillsFuture WSQ Statement of Attainment (SOA) - User Experience Design",
+        "title": "WSQ User Experience & User Interface (UX UI) Design Essentials - WSQ Statement of Attainment (User Experience Design TSC)",
         "url": "https://www.equinetacademy.com/course/wsq-user-experience-user-interface-ux-ui-design-essentials/"
        }
       ],
@@ -7425,22 +7469,22 @@
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2025-07",
+        "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Equinet Academy (WSQ, SkillsFuture Singapore)",
-        "quote": "Evaluate layouts for usability, visual hierarchy, and accessibility",
+        "provider": "Singapore Management University",
+        "quote": "participants will develop a deep understanding of the UX design process and the skills to create effective and user-friendly digital products that meet the needs of users.",
         "region": "Local",
         "relevance": "direct",
-        "title": "WSQ User Experience & User Interface (UX UI) Design Essentials",
-        "url": "https://www.equinetacademy.com/course/wsq-user-experience-user-interface-ux-ui-design-essentials/"
+        "title": "UX Design for Modern Applications",
+        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2025058754"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 1
      },
-     "rationale": "The term matches user experience design. Equinet Academy's WSQ UX UI Design Essentials course (support period Jul 2025 to Jul 2027) publishes UX learning outcomes and awards a WSQ Statement of Attainment in the User Experience Design TSC after a written exam and project. Both criteria rest on one Singapore provider page, so confidence is medium; other WSQ UX courses (SGInnovate, CuriousCore) were seen in results but not needed.",
+     "rationale": "Treating the term as UX design (developing solutions that improve user interactions), both criteria are met locally: SMU's UX Design for Modern Applications publishes outcomes from user research to prototyping and usability testing, and Equinet Academy's WSQ course awards an SOA in the 'User Experience Design' TSC after a written exam and project. The 'new/innovative' framing of the title is not separately evidenced beyond design-thinking content.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -9681,26 +9725,26 @@
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "unknown",
+        "as_of": "2025-06",
         "evidence_type": "certification",
         "formal": true,
         "provider": "APMG International",
-        "quote": "Candidates who pass the practitioner exam are recognized as 'Change Management Registered Practitioners'",
+        "quote": "There are two levels of examination: Foundation which tests what you know and understand about organisational Change Management, and Practitioner which tests your understanding and your ability to apply that knowledge appropriately to a real situation. ... 3. Change leadership and teams",
         "region": "International",
         "relevance": "direct",
-        "title": "Change Management Foundation and Practitioner certification",
-        "url": "https://apmg-international.com/product/change-management"
+        "title": "APMG Change Management (CM3) Foundation and Practitioner examinations",
+        "url": "https://apmg-international.com/article/change-management-exam-questions-answer-guide"
        },
        {
         "as_of": "unknown",
-        "evidence_type": "assessment",
+        "evidence_type": "certification",
         "formal": true,
-        "provider": "ODC Training (WSQ ATO)",
-        "quote": "a 'Competent' (C) grading for the final assessment result",
+        "provider": "Prosci (Singapore)",
+        "quote": "Become a Prosci Certified Change Practitioner and help your organization successfully navigate complex transformations.",
         "region": "Local",
         "relevance": "adjacent",
-        "title": "WSQ People Change Management - Level 4",
-        "url": "https://www.odctraining.com.sg/people-change-management-4"
+        "title": "Prosci Change Management Certification Program",
+        "url": "https://www.proscisingapore.sg/prosci-change-management-practitioner-certification-programme"
        }
       ],
       "gap_note": "",
@@ -9715,19 +9759,19 @@
         "as_of": "unknown",
         "evidence_type": "training_programme",
         "formal": true,
-        "provider": "ODC Training (WSQ ATO)",
-        "quote": "Equip leaders with skillsets to facilitate innovation at the workplace, manage implementation of change strategies and processes, and monitor and evaluate change impact on team leaders.",
+        "provider": "Catapult Asia Pte. Ltd.",
+        "quote": "Develop specific and focused strategies to guide the stakeholders through the key phases of transition in times of change.",
         "region": "Local",
         "relevance": "direct",
-        "title": "WSQ People Change Management - Level 4",
-        "url": "https://www.odctraining.com.sg/people-change-management-4"
+        "title": "Adaptive Leadership - Leading the Human Side of Change",
+        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2025057939"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 2
+      "searches": 1
      },
-     "rationale": "The term reduces to leading/driving organisational change management. A Singapore WSQ programme (ODC) publishes change-management learning outcomes, and APMG International's Change Management Practitioner exam certifies the skill. The local WSQ assessment line is recorded only as a near-miss because it is framed as a funding condition and does not describe the assessment method.",
+     "rationale": "Read as leading/driving organisational change, learnability is met by Catapult Asia's SkillsFuture-listed change-leadership course with published outcomes. Demonstrability is met internationally by APMG's Change Management Foundation/Practitioner exams, whose syllabus includes change leadership and whose Practitioner exam tests applying it to a real situation. The Singapore Prosci certification pages retrieved did not describe how competence is assessed, so the local pass yielded only a near-miss.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -12682,26 +12726,26 @@
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "unknown",
+        "as_of": "2023-01",
         "evidence_type": "certification",
         "formal": true,
-        "provider": "CertiProf",
-        "quote": "User Stories Foundations Certification – USFC™ Issuing organization Certiprof International Number of questions 40 multiple-choice questions",
+        "provider": "BCS, The Chartered Institute for IT",
+        "quote": "Explain the key underlying principles and standard format of a user story. ... This certificate is assessed through completion of an invigilated online exam",
         "region": "International",
         "relevance": "direct",
-        "title": "User Stories Foundations Certification (USFC)",
-        "url": "https://certiprof.com/products/user-stories-foundations-certificate-usfc"
+        "title": "BCS Practitioner Certificate in Requirements Engineering",
+        "url": "https://www.bcs.org/media/8271/ba-practitioner-requirements-syllabus.pdf"
        },
        {
         "as_of": "unknown",
         "evidence_type": "certification",
         "formal": true,
-        "provider": "Agilitics (Scrum.org PSPO)",
-        "quote": "Once you pass the Assessment, you are declared PSPO certified and can instantly download your certificate.",
+        "provider": "AgileAsia / SUTD Academy",
+        "quote": "At this time, there is no test required to earn a CSPO® certification.",
         "region": "Local",
         "relevance": "adjacent",
-        "title": "Professional Scrum Product Owner (PSPO I) training and assessment",
-        "url": "https://www.agilitics.edu.sg/professional-scrum-product-owner-training-singapore/"
+        "title": "Certified Scrum Product Owner® (CSPO)",
+        "url": "https://agileasia.com/cspo/"
        }
       ],
       "gap_note": "",
@@ -12716,19 +12760,30 @@
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "NUS-ISS",
-        "quote": "Create user stories",
-        "region": "Local",
+        "provider": "Salesforce Trailhead",
+        "quote": "After completing this unit, you’ll be able to: Highlight the importance of establishing an acceptance criteria. Summarize the INVEST concept to writing a user story. Identify common mistakes to avoid when writing a user story.",
+        "region": "International",
         "relevance": "direct",
-        "title": "Business Analysis for Agile Practitioners (Blended Learning)",
-        "url": "https://www.iss.nus.edu.sg/blended-learning-programme/programmes/course-bl/detail/business-analysis-for-agile-practitioners_/digital-agility"
+        "title": "User Story Creation - Construct a User Story (module unit)",
+        "url": "https://trailhead.salesforce.com/content/learn/modules/user-story-creation/construct-a-user-story"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "AgileAsia / SUTD Academy",
+        "quote": "Techniques for writing user stories and estimating effort",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "SUTD Academy: Certified Scrum Product Owner® (CSPO)",
+        "url": "https://agileasia.com/cspo/"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 2
+      "searches": 3
      },
-     "rationale": "Learnability is met locally: NUS-ISS Business Analysis for Agile Practitioners lists 'Create user stories' as a learning outcome (read from search results; the page blocked direct fetch). Demonstrability is met internationally by CertiProf's User Stories Foundations Certification, a proctored 40-question exam specific to user stories; Singapore passes found only broader Product Owner assessments (PSPO, CSPO) and NUS-ISS course assessments not described as assessing user stories, so no local direct item.",
+     "rationale": "Interpreted as writing agile user stories (per the description). Learnability is met by a Salesforce Trailhead unit whose stated objectives are about writing user stories; demonstrability by the BCS Practitioner Certificate in Requirements Engineering, whose examined syllabus lists user-story principles and format (LO 3.5). Singapore coverage is weaker: AgileAsia's CSPO only lists user stories as one topic and requires no test, and NUS-ISS's 'Business Analysis for Agile Practitioners' (reported to assess writing user stories) could not be retrieved (bot-blocked).",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -12940,22 +12995,22 @@
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2024",
+        "as_of": "unknown",
         "evidence_type": "certification",
         "formal": true,
         "provider": "Consepsys",
-        "quote": "To become a Certified Document Controller you must: 1. Attend the Course: Certified Document Controller and 2. Obtain a pass mark for the Level 1 examination",
+        "quote": "Consepsys is the internationally recognised certification body for Document Control Professionals. ... To become a Certified Document Controller you must: Attend the Course: Certified Document Controller and Obtain a pass mark for the Level 1 examination",
         "region": "International",
         "relevance": "direct",
-        "title": "Certified Document Controller (Document Control Certification Programme)",
+        "title": "Certified Document Controller (Level 1) / Certified Lead Document Controller (Level 2)",
         "url": "https://www.consepsys.com/certification/"
        },
        {
         "as_of": "unknown",
         "evidence_type": "assessment",
         "formal": true,
-        "provider": "Singapore Quality Institute (SQI)",
-        "quote": "acquire the practical knowledge and skills in identifying the Documented Information (DI) necessary for ISO 9001:2015",
+        "provider": "Singapore Quality Institute",
+        "quote": "Award of Certificate Certificate of Completion",
         "region": "Local",
         "relevance": "adjacent",
         "title": "Control of Documented Information",
@@ -12964,29 +13019,40 @@
       ],
       "gap_note": "",
       "met": true,
-      "searches": 2
+      "searches": 3
      },
      "failure_reason": null,
      "learnability": {
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2022",
-        "evidence_type": "training_programme",
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Spire Events Pte Ltd",
-        "quote": "Identify the key components required to implement an effective document and records control system",
+        "provider": "Singapore Quality Institute",
+        "quote": "This program is designed to enable the participants to acquire the practical knowledge and skills in identifying the Documented Information (DI) necessary for ISO 9001:2015 that require documents / records control activities in the context of Annex SL with a view to maintain their Management Systems effectively.",
         "region": "Local",
         "relevance": "direct",
-        "title": "Advanced Document Control & Records Management - Singapore & On-line",
-        "url": "https://www.spire-events.com/advanced-dc-rm"
+        "title": "Control of Documented Information: DI (Interpretation, Application & Implementation)",
+        "url": "https://www.sqi.org.sg/courses/control-of-documented-information/"
+       },
+       {
+        "as_of": "2025",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Knowles Training Institute (Singapore)",
+        "quote": "Master essential document control tools and techniques for efficient record-keeping and version management",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Document Control and Management Training Course In Singapore",
+        "url": "https://knowlesti.sg/document-control-and-management-training-course-in-singapore/"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 1
      },
-     "rationale": "Learnability is met locally by Spire Events' Singapore-run Advanced Document Control & Records Management course with published outcomes (dated 2022 listing). Demonstrability is met internationally by Consepsys' Certified Document Controller, which requires passing a Level 1 examination; Singapore-based options found (SQI Control of Documented Information, Pathways/Scandinavian Academy venues) issue completion/attendance certificates without a published assessment.",
+     "rationale": "Learnability is met by the Singapore Quality Institute's Control of Documented Information course (document/record control under ISO 9001:2015, with a detailed syllabus). Demonstrability is met internationally by Consepsys's Certified Document Controller, which requires passing a certification examination. In Singapore, SQI awards only a Certificate of Completion with no published assessment, so the local demonstrability pass ended with a near-miss.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -15301,19 +15367,19 @@
         "as_of": "unknown",
         "evidence_type": "certification",
         "formal": true,
-        "provider": "PeopleCert (AXELOS ITIL)",
-        "quote": "Learn how to systematically observe services and service components, recording, reporting, and responding to selected changes of state identified as events. ... 20 multiple-choice questions ... Minimum passing score: 65%",
+        "provider": "ISACA",
+        "quote": "C—RISK MONITORING AND REPORTING",
         "region": "International",
-        "relevance": "direct",
-        "title": "ITIL 4 Practitioner: Monitoring and Event Management",
-        "url": "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil4-practices-monitoring-and-event-management-3686"
+        "relevance": "adjacent",
+        "title": "CRISC (Certified in Risk and Information Systems Control) exam",
+        "url": "https://www.isaca.org/credentialing/crisc/crisc-exam-content-outline"
        }
       ],
-      "gap_note": "",
-      "met": true,
-      "searches": 3
+      "gap_note": "Singapore pass (WSQ assessment/certification query) returned only generic WSQ and unrelated WSQ course pages (incident management, retail operations, QA) — no assessment of monitoring operations/processes, so nothing to escalate to. International pass found exam outlines (ISACA CRISC, CISM) that test risk/security-specific monitoring (e.g. CRISC 'Risk and Control Monitoring Techniques'), which is a narrower IT-risk specialisation rather than monitoring operations/processes generally — adjacent. No certification or test naming general operations/process monitoring as an examined topic was retrieved.",
+      "met": false,
+      "searches": 2
      },
-     "failure_reason": null,
+     "failure_reason": "Learnability not met",
      "learnability": {
       "confidence": "low",
       "evidence": [
@@ -15321,20 +15387,31 @@
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Singapore Polytechnic (PACE Academy)",
-        "quote": "Monitor and control industrial processes while ensuring product quality, operational efficiency, and compliance with safety and regulatory requirements.",
-        "region": "Local",
-        "relevance": "direct",
-        "title": "Specialist Diploma in Process Operations, Safety & Health",
-        "url": "https://www.sp.edu.sg/pace/courses/all-courses/course-details/specialist-diploma-in-process-operations--safety---health"
+        "provider": "Datastat Training Institute",
+        "quote": "Module 8: Monitoring Activities (COSO Component 5)",
+        "region": "International",
+        "relevance": "adjacent",
+        "title": "Internal Controls and SOX/COSO Compliance Auditing Training Course",
+        "url": "https://datastatresearch.org/courses/internal-controls-and-sox-coso-compliance-auditing-training-course"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "AICPA & CIMA",
+        "quote": "Learn how to evaluate the control environment, risk assessment, control activities, information and communication, and monitoring activities at your or your client’s entity.",
+        "region": "International",
+        "relevance": "adjacent",
+        "title": "COSO's Internal Control Framework Essentials",
+        "url": "https://www.aicpa-cima.com/cpe-learning/course/cosos-internal-control-framework-essentials-sso"
        }
       ],
-      "gap_note": "",
-      "met": true,
-      "searches": 2
+      "gap_note": "Singapore pass (SkillsFuture/MySkillsFuture query) surfaced no course on monitoring operations/processes; the only course hit was a JS-rendered GoBusiness listing with no retrievable content, so no local provider to escalate to. International: the closest items are COSO internal-control courses where 'Monitoring Activities' is one of five components (Datastat Module 8; AICPA essentials course, whose published outcomes are about all components generally) — a single module of a broader internal-control/SOX course, so adjacent. APQC 'Monitoring and Controlling Your Processes' looked directly relevant but its page is Cloudflare-blocked (403) and its raw text could not be retrieved, so it is not recorded as evidence; a reviewer who can open it may overturn this gap.",
+      "met": false,
+      "searches": 3
      },
-     "rationale": "The skill is generic (observing and tracking operations or processes to ensure correct, efficient functioning); both evidence items are domain instances of it. Singapore Polytechnic publishes a learning outcome to monitor and control industrial processes for operational efficiency, and PeopleCert's ITIL 4 Monitoring and Event Management certification examines systematic observation of services by MCQ exam. The Singapore demonstrability pass (WSQ process-technology/process-plant SOAs) surfaced only WSH-in-process-plant courses and an unreachable Daikin brochure, so no local assessment was found; confidence is low because a reviewer may consider domain-specific monitoring adjacent to this generic term.",
-     "status": "pass"
+     "rationale": "The term is generic; retrievable provision only teaches it as the COSO 'monitoring activities' component inside broader internal-control/SOX courses, and the only certifications found test IT-risk/security monitoring. A dedicated process-monitoring course (APQC) exists but its page could not be retrieved, so confidence in the gap is low; a reviewer may overturn if it publishes outcomes and an assessment.",
+     "status": "fail"
     },
     "not_in_taxonomy": {
      "matched_skill_title": "monitoring and surveillance",
@@ -15345,7 +15422,8 @@
    "data_quality_note": "",
    "description": "Observing and tracking operations or processes to ensure they are functioning correctly and efficiently.",
    "failed_checks": [
-    "not_in_taxonomy"
+    "not_in_taxonomy",
+    "meets_definition"
    ],
    "id": "197",
    "overall": "FAIL",
@@ -16424,34 +16502,34 @@
     },
     "meets_definition": {
      "demonstrability": {
-      "confidence": "medium",
+      "confidence": "low",
       "evidence": [
        {
         "as_of": "unknown",
         "evidence_type": "test",
         "formal": true,
-        "provider": "The Knowledge Academy",
-        "quote": "50%, or 15/30 Marks",
+        "provider": "LearnGxP",
+        "quote": "Added new final exam question to align with learning objectives",
         "region": "International",
         "relevance": "direct",
-        "title": "ISO 17025 Internal Auditor exam",
-        "url": "https://www.theknowledgeacademy.com/sg/courses/iso-17025-training/iso-17025-internal-auditor/singapore/"
+        "title": "How to Prepare for Internal & External Laboratory Audits (ELM-106) — Final Assessment",
+        "url": "https://www.learngxp.com/elearning/how-to-prepare-for-internal-external-laboratory-audits/"
        },
        {
         "as_of": "unknown",
         "evidence_type": "assessment",
         "formal": true,
-        "provider": "Singapore Quality Institute (SQI)",
-        "quote": "Group Assignment & Presentation",
+        "provider": "SGS Singapore",
+        "quote": "Learners will need to demonstrate acceptable performance in these areas in order to complete the course successfully.",
         "region": "Local",
         "relevance": "adjacent",
-        "title": "ISO/IEC 17025:2017 & Internal Auditor Training",
-        "url": "https://www.sqi.org.sg/courses/iso-iec-170252017-ia-training/"
+        "title": "ISO/IEC 17025:2017 Internal Auditor Training Course",
+        "url": "https://www.sgs.com/en-sg/services/iso-iec-17025-2017-laboratory-management-systems-internal-auditor-training-course"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 1
+      "searches": 2
      },
      "failure_reason": null,
      "learnability": {
@@ -16461,30 +16539,30 @@
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Singapore Quality Institute (SQI)",
-        "quote": "Preparatory Work for External Audit",
-        "region": "Local",
+        "provider": "LearnGxP",
+        "quote": "This course will examine the formal laboratory audit from the perspective of the laboratory being audited. By the end of this course you will be able to explain, the different approaches the auditor can follow during an audit, the things the auditor will be looking for during a typical laboratory audit, an overview of a strategy the laboratory can use to handle audits, what the laboratory can do to prepare for the audit",
+        "region": "International",
         "relevance": "direct",
-        "title": "ISO/IEC 17025:2017 & Internal Auditor Training",
-        "url": "https://www.sqi.org.sg/courses/iso-iec-170252017-ia-training/"
+        "title": "How to Prepare for Internal & External Laboratory Audits (ELM-106)",
+        "url": "https://www.learngxp.com/elearning/how-to-prepare-for-internal-external-laboratory-audits/"
        },
        {
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "The Knowledge Academy",
-        "quote": "To identify non-conformities and recommend corrective actions",
-        "region": "International",
-        "relevance": "direct",
-        "title": "ISO 17025 Internal Auditor Training",
-        "url": "https://www.theknowledgeacademy.com/sg/courses/iso-17025-training/iso-17025-internal-auditor/singapore/"
+        "provider": "SGS Singapore",
+        "quote": "This course enables you to perform an internal audit of part of a laboratory management system (LMS) based on ISO/IEC 17025:2017 (or equivalent).",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "ISO/IEC 17025:2017 – Laboratory Management Systems – Internal Auditor Training Course",
+        "url": "https://www.sgs.com/en-sg/services/iso-iec-17025-2017-laboratory-management-systems-internal-auditor-training-course"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 1
+      "searches": 3
      },
-     "rationale": "Reading the fragmentary title via its description (preparing laboratory records and procedures for audits), ISO/IEC 17025 internal-auditor training covers it: Singapore Quality Institute's course integrates 17025 requirements into the lab's quality system and includes 'Preparatory Work for External Audit', and The Knowledge Academy's Singapore-delivered course teaches identifying non-conformities and is examined by a 30-question closed-book MCQ exam. The local SQI course certifies attendance only, so demonstrability rests on the international provider. Medium confidence; a reviewer may see internal-auditor training as the auditor's rather than the auditee's skill.",
+     "rationale": "LearnGxP's ELM-106 course publishes outcomes on preparing a laboratory for internal and external audits and has a final exam aligned to those outcomes, which satisfies both criteria. Local provision found (SGS Singapore ISO/IEC 17025 internal auditor course; SAC's past Laboratory Management course page now 404s) teaches conducting audits rather than preparing the lab for them, so is adjacent. Demonstrability rests on a short e-learning final exam, hence low confidence.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -17243,23 +17321,23 @@
         "as_of": "unknown",
         "evidence_type": "assessment",
         "formal": true,
-        "provider": "Coursera / Rutgers the State University of New Jersey",
-        "quote": "Final Logistics Network project",
+        "provider": "Coursera / Rutgers (Supply Chain Management Specialization)",
+        "quote": "After completing this module, you will have shown that you master the basics of logistics and are able to design your own logistics network.",
         "region": "International",
         "relevance": "direct",
-        "title": "Supply Chain Logistics - Final Logistics Network project",
+        "title": "Supply Chain Logistics — Final Exam module (Build a Logistics Network)",
         "url": "https://www.coursera.org/learn/supply-chain-logistics"
        },
        {
         "as_of": "unknown",
-        "evidence_type": "certification",
+        "evidence_type": "assessment",
         "formal": true,
-        "provider": "Singapore Polytechnic PACE Academy",
-        "quote": "certified competent on all assessments",
+        "provider": "Republic Polytechnic",
+        "quote": "Participants will also be expected to take corrective action if necessary and prepare a report and presentation covering the entire project.",
         "region": "Local",
         "relevance": "adjacent",
-        "title": "SF Diploma in Logistics (Warehouse Management)",
-        "url": "https://www.sp.edu.sg/pace/courses/all-courses/course-details/sf-diploma-in-logistics-(warehouse-management)"
+        "title": "Specialist Diploma in Supply Chain Management — Project",
+        "url": "https://www.rp.edu.sg/lifelong-learning/courses/specialist-diploma-in-supply-chain-management/"
        }
       ],
       "gap_note": "",
@@ -17268,25 +17346,25 @@
      },
      "failure_reason": null,
      "learnability": {
-      "confidence": "low",
+      "confidence": "medium",
       "evidence": [
        {
         "as_of": "unknown",
-        "evidence_type": "course_syllabus",
+        "evidence_type": "training_programme",
         "formal": true,
-        "provider": "Coursera / Rutgers the State University of New Jersey",
-        "quote": "select the options that enable you to develop logistics networks, that minimize costs and deliver top customer service",
-        "region": "International",
+        "provider": "Republic Polytechnic",
+        "quote": "The Post Diploma Certificate aims to equip participants with integrated logistics solutioning and process improvement. Participants will learn how to apply process improvement techniques and technologies to plan, implement and manage the integrated supply chain.",
+        "region": "Local",
         "relevance": "direct",
-        "title": "Supply Chain Logistics",
-        "url": "https://www.coursera.org/learn/supply-chain-logistics"
+        "title": "Specialist Diploma in Supply Chain Management — Post-Diploma Certificate in Supply Chain Processes Improvement",
+        "url": "https://www.rp.edu.sg/lifelong-learning/courses/specialist-diploma-in-supply-chain-management/"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 2
      },
-     "rationale": "Rutgers' Coursera 'Supply Chain Logistics' publishes outcomes on designing cost-minimising logistics networks and assesses them through graded assignments culminating in a Final Logistics Network project. Singapore search results referenced a 'Logistics Solutioning' specialisation module in SP's WSQ Diploma in Logistics, but the retrieved SP page did not show the module's content or assessment, so it is adjacent. Confidence is low: a single introductory source, and the demonstrability quote is an assignment name.",
+     "rationale": "Republic Polytechnic's post-diploma certificate explicitly aims to teach 'integrated logistics solutioning' with a stated outcome on planning and managing the integrated supply chain. Demonstrability rests on Coursera's Supply Chain Logistics final-exam module, whose graded 'Build a Logistics Network' assignment assesses designing a logistics solution; SP's WSQ Diploma page listing a 'Logistics Solutioning' module and the Skills Framework PDF could not be retrieved, and CLTD/SOLE pages were blocked. Demonstrability confidence is low because the only direct item is an introductory MOOC assessment.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -17657,29 +17735,18 @@
     },
     "meets_definition": {
      "demonstrability": {
-      "confidence": "low",
+      "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2023",
+        "as_of": "unknown",
         "evidence_type": "assessment",
         "formal": true,
-        "provider": "Tertiary Infotech Academy / SkillsFuture Singapore (WSQ)",
-        "quote": "Case Study",
+        "provider": "Singapore Chinese Chamber Institute of Business (SCCIOB)",
+        "quote": "A Certificate of Attendance will be awarded to participants who achieve at least a 75% attendance & pass the assessment test.",
         "region": "Local",
         "relevance": "direct",
-        "title": "WSQ - Business Innovation with Agentic AI and AI Agents (TSC ICT-SNA-5003-1.1 Business Innovation)",
-        "url": "https://www.tertiarycourses.com.sg/wsq-digital-transformation-and-business-innovation-with-generative-ai-gai.html"
-       },
-       {
-        "as_of": "2014-07-08",
-        "evidence_type": "certification",
-        "formal": true,
-        "provider": "SMa Centre for Corporate Learning (Singapore Manufacturers' Federation / WDA)",
-        "quote": "to implement productivity and business innovation tools and initiatives at the enterprise level",
-        "region": "Local",
-        "relevance": "adjacent",
-        "title": "WSQ Certified Productivity & Innovation Manager",
-        "url": "https://www.yumpu.com/en/document/view/35381059/wsq-certified-productivity-innovation-manager-singapore-"
+        "title": "Productivity & Innovation Strategy — written assessment",
+        "url": "https://www.scciob.edu.sg/programmes-courses/productivity-and-innovation-strategy/"
        }
       ],
       "gap_note": "",
@@ -17691,22 +17758,33 @@
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2023-08",
+        "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Lithan Academy (SkillsFuture WSQ)",
-        "quote": "These units equip learners with the tools to identify opportunities, drive innovation, leverage digital technologies effectively, and develop a workforce capable of adapting to the digital era.",
+        "provider": "Singapore Chinese Chamber Institute of Business (SCCIOB)",
+        "quote": "Participants will learn to diagnose productivity issues, recommend solutions, and drive innovation through actionable roadmaps.",
         "region": "Local",
         "relevance": "direct",
-        "title": "Digital Transformation - Course Overview (WSQ Digital Transformation (SF) and WSQ Capstone Project Digital Transformation (SF))",
-        "url": "https://www.lithan.com/msme-transformation/wp-content/uploads/sites/14/2023/08/Course-Overview-Digital-Transformation-Management.pdf"
+        "title": "Productivity & Innovation Strategy (Synchronous E-Learning), TGS-2022011640",
+        "url": "https://www.scciob.edu.sg/programmes-courses/productivity-and-innovation-strategy/"
+       },
+       {
+        "as_of": "2026-09-12",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Ultimahub",
+        "quote": "How organisations adopt AI and digital tools shapes their productivity, decision quality, and transformation outcomes. This course gives participants a hands-on methodology to apply Digital Innovation in operational business environments",
+        "region": "International",
+        "relevance": "direct",
+        "title": "Digital Innovation Training Course in Hong Kong",
+        "url": "https://ultimahub.com/courses/ai-digital/digital-innovation-training-course-in-hong-kong-2/"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 2
      },
-     "rationale": "Lithan's WSQ Digital Transformation course overview publishes outcomes on assessing technologies, driving innovation and optimising processes. Tertiary Infotech's WSQ course, mapped to the Business Innovation TSC, is assessed by a 2-hour case study that leads to an SSG Statement of Attainment. The demonstrability quote is thin, and that page's URL names a generative-AI course while it now describes an agentic-AI course under the same TSC. The SMa CPI Manager programme matches closely but is an old secondary copy with no assessment method, so it is adjacent.",
+     "rationale": "SCCIOB's SSG-funded 'Productivity & Innovation Strategy' course publishes outcomes on driving productivity and innovation initiatives and requires passing a written assessment. The technology-adoption strand of this compound term is not explicit in SCCIOB's outcomes; it is covered by Ultimahub's Digital Innovation course outcomes (user adoption and rollout of digital tools), which has no published assessment. The title reads like a fragment of WSQ boilerplate ('productivity and innovation efforts'), which a reviewer may want to consider separately.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -18759,45 +18837,56 @@
     },
     "meets_definition": {
      "demonstrability": {
-      "confidence": "medium",
+      "confidence": "low",
       "evidence": [
        {
-        "as_of": "2024",
+        "as_of": "unknown",
         "evidence_type": "certification",
         "formal": true,
-        "provider": "ISCA Academy (Institute of Singapore Chartered Accountants) with IMAA",
-        "quote": "for the examination, you are given up to 3 attempts to pass the exams and the passing marking is at 70%",
-        "region": "Local",
+        "provider": "M&A Institute (JC Academy of Finance Ltd.)",
+        "quote": "This course builds one part of the knowledge and judgment directly assessed in MADEX. M&A Steps 1–5: Strategy, Sourcing & Due Diligence",
+        "region": "International",
         "relevance": "direct",
+        "title": "MADEX certification (M&A Deal Sourcing course page)",
+        "url": "https://mnainstitute.com/course/ma-deal-sourcing/"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "certification",
+        "formal": true,
+        "provider": "ISCA Academy / IMAA",
+        "quote": "The IM&A certificate is structured in four modules based on our IMAA Framework and Body of Knowledge: 1. Essential of M&A 2. Due Diligence 3. Valuation 4. Post-Merger Integration (PMI) At the end of each modules, there will be an assessment and examination.",
+        "region": "Local",
+        "relevance": "adjacent",
         "title": "International Mergers & Acquisitions Expert (IM&A)",
-        "url": "https://isca.org.sg/iscaacademy/courses/certification-programmes/international-mergers-acquisitions-expert/programme-information-(international-mergers-acquisitions-expert)"
+        "url": "https://isca.org.sg/iscaacademy/courses/certification-programmes/international-mergers-acquisitions-expert/faqs-(international-mergers-acquisitions-expert)"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 1
+      "searches": 2
      },
      "failure_reason": null,
      "learnability": {
       "confidence": "medium",
       "evidence": [
        {
-        "as_of": "2024",
-        "evidence_type": "training_programme",
+        "as_of": "2026",
+        "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "ISCA Academy (Institute of Singapore Chartered Accountants) with IMAA",
-        "quote": "seek buyers or potential targets (long list & short list)",
+        "provider": "Nanyang Executive Education, Nanyang Business School (NTU Singapore)",
+        "quote": "At the end of the programme, you will gain an understanding of: The role of M&A in an organisation’s corporate strategy and growth policy. The process involved in M&A including target search and identification, due diligence, valuation, negotiations, deal design and structuring, financing, and implementation.",
         "region": "Local",
         "relevance": "direct",
-        "title": "International Mergers & Acquisitions Expert (IM&A)",
-        "url": "https://isca.org.sg/iscaacademy/courses/certification-programmes/international-mergers-acquisitions-expert/programme-information-(international-mergers-acquisitions-expert)"
+        "title": "Mergers and Acquisitions (TGS-2025058660)",
+        "url": "https://www.ntu.edu.sg/business/admissions/NEE/public-programmes-for-professionals/finance-and-valuation/MnA"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 1
      },
-     "rationale": "ISCA Academy's International Mergers & Acquisitions Expert programme (with IMAA) teaches the buy-side M&A process, including how to find and shortlist potential targets and strategies for identifying new ones. Its certificate is earned through examinations with a 70% pass mark, plus assignments and case studies. The skill was read as buy-side acquisition opportunity identification and pursuit. Confidence is medium because opportunity identification is taught inside a broader M&A programme rather than as a standalone course, and the 'content acquisition' reading (e.g. media rights) was not separately searched.",
+     "rationale": "Interpreted as M&A-style acquisition opportunity recognition and pursuit. NTU's SkillsFuture-listed M&A programme publishes an outcome covering target search and identification through negotiation and deal closure (direct, local). For assessment, the ISCA/IMAA IM&A exam is broad M&A and does not name opportunity sourcing as an exam topic (adjacent); the only direct item is a commercial provider page stating deal sourcing is directly assessed in its MADEX exam, so demonstrability confidence is low. If the term was meant as content/asset acquisition outside M&A, a reviewer should reassess.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -20574,65 +20663,42 @@
       "confidence": "low",
       "evidence": [
        {
+        "as_of": "2018-10-04",
+        "evidence_type": "certification",
+        "formal": true,
+        "provider": "Institution of Engineers, Singapore (IES) and National Environment Agency (NEA)",
+        "quote": "The panel will assess the applicants’ competencies and experience to lead and conduct EEOAs in accordance to the international standards such as the ISO 50002- Energy Audits.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "Energy Efficiency Opportunities (EEO) Assessor Certification Scheme",
+        "url": "https://eeoa.sg/energy-efficiency-opportunities-eeo-assessor-certification-scheme/"
+       },
+       {
         "as_of": "unknown",
         "evidence_type": "certification",
         "formal": true,
-        "provider": "ISA (International Society of Automation)",
-        "quote": "The CAP exam has 175 multiple-choice questions and is four hours long.",
+        "provider": "International Society of Automation (ISA)",
+        "quote": "Task: Perform continuous improvement and optimization by working with facility personnel.",
         "region": "International",
-        "relevance": "direct",
-        "title": "Certified Automation Professional (CAP)",
-        "url": "https://www.isa.org/certification/cap"
-       },
-       {
-        "as_of": "unknown",
-        "evidence_type": "assessment",
-        "formal": true,
-        "provider": "A*STAR SIMTech",
-        "quote": "Electronic Statement of Attainment (SOA) certificates (in OpenCerts Formats) will be issued by SkillsFuture Singapore (SSG) to participants who have attended and attained competency in the Singapore Skills Framework training modules.",
-        "region": "Local",
         "relevance": "adjacent",
-        "title": "Control in Automation Systems (42 hours)",
-        "url": "https://www.a-star.edu.sg/simtech/kto/industrial-automation/control-in-automation-systems"
+        "title": "Certified Automation Professional (CAP)",
+        "url": "https://www.isa.org/certification/cap/cap-body-of-knowledge"
        }
       ],
-      "gap_note": "",
-      "met": true,
+      "gap_note": "Singapore pass surfaced the NEA/IES EEO Assessor scheme (escalated to its own site): it certifies engineers via panel interview for energy-audit competence in improving industrial systems and equipment, which is energy-efficiency assessment, not innovation of equipment systems and controls. International pass found ISA CAP, a broad automation exam whose Body of Knowledge lists a continuous improvement and optimization task, but it does not name innovation/new-technology development for equipment systems and controls as a domain, so under the broad-exam rule it is adjacent. Both regions covered; no direct assessment found.",
+      "met": false,
       "searches": 3
      },
-     "failure_reason": null,
+     "failure_reason": "Learnability not met",
      "learnability": {
       "confidence": "low",
-      "evidence": [
-       {
-        "as_of": "2007-02-10",
-        "evidence_type": "course_syllabus",
-        "formal": true,
-        "provider": "University of Texas at Arlington",
-        "quote": "classical and modern control theory with control engineering practice methods to enable student teams to design, implement, test and document control systems",
-        "region": "International",
-        "relevance": "direct",
-        "title": "EE 4343/5320 - Control System Design Project",
-        "url": "https://lewisgroup.uta.edu/ee4343ee5320/EE4343hnd.htm"
-       },
-       {
-        "as_of": "unknown",
-        "evidence_type": "training_programme",
-        "formal": true,
-        "provider": "A*STAR SIMTech",
-        "quote": "Participants will learn the capabilities of the state-of-the-art controllers and latest industrial interface standards used in equipment and automation lines.",
-        "region": "Local",
-        "relevance": "adjacent",
-        "title": "Control in Automation Systems (42 hours)",
-        "url": "https://www.a-star.edu.sg/simtech/kto/industrial-automation/control-in-automation-systems"
-       }
-      ],
-      "gap_note": "",
-      "met": true,
-      "searches": 3
+      "evidence": [],
+      "gap_note": "Searched the SkillsFuture/WSQ directory and Skills Framework documents for the phrase (no matching TSC or course found in the retrieved TPGateway closed-framework lists), then escalated to the one plausible Singapore provider surfaced, A*STAR SIMTech's 'Control in Automation Systems' (42 h), whose pages sit behind an AWS WAF challenge and could not be retrieved as raw text; per its search snippet it teaches planning/designing automation motion control systems, which is control engineering rather than innovation of equipment systems, so it would be adjacent at best. An international search for control-technology innovation courses returned only generic control-theory syllabi and course catalogue pages (EPIC page resolved to a catalogue; AIChE and ECT pages returned 403). Both regions covered; no course with published outcomes on developing and implementing new technologies/methodologies for equipment systems and controls was retrieved.",
+      "met": false,
+      "searches": 4
      },
-     "rationale": "Designing and implementing control systems for equipment is taught (UTA Control System Design Project, a dated 2007 syllabus with graded design projects). It is examined by ISA's CAP, whose 4-hour exam covers the design, development and deployment of equipment and control systems. Singapore's SIMTech automation/control modules issue SOAs, but their pages could not be read and no learning outcomes or assessment method were retrieved (adjacent). Confidence is low: the evidence covers control-system design and development generally rather than 'innovation' as such, and the learnability source is old.",
-     "status": "pass"
+     "rationale": "No course or programme with published learning outcomes for innovating equipment systems and controls was retrieved in either region; the only plausible local lead (A*STAR SIMTech control-systems course) was unretrievable and appears to be control design rather than innovation. Demonstrability also failed: EEO Assessor (energy audits) and ISA CAP (broad automation exam) are adjacent only. Confidence is low given the vague, composite nature of the term.",
+     "status": "fail"
     },
     "not_in_taxonomy": {
      "matched_skill_title": "equipment maintenance",
@@ -20643,7 +20709,8 @@
    "data_quality_note": "",
    "description": "Developing and implementing new technologies and methodologies to enhance the functionality and efficiency of equipment systems and controls.",
    "failed_checks": [
-    "not_in_taxonomy"
+    "not_in_taxonomy",
+    "meets_definition"
    ],
    "id": "267",
    "overall": "FAIL",
@@ -22976,56 +23043,67 @@
     },
     "meets_definition": {
      "demonstrability": {
-      "confidence": "medium",
+      "confidence": "high",
       "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "assessment",
+        "formal": true,
+        "provider": "Avanta Academy (WSQ, awarded by SkillsFuture Singapore)",
+        "quote": "At the end of the module, learners are required to complete a total of 2 hours of assessment, comprising a written assessment and case studies.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "WSQ Manage Site/Outlet and Equipment Maintenance (SSF) — module assessment",
+        "url": "https://avanta-acad.edu.sg/wsq-manage-site-outlet-and-equipment-maintenance-ssf/"
+       },
        {
         "as_of": "unknown",
         "evidence_type": "certification",
         "formal": true,
-        "provider": "Association of Asset Management Professionals",
-        "quote": "will allow you to validate the skills and competencies of the maintenance leader",
+        "provider": "Society for Maintenance & Reliability Professionals (SMRP)",
+        "quote": "The test is a thorough examination of a broad scope of expertise measured against the universal standard. It was developed to assess professionals’ aptitude within the five pillars of the SMRP Body of Knowledge (BoK), which include: Business & Management, Equipment Reliability, Manufacturing Process Reliability, Organization & Leadership, and Work Management.",
         "region": "International",
         "relevance": "direct",
-        "title": "Certified Maintenance Manager (CMM)",
-        "url": "https://assetmanagementprofessionals.org/certified-maintenance-manager-overview/"
-       }
-      ],
-      "gap_note": "",
-      "met": true,
-      "searches": 1
-     },
-     "failure_reason": null,
-     "learnability": {
-      "confidence": "medium",
-      "evidence": [
-       {
-        "as_of": "2026",
-        "evidence_type": "course_syllabus",
-        "formal": true,
-        "provider": "NC State University Continuing and Lifelong Education",
-        "quote": "leadership principles for managers in operations, maintenance, and engineering",
-        "region": "International",
-        "relevance": "direct",
-        "title": "Maintenance and Reliability Management I: Strategic Leadership, Planning and Control",
-        "url": "https://lifelonglearning.ncsu.edu/reporter_course/maintenance-and-reliability-management-i-strategic-leadership-planning-and-control/"
-       },
-       {
-        "as_of": "unknown",
-        "evidence_type": "course_syllabus",
-        "formal": true,
-        "provider": "Avanta Academy (WSQ, SkillsFuture Singapore)",
-        "quote": "Audit and improve maintenance plan",
-        "region": "Local",
-        "relevance": "adjacent",
-        "title": "WSQ Manage Site/Outlet and Equipment Maintenance (SSF)",
-        "url": "https://avanta-acad.edu.sg/wsq-manage-site-outlet-and-equipment-maintenance-ssf/"
+        "title": "Certified Maintenance & Reliability Professional (CMRP)",
+        "url": "https://smrp.org/Certification/CMRP-Certification/"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 2
      },
-     "rationale": "NC State's Maintenance and Reliability Management I course publishes outcomes on world-class maintenance programme elements, implementation strategies and leadership principles for maintenance managers; the Certified Maintenance Manager credential validates the maintenance leader's competencies via a proctored 125-question exam. The local Singapore pass found only an F&B outlet maintenance WSQ module (adjacent) and no Singapore certification. Confidence medium: evidence is international only.",
+     "failure_reason": null,
+     "learnability": {
+      "confidence": "high",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Avanta Academy (WSQ, awarded by SkillsFuture Singapore)",
+        "quote": "This 2-day course aims to develop knowledge, skills and attitude in learners to manage site/outlet and equipment maintenance.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "WSQ Manage Site/Outlet and Equipment Maintenance (SSF), TGS-2019504801",
+        "url": "https://avanta-acad.edu.sg/wsq-manage-site-outlet-and-equipment-maintenance-ssf/"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "NC State University Continuing and Lifelong Education (with Marshall Institute)",
+        "quote": "In MRM I, you will cover strategic leadership, planning and control topics in the key areas of strategic maintenance leadership, world-class maintenance, and total productive maintenance/total process reliability.",
+        "region": "International",
+        "relevance": "direct",
+        "title": "Maintenance and Reliability Management I: Strategic Leadership, Planning and Control",
+        "url": "https://lifelonglearning.ncsu.edu/reporter_course/maintenance-and-reliability-management-i-strategic-leadership-planning-and-control/"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 2
+     },
+     "rationale": "Local WSQ provision (Avanta, TGS-2019504801) teaches planning, executing, auditing and improving maintenance with a 2-hour written/case-study assessment, and NC State's MRM I teaches strategic maintenance leadership and world-class maintenance practice. SMRP's CMRP exam names Organization & Leadership among its tested pillars. The local item is scoped to F&B site/outlet maintenance, so the international items carry the 'leading best practice' sense more fully.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -24438,67 +24516,67 @@
     },
     "meets_definition": {
      "demonstrability": {
-      "confidence": "medium",
+      "confidence": "low",
       "evidence": [
-       {
-        "as_of": "2026",
-        "evidence_type": "certification",
-        "formal": true,
-        "provider": "The Knowledge Academy (Singapore offering)",
-        "quote": "65%, or 26/40 Marks",
-        "region": "International",
-        "relevance": "direct",
-        "title": "Certified Training and Development Manager Certificate",
-        "url": "https://www.theknowledgeacademy.com/sg/courses/learning-and-development-courses/certified-training-development-manager/singapore/"
-       },
        {
         "as_of": "unknown",
         "evidence_type": "assessment",
         "formal": true,
-        "provider": "Institute for Adult Learning (IAL), SUSS",
-        "quote": "Attain a 'C' (Competent) grade for all modules.",
+        "provider": "Institute for Adult Learning (IAL)",
+        "quote": "For each module, you must achieve at least 75% attendance, and successfully attain a ‘Competent’ (C) grading for the final assessment result.",
         "region": "Local",
-        "relevance": "adjacent",
-        "title": "WSQ Graduate Diploma in Workplace Learning — module assessments",
-        "url": "https://www.ial.edu.sg/programmes/wsq-graduate-diploma-in-workplace-learning/"
-       }
-      ],
-      "gap_note": "",
-      "met": true,
-      "searches": 1
-     },
-     "failure_reason": null,
-     "learnability": {
-      "confidence": "medium",
-      "evidence": [
-       {
-        "as_of": "2026",
-        "evidence_type": "course_syllabus",
-        "formal": true,
-        "provider": "The Knowledge Academy (Singapore offering)",
-        "quote": "identify organisational learning needs, develop and manage effective training initiatives, evaluate learning outcomes, and support workforce development",
-        "region": "International",
         "relevance": "direct",
-        "title": "Certified Training & Development Manager Course",
-        "url": "https://www.theknowledgeacademy.com/sg/courses/learning-and-development-courses/certified-training-development-manager/singapore/"
+        "title": "WSQ Graduate Diploma in Workplace Learning (GDWPL) — module final assessments",
+        "url": "https://www.ial.edu.sg/full-qualifications/wsq-graduate-diploma-in-workplace-learning/"
        },
        {
         "as_of": "unknown",
-        "evidence_type": "training_programme",
+        "evidence_type": "certification",
         "formal": true,
-        "provider": "Institute for Adult Learning (IAL), SUSS",
-        "quote": "This module targets at enabling individuals in creating learning strategies that align with organisational goals.",
-        "region": "Local",
+        "provider": "ATD Certification Institute (via Pearson VUE)",
+        "quote": "The CPTD Exam is designed to measure a candidate’s breadth of knowledge and skill in the talent development profession, focusing on skills application and decision making for professionals.",
+        "region": "International",
         "relevance": "adjacent",
-        "title": "WSQ Graduate Diploma in Workplace Learning",
-        "url": "https://www.ial.edu.sg/programmes/wsq-graduate-diploma-in-workplace-learning/"
+        "title": "Certified Professional in Talent Development (CPTD) exam",
+        "url": "https://www.pearsonvue.com/us/en/atd.html"
        }
       ],
       "gap_note": "",
       "met": true,
       "searches": 3
      },
-     "rationale": "The term reads as a job role; assessed as the described competence of overseeing L&D/training programmes. The Knowledge Academy's Certified Training & Development Manager course (offered in Singapore) publishes a learning outcome on developing and managing training initiatives and a 40-question closed-book exam with a 65% pass mark. IAL's WSQ Graduate Diploma in Workplace Learning is a close local near-miss (learning-strategy module, competency-graded) but publishes no explicit learning outcomes; medium confidence, resting on a single commercial provider.",
+     "failure_reason": null,
+     "learnability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Institute for Adult Learning (IAL)",
+        "quote": "This comprehensive programme equips you with the technical skills to diagnose organisational needs, develop customised learning strategies, implement frameworks, and manage quality assurance.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "WSQ Graduate Diploma in Workplace Learning (GDWPL) — module 'Developing Learning Strategy for Business Excellence'",
+        "url": "https://www.ial.edu.sg/full-qualifications/wsq-graduate-diploma-in-workplace-learning/"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "Institute for Adult Learning (IAL)",
+        "quote": "Design and develop assessments to promote learning and measure attainment of learning outcomes.",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "WSQ Diploma in Design and Development of Learning for Performance 2.0 (DDDLP 2.0)",
+        "url": "https://www.ial.edu.sg/programmes/diploma-in-design-and-development-of-learning-for-performance-2/"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 2
+     },
+     "rationale": "The title names a job role rather than a skill; assessed as described (overseeing and managing learning programmes). IAL's WSQ GDWPL teaches developing and managing organisational learning strategy and internal learning capabilities, and each module ends in a final assessment graded Competent. Demonstrability is low-confidence because the page states only the Competent-grade requirement, not the assessment method, and the CPTD page retrieved (td.org itself was blocked) does not name L&D management as a tested topic.",
      "status": "pass"
     },
     "not_in_taxonomy": {
@@ -25780,36 +25858,25 @@
     },
     "meets_definition": {
      "demonstrability": {
-      "confidence": "low",
+      "confidence": "medium",
       "evidence": [
        {
         "as_of": "unknown",
         "evidence_type": "certification",
         "formal": true,
-        "provider": "Hewlett Packard Enterprise (HPE)",
-        "quote": "It verifies that you can translate business and technical requirements into a complete HPE solution design",
+        "provider": "International Institute of Business Analysis (IIBA)",
+        "quote": "Requirements analysis and design definition\n30%",
         "region": "International",
         "relevance": "direct",
-        "title": "HPE ASE - Edge-to-cloud architect",
-        "url": "https://certification-learning.hpe.com/tr/datasheet/certification/ASE-EdgCldAr?version=2"
-       },
-       {
-        "as_of": "unknown",
-        "evidence_type": "assessment",
-        "formal": true,
-        "provider": "NTUC LearningHub",
-        "quote": "Students are required to complete two assessment methods (case studies and written questions) during class.",
-        "region": "Local",
-        "relevance": "adjacent",
-        "title": "IT03A01: Certified Business Analysis Professional (CBAP) (SF)",
-        "url": "https://www.ntuclearninghub.com/en-GB/-/course/certified-business-analysis-professional-cbap-sf-1"
+        "title": "Certified Business Analysis Professional (CBAP)",
+        "url": "https://www.iiba.org/business-analysis-certifications/cbap/"
        }
       ],
       "gap_note": "",
       "met": true,
-      "searches": 3
+      "searches": 1
      },
-     "failure_reason": null,
+     "failure_reason": "Learnability not met",
      "learnability": {
       "confidence": "low",
       "evidence": [
@@ -25817,31 +25884,20 @@
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Training provider listed on SkillsFuture for Business (GoBusiness) course directory (provider name not visible; page returned HTTP 403 on fetch)",
-        "quote": "translate business requirements to software design blueprint",
+        "provider": "ALC Training Pte Ltd (Singapore)",
+        "quote": "This Practitioner course is designed for people who want to elicit, analyse, validate, document and manage requirements. You’ll learn how to take a systematic approach to eliciting, analysing, validating, documenting and managing requirements.",
         "region": "Local",
-        "relevance": "direct",
-        "title": "Course TGS-2020502318 (enterprise systems architecture / system analysis and design)",
-        "url": "https://skillsfuture.gobusiness.gov.sg/course-directory/courses/TGS-2020502318"
-       },
-       {
-        "as_of": "unknown",
-        "evidence_type": "course_syllabus",
-        "formal": true,
-        "provider": "RMIT University",
-        "quote": "We've moved! The Handbook has had an upgrade, and it's been replaced with a new platform.",
-        "region": "International",
         "relevance": "adjacent",
-        "title": "Translate business needs into technical requirements (COSC5321C)",
-        "url": "http://www1.rmit.edu.au/courses/c5194cosc5321c0905"
+        "title": "Requirements Engineering (BCS Practitioner)",
+        "url": "https://www.alctraining.com.sg/business-analysis/"
        }
       ],
-      "gap_note": "",
-      "met": true,
+      "gap_note": "Singapore pass: the first search surfaced NUS-ISS 'Business Analysis for Agile Practitioners' and related NUS-ISS pages; the mandatory escalation search targeted NUS-ISS directly, but every NUS-ISS page is behind an Incapsula block and its text could not be retrieved, so it cannot be used (a reviewer who can open it may overturn this). The international search ('translate business requirements into technical' + course learning outcomes) returned only blogs and articles, no course. The closest retrieved item is ALC Singapore's BCS Requirements Engineering course, whose stated outcome covers eliciting/analysing/documenting requirements but not translating them into technological solutions — adjacent. Both regions searched.",
+      "met": false,
       "searches": 3
      },
-     "rationale": "Learnability rests on a SkillsFuture-listed course whose search result states it teaches learners to 'translate business requirements to software design blueprint'; the page itself returned 403 so provider and full outcomes could not be read (low confidence). Demonstrability rests on the HPE Edge-to-cloud architect certification, which states it verifies the ability to translate business and technical requirements into a solution design via a proctored exam; it is vendor-specific. Singapore BA assessment (NTUC CBAP) is only adjacent; a reviewer may wish to re-check the SkillsFuture page.",
-     "status": "pass"
+     "rationale": "Demonstrability is met: IIBA's CBAP exam blueprint lists 'Requirements analysis and design definition' (30% of the exam) as a tested knowledge area. Learnability fails on retrievable evidence only. The obvious Singapore provider (NUS-ISS business analysis courses) could not be read because of bot blocking, and the only readable local course (ALC's Requirements Engineering) stops at managing requirements. Confidence in the gap is low; a reviewer who opens the NUS-ISS pages will likely overturn it.",
+     "status": "fail"
     },
     "not_in_taxonomy": {
      "matched_skill_title": "technology and systems application",
@@ -25851,9 +25907,11 @@
    },
    "data_quality_note": "",
    "description": "Translating intricate business requirements into effective technological implementations.",
-   "failed_checks": [],
+   "failed_checks": [
+    "meets_definition"
+   ],
    "id": "332",
-   "overall": "PROVISIONAL",
+   "overall": "FAIL",
    "pending_checks": [
     "market_pulse"
    ],
