@@ -262,11 +262,8 @@
     border-left:3px solid var(--accent); border-radius:6px; padding:11px 14px; margin-top:4px; }
   .note.ov { border-left-color:var(--override); }
 
-  /* banner + cohort note */
-  .banner { display:flex; gap:10px; align-items:flex-start; margin-top:16px; padding:11px 14px; border-radius:var(--radius-sm);
-    background:var(--warn-bg); color:var(--ink); border:1px solid color-mix(in srgb, var(--warn) 45%, transparent); font-size:13.5px; line-height:1.45; }
-  .banner-i { flex:none; width:20px; height:20px; border-radius:50%; background:var(--warn); color:var(--surface); display:grid; place-items:center; font-weight:800; font-size:12px; margin-top:1px; }
-  .cohort-note { font-size:12.5px; color:var(--ink-2); margin:8px 2px 0; }
+  /* cohort note */
+  .cohort-note { font-size:12.5px; color:var(--ink-2); margin:16px 2px 0; }
 
   /* review filters + pager */
   .filters { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
@@ -312,7 +309,6 @@
 </header>
 
 <div class="wrap">
-  <div class="banner" role="note"><span class="banner-i" aria-hidden="true">!</span><span>Market pulse uses job postings from Aug 2025 to Jul 2026, analysed inside the organisation; only monthly counts per skill title were used here.</span></div>
   <p class="cohort-note">Trial cohort: 304 terms after removing 34 whose text was lost or unreadable.</p>
   <div class="stepper" id="stepper"></div>
   <div id="pageHost"></div>

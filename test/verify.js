@@ -575,7 +575,7 @@ for(const s of ["generateSignals","samples(","Load 8 sample","Demo controls","de
   ok(`index.html free of "${s}"`, !src.includes(s));
 const FOOT = `${DATA.terms.length} terms after removing 34 whose text was lost or unreadable`;
 eq("cohort footnote appears exactly once", src.split(FOOT).length-1, 1);
-eq("market-pulse banner appears exactly once", src.split("Market pulse uses job postings from Aug 2025 to Jul 2026, analysed inside the organisation; only monthly counts per skill title were used here.").length-1, 1);
+ok("no banner above the stepper (moved to the deck, 2026-09-29)", !src.includes('class="banner"') && !src.includes("analysed inside the organisation; only monthly counts"));
 for(const s of ["Market pulse check not yet run","No term can PASS","no term can PASS","job-posting data is not yet available","until job-posting data is available"])
   ok(`index.html free of stale pending wording "${s}"`, !src.includes(s));
 ok("no mention of an 18-term set", !/18[- ]term|\b18 terms\b|11\/18/.test(src));
