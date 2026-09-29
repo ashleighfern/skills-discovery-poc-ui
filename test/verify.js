@@ -474,6 +474,7 @@ fresh();
   const rc = captureDOM(()=>api.fns("renderReview")());
   const st = rc["#revStatus"].innerHTML;
   ok("status filter offers Pass (2) and Fail (7), no Provisional", st.includes(">Pass (2)<") && st.includes(">Fail (7)<") && !st.includes("PROVISIONAL"), st);
+  eq("status filter order: All, Pass, Fail, Overridden", [...st.matchAll(/data-st="([A-Za-z]+)"/g)].map(m=>m[1]), ["all","PASS","FAIL","OVERRIDDEN"]);
   ok("review count line omits provisional", !/provisional/.test(rc["#revCount"].textContent) && rc["#revCount"].textContent.includes("2 pass"), rc["#revCount"].textContent);
   const ov = pageHTML(captureDOM(()=>api.fns("renderOverview")()));
   ok("overview tiles: Passed shown, no Provisional tile", ov.includes('<div class="t-k">Passed</div><div class="t-v">2</div>') && !ov.includes(">Provisional<"));

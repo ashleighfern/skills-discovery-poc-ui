@@ -725,7 +725,7 @@ function pageSlice(idx){ return idx.slice(revPageNo*REV_PAGE_SIZE, (revPageNo+1)
 function renderCards(){
   const wrap=$("#tcards"); if(!wrap||!results) return;
   const R=results, cnt=s=>R.filter(r=>r.status===s).length, nov=R.filter(r=>r.overrideCount>0).length;
-  const opts=[["all","All",R.length],["FAIL","Fail",cnt("FAIL")],...(cnt("PROVISIONAL")?[["PROVISIONAL","Provisional",cnt("PROVISIONAL")]]:[]),["PASS","Pass",cnt("PASS")],["OVERRIDDEN","Overridden",nov]];
+  const opts=[["all","All",R.length],["PASS","Pass",cnt("PASS")],...(cnt("PROVISIONAL")?[["PROVISIONAL","Provisional",cnt("PROVISIONAL")]]:[]),["FAIL","Fail",cnt("FAIL")],["OVERRIDDEN","Overridden",nov]];
   const sg=$("#revStatus");
   sg.innerHTML=opts.map(([v,t,n])=>`<button data-st="${v}" class="${revFilter.status===v?"on":""}">${t} (${n})</button>`).join("");
   sg.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>setFilter("status",b.dataset.st));
@@ -736,7 +736,7 @@ function renderCards(){
   shown.forEach(i=>{ if(expanded[i]===undefined) expanded[i] = R[i].overrideCount>0; });
   wrap.innerHTML=shown.length?shown.map(i=>termCardHTML(R[i],i,!!expanded[i])).join(""):`<div class="empty">No terms match these filters.</div>`;
   const nd=R.filter(r=>r.failed&&r.failedChecks.length===1).length;
-  $("#revCount").textContent=`${idx.length} of ${R.length} terms shown · ${cnt("FAIL")} fail${cnt("PROVISIONAL")?` · ${cnt("PROVISIONAL")} provisional`:""} · ${cnt("PASS")} pass · ${nd} fail one check only · ${nov} with overrides`;
+  $("#revCount").textContent=`${idx.length} of ${R.length} terms shown · ${cnt("PASS")} pass${cnt("PROVISIONAL")?` · ${cnt("PROVISIONAL")} provisional`:""} · ${cnt("FAIL")} fail · ${nd} fail one check only · ${nov} with overrides`;
   const pg=$("#revPager");
   pg.innerHTML=pages>1?`<button class="small ghost" id="pgPrev" ${revPageNo===0?"disabled":""}>◂ Prev</button><span class="hint">Page ${revPageNo+1} of ${pages}</span><button class="small ghost" id="pgNext" ${revPageNo>=pages-1?"disabled":""}>Next ▸</button>`:"";
   const go=d=>{ revPageNo+=d; renderCards(); const s=$("#revStatus"); if(s&&s.scrollIntoView) s.scrollIntoView({block:"start"}); };
