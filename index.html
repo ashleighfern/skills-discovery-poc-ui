@@ -599,8 +599,8 @@ function renderOverview(){
   recompute();
   const host=$("#pageHost"); const m=metrics();
   const p=el("div","page");
-  const tiles=[["Terms checked",m.total,"accent","Every term in the trial cohort"],["Failed",m.failed,"bad","Failed at least one completed check"],
-    ...(m.provisional?[["Provisional",m.provisional,"provt","No completed check failed, but a check is still pending"]]:[]),["Passed",m.passed,"good","Passed all four checks"]]
+  const tiles=[["Terms checked",m.total,"accent","Every term in the trial cohort"],["Passed",m.passed,"good","Passed all four checks"],
+    ...(m.provisional?[["Provisional",m.provisional,"provt","No completed check failed, but a check is still pending"]]:[]),["Failed",m.failed,"bad","Failed at least one completed check"]]
     .map(([k,v,c,tip])=>`<div class="tile ${c}" title="${tip}"><div class="t-k">${k}</div><div class="t-v">${v}</div></div>`).join("");
   p.innerHTML=`
     <div class="page-h"><div class="eyebrow">Step 1 of ${STEPS.length}</div>

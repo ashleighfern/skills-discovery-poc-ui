@@ -479,6 +479,7 @@ fresh();
   eq("status filter order: All, Pass, Fail, Overridden", [...st.matchAll(/data-st="([A-Za-z]+)"/g)].map(m=>m[1]), ["all","PASS","FAIL","OVERRIDDEN"]);
   ok("review count line omits provisional", !/provisional/.test(rc["#revCount"].textContent) && rc["#revCount"].textContent.includes("2 pass"), rc["#revCount"].textContent);
   const ov = pageHTML(captureDOM(()=>api.fns("renderOverview")()));
+  eq("overview tile order: Terms checked, Passed, Failed", [...ov.matchAll(/<div class="t-k">([^<]+)<\/div>/g)].map(m=>m[1]), ["Terms checked","Passed","Failed"]);
   ok("overview tiles: Passed shown, no Provisional tile", ov.includes('<div class="t-k">Passed</div><div class="t-v">2</div>') && !ov.includes(">Provisional<"));
   const sd = captureDOM(()=>api.fns("renderSummary")()), su = pageHTML(sd);
   ok("summary tiles: no Provisional tile; failed-market-pulse subtile", !su.includes(">Provisional<") && su.includes("Failed “Has market pulse?”"));
