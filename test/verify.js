@@ -339,7 +339,12 @@ ok("review note no longer explains decisive marks", !src.includes("⚡ decisive"
   ok("no synthetic Google-search links", !html.includes("google.com/search"));
 })();
 ok("closest-match badges rendered on check 2", checkPanelHTML(R[iOne],iOne,1).includes('class="badges"') && checkPanelHTML(R[iOne],iOne,1).includes(esc(T("g1_only").checks.not_in_taxonomy.matched_skill_title)));
-ok("is-it-a-skill reasoning rendered on check 1", checkPanelHTML(R[iOne],iOne,0).includes("Reasoning:"));
+{ const h0 = checkPanelHTML(R[iOne],iOne,0), rsn = R[iOne].gateRows[0].machine.reasoning;
+  ok("is-a-skill reasoning rendered on check 1 as one plain note", rsn && h0.includes(esc(rsn)) && !h0.includes("Reasoning:"));
+  ok("no Term type badge on check 1 (the verdict already names the type)", !h0.includes("Term type:")); }
+{ const h2 = checkPanelHTML(R[iDef],iDef,2);
+  ok("definition sources sit behind collapsed 'Show sources' toggles", /<details class="more ev-more"><summary>Show sources \(\d+\)<\/summary>/.test(h2) && !/<details[^>]*open/.test(h2));
+  ok("definition panel headers show only Met / Not met per part", (h2.match(/class="ev-h"/g)||[]).length===2 && !h2.includes('class="ev-sub"')); }
 (function(){
   // Market-pulse panel (check 4) with real job-posting results.
   const mp = T("pass_a").checks.market_pulse, pq = mp.quarters.filter(q=>q.pass).map(q=>`${q.q} (${q.cond})`);

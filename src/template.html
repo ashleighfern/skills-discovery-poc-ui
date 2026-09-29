@@ -212,6 +212,7 @@
   details.more { font-size:11.5px; color:var(--ink-2); margin-top:6px; }
   details.more summary { cursor:pointer; font-weight:600; color:var(--ink-3); }
   details.more ul { margin:4px 0 0; padding-left:18px; }
+  details.ev-more { margin-top:8px; }
   .ev-nc { font-size:10.5px; font-weight:650; padding:1px 7px; border-radius:20px; color:var(--warn); background:var(--warn-bg); }
   .pending-note { font-size:12px; color:var(--ink-2); background:var(--na-bg); border:1px dashed var(--na); border-radius:6px; padding:8px 11px; margin-top:8px; }
   @media (max-width:640px){ .evidence { grid-template-columns:1fr; } }
@@ -539,9 +540,12 @@ function evGroups(items,crit){ const regions=[["Local","Local (Singapore)","Sing
 function renderEvidence(sk){
   const e=evidenceFor(sk);
   const col=(title,def,side,tip,crit)=>{
-    const head=`<div class="ev-h" title="${tip}">${title} ${side.met?pill("yes","Met"):pill("no","Not met")}</div><div class="ev-sub">${def}</div>`;
-    const body=(side.items.length?evGroups(side.items,crit):`<div class="ev-gap">⚠ No qualifying source was recorded.</div>`)
-      +(side.gap?`<div class="ev-note"><b>Search notes:</b> ${esc(side.gap)}</div>`:"");
+    const head=`<div class="ev-h" title="${tip} ${def}.">${title} ${side.met?pill("yes","Met"):pill("no","Not met")}</div>`;
+    const n=side.items.length;
+    // Sources, quotes and search notes sit behind a collapsed toggle so the panel reads as two verdicts.
+    const detail=(n?evGroups(side.items,crit):"")+(side.gap?`<div class="ev-note"><b>Search notes:</b> ${esc(side.gap)}</div>`:"");
+    const body=n ? `<details class="more ev-more"><summary>Show sources (${n})</summary>${detail}</details>`
+      : `<div class="ev-gap">No qualifying source was found.</div>`+(side.gap?`<details class="more ev-more"><summary>Show search notes</summary>${detail}</details>`:"");
     return `<div class="ev-col">${head}${body}</div>`;
   };
   return `<div class="evidence">`
@@ -551,8 +555,7 @@ function renderEvidence(sk){
 }
 function renderIsSkill(m){
   const sa=m.signalsAgainst.length?`<details class="more"><summary>Signals against being a skill, as weighed (${m.signalsAgainst.length})</summary><ul>${m.signalsAgainst.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:"";
-  return `<div class="badges"><span class="badge" title="What kind of term the classifier judged this to be">Term type: <b>${esc(m.detail)}</b></span>`+`</div>`
-    +(m.reasoning?`<div class="ev-note"><b>Reasoning:</b> ${esc(m.reasoning)}</div>`:"")+sa;
+  return (m.reasoning?`<div class="ev-note">${esc(m.reasoning)}</div>`:"")+sa;
 }
 function renderClosest(m){
   if(!m.closest) return `<div class="badges"><span class="badge">Closest existing skill: <b>none found</b></span></div>`;
