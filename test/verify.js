@@ -294,6 +294,11 @@ ok("review note no longer explains decisive marks", !src.includes("⚡ decisive"
   ok("no direct/adjacent or formal/informal badges (removed 2026-09-29)", !/class="ev-tag[ "]/.test(html) && !/Formal<|Informal<|>Direct<|>Adjacent</.test(html));
   ok("no rationale, confidence or search-pass count (removed 2026-09-29)", !/Rationale:|confidence<|search pass/.test(html));
   ok("gap note still shown", html.includes("Search notes:"));
+  eq("one 'Not counted' tag per non-direct source", (html.match(/class="ev-nc"/g)||[]).length, ev.filter(e=>e.relevance!=="direct").length);
+  { const L=d.learnability.evidence.filter(e=>e.relevance!=="direct"), D=d.demonstrability.evidence.filter(e=>e.relevance!=="direct");
+    const want=[...L.map(e=>e.has_outcomes===false?"no published learning outcomes":"covers a related or broader skill"),
+                ...D.map(()=>"doesn't assess this exact skill")];
+    ok("'Not counted' reasons match the recorded evidence", want.every(w=>html.includes("Not counted: "+w)), JSON.stringify(want)); }
   ok("no synthetic Google-search links", !html.includes("google.com/search"));
 })();
 ok("closest-match badges rendered on check 2", checkPanelHTML(R[iOne],iOne,1).includes('class="badges"') && checkPanelHTML(R[iOne],iOne,1).includes(esc(T("g1_only").checks.not_in_taxonomy.matched_skill_title)));
