@@ -162,7 +162,6 @@
   .chip.pass { color:var(--pass); background:var(--pass-bg); }
   .chip.fail { color:var(--fail); background:var(--fail-bg); }
   .chip.pend { color:var(--na); background:var(--na-bg); border:1px dashed var(--na); }
-  .flipnote { font-size:11.5px; color:var(--ink-3); margin-top:8px; line-height:1.4; }
   @media (max-width:640px){ .tcard-head { grid-template-columns:auto 1fr; gap:8px 12px; } .chipstrip, .tcard-head .tstat { grid-column:1/-1; justify-content:flex-start; } }
   .gcard.ovon { border-color:var(--override); box-shadow:0 0 0 1px var(--override) inset; }
   .gcard-top { display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:start; padding:13px 15px; }
@@ -180,7 +179,7 @@
   .badges { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
   .badge { font-size:11px; font-weight:600; padding:2px 8px; border-radius:6px; background:var(--surface-3); color:var(--ink-2); }
   .badge b { font-family:var(--mono); }
-  .chip[title], .flipnote[title], .badge[title], .ev-tag[title], .ev-h[title], .ev-rg[title], .tile[title], .ov-tag[title], .switch[title], .vlabel[title], [data-tip] { cursor:help; }
+  .chip[title], .badge[title], .ev-tag[title], .ev-h[title], .ev-rg[title], .tile[title], .ov-tag[title], .switch[title], .vlabel[title], [data-tip] { cursor:help; }
   .tooltip { position:fixed; z-index:9999; left:0; top:0; max-width:300px; background:#111a24; color:#f2f6fa;
     font-size:12px; line-height:1.45; padding:8px 11px; border-radius:8px; border:1px solid rgba(255,255,255,.12);
     box-shadow:0 8px 28px rgba(0,0,0,.38); pointer-events:none; }
@@ -536,16 +535,14 @@ function renderEvidence(sk){
 }
 function renderIsSkill(m){
   const sa=m.signalsAgainst.length?`<details class="more"><summary>Signals against being a skill, as weighed (${m.signalsAgainst.length})</summary><ul>${m.signalsAgainst.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:"";
-  return `<div class="badges"><span class="badge" title="What kind of term the classifier judged this to be">Term type: <b>${esc(m.detail)}</b></span>`
-    +(m.confidence?`<span class="badge" title="The classifier's own confidence in this verdict">Confidence: <b>${esc(m.confidence)}</b></span>`:"")+`</div>`
+  return `<div class="badges"><span class="badge" title="What kind of term the classifier judged this to be">Term type: <b>${esc(m.detail)}</b></span>`+`</div>`
     +(m.reasoning?`<div class="ev-note"><b>Reasoning:</b> ${esc(m.reasoning)}</div>`:"")+sa;
 }
 function renderClosest(m){
   if(!m.closest) return `<div class="badges"><span class="badge">Closest existing skill: <b>none found</b></span></div>`;
   const flag=m.status==="fail"
-    ? `<span class="badge" style="color:var(--fail)" title="The de-duplication run flagged this term as a duplicate of the existing skill">flagged as duplicate</span>`
-    : `<span class="badge" title="The de-duplication run did not flag this term — it is treated as distinct from the closest skill">not flagged — treated as distinct</span>`;
-  return `<div class="badges"><span class="badge" title="Nearest skill in the existing taxonomy">Closest existing skill: <b>${esc(m.closest)}</b></span><span class="badge" title="Similarity score from the taxonomy de-duplication run">Similarity: <b>${pct(m.similarity)}</b></span>${flag}</div>`;
+    ? `<span class="badge" style="color:var(--fail)" title="The de-duplication run flagged this term as a duplicate of the existing skill">flagged as duplicate</span>` : "";
+  return `<div class="badges"><span class="badge" title="Nearest skill in the existing taxonomy">Closest existing skill: <b>${esc(m.closest)}</b></span>${flag}</div>`;
 }
 function sparkline(mm){ const max=Math.max(1,...mm);
   return `<span class="spark" title="Monthly postings: ${mm.join(", ")}">`+mm.map(v=>`<i style="height:${Math.max(2,Math.round(v/max*18))}px"></i>`).join("")+`</span>`; }
@@ -625,7 +622,7 @@ function checkPanelHTML(r,i,gi){
         <div><div class="gt">${esc(GATES[gi].q)}</div>
           <div class="gd">${esc(GATES[gi].d)}</div>
           <div class="verdicts"><span class="vlabel" title="The automated verdict, before any human override">Machine:</span> ${machineLabel(gi,m)}</div>${badges}
-          <div class="flipnote" title="What happens to this term's overall result if you override this one check and change nothing else">What-if: ${esc(r.flipNote[gi])}</div></div>
+</div>
         <div class="ctrl">${ctrl}</div>
       </div>
       ${g.overridden?`<div class="reasonbox">
@@ -639,7 +636,7 @@ function checkPanelHTML(r,i,gi){
 function termCardHTML(r,i,open){
   const chips=r.gateRows.map((g,gi)=>{
     const cls=g.pending?"pend":(g.finalPass?"pass":"fail"), sym=g.pending?"…":(g.finalPass?"✔":"✘"), word=g.pending?"Pending":(g.finalPass?"Pass":"Fail");
-    return `<span class="chip ${cls}" title="${esc(GATES[gi].q)} — ${word}${g.overridden?" (overridden by reviewer)":""}. ${esc(r.flipNote[gi])}">${sym} ${esc(SHORT_NAMES[gi])}${r.decisive[gi]?" ⚡":""}${g.overridden?" ov":""}</span>`; }).join("");
+    return `<span class="chip ${cls}" title="${esc(GATES[gi].q)} — ${word}${g.overridden?" (overridden by reviewer)":""}">${sym} ${esc(SHORT_NAMES[gi])}${g.overridden?" ov":""}</span>`; }).join("");
   const head=`<div class="tcard-head" data-term="${i}" title="Click to ${open?"collapse":"expand"} the four check panels for this term">
       <div class="tn">${esc(r.sk.id)}</div>
       <div><div class="tt">${esc(r.sk.title)}</div>

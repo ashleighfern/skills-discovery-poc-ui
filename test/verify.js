@@ -273,7 +273,8 @@ const iPass = R.findIndex(r=>r.sk.id===ROLE.pass_a),
   ok(`${label} card: collapsed renders none`, !shut.includes('class="gcard-top"'));
   ok(`${label} card: 4 chips in the header strip`, (open.match(/class="chip /g)||[]).length===4);
   ok(`${label} card: override switch on all 4 checks (market pulse included)`, (open.match(/data-ov="/g)||[]).length===4 && open.includes(`data-ov="${i}:3"`));
-  ok(`${label} card: what-if note on every check`, (open.match(/What-if:/g)||[]).length===4);
+  ok(`${label} card: no what-if note, decisive mark, confidence or similarity badge (removed 2026-09-29)`,
+     !/What-if:|⚡|Confidence:|Similarity:|treated as distinct/.test(open));
   ok(`${label} card: no pending chip, note or 'Not overridable' label`, !open.includes('class="chip pend') && !open.includes('class="pending-note"') && !open.includes("Not overridable while pending"));
   ok(`${label} card: no unbalanced template literal leak`, !open.includes("${"));
 });
