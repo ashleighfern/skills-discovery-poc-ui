@@ -173,6 +173,8 @@
   .vlabel { font-size:11px; color:var(--ink-3); font-weight:600; }
   .gcard .ctrl { display:flex; flex-direction:column; gap:8px; align-items:flex-end; text-align:right; min-width:150px; }
   .gcard .reasonbox { padding:0 15px 14px 15px; }
+  .gcard .reasonbox .parts { display:flex; flex-wrap:wrap; gap:6px 16px; margin:4px 0 10px; }
+  .gcard .reasonbox .part { display:inline-flex; align-items:center; gap:6px; font-size:13px; cursor:pointer; }
   .gcard .reasonbox textarea { min-height:46px; }
   .reason-req { font-size:11.5px; color:var(--fail); font-weight:600; margin-top:4px; }
   .reason-ok { font-size:11.5px; color:var(--pass); font-weight:600; margin-top:4px; }
@@ -343,6 +345,18 @@ const GATES = [
 const CHECK_NAMES = ["Is a skill?","Already in taxonomy?","Meets skill definition?","Has market pulse?"];
 const SHORT_NAMES = ["Skill?","Taxonomy","Definition","Market pulse"];
 const PENDING_TEXT = "Pending — no data yet";
+/* Overriding "Meets skill definition?" (gate 2) also records which part the reviewer disagrees with.
+   Tag only: the override still flips the whole check. */
+const PART_GATE = 2;
+const PARTS = {learn:"Learnability", demo:"Demonstrability", both:"Both"};
+const partLabel = p => PARTS[p] || "";
+function overrideStatus(gi, reason, part){
+  const hasR=!!(reason&&reason.trim()), hasP=gi!==PART_GATE || !!PARTS[part];
+  if(hasR && hasP) return [true, "✓ recorded"];
+  if(gi!==PART_GATE) return [false, "A reason is required before the review can be marked complete."];
+  return [false, !hasP&&!hasR ? "Choose which part you disagree with and give a reason before the review can be marked complete."
+    : !hasP ? "Choose which part you disagree with (Learnability, Demonstrability or Both)." : "A reason is required before the review can be marked complete."];
+}
 const MP_RULE = "A quarter passes if postings appear in all three months and either the quarterly total is in the top quarter of skills for that quarter (high volume), or demand is growing (last month above the first, or rising over six months).";
 const STEPS = [
   {t:"Overview", s:"The cohort and the four checks"},
@@ -372,7 +386,7 @@ let revPinned = new Set();   // terms touched under the current filter stay visi
 /* ============================ Model ============================ */
 function toQueue(terms){
   return (terms||[]).map(t=>({ id:String(t.id), title:t.title||"", desc:t.description||"", dq:t.data_quality_note||"",
-    checks:t.checks||{}, overrides:{}, overrideReasons:{} }));
+    checks:t.checks||{}, overrides:{}, overrideReasons:{}, overrideParts:{} }));
 }
 /* Display order: the terms we are most confident in come first, so reviewers (and a briefing audience) meet clean,
    well-supported verdicts before odd ones. Keys, in order: no data-quality flag first; verdicts not contested in the
@@ -431,13 +445,13 @@ function evalGates(sk){
 function runPipeline(items){
   return items.map((sk,idx)=>{
     // Every check runs for every term — no short-circuit. A check is pass, fail or pending.
-    const machine=evalGates(sk), ov=sk.overrides||{}, rs=sk.overrideReasons||{}, gr=[];
+    const machine=evalGates(sk), ov=sk.overrides||{}, rs=sk.overrideReasons||{}, ps=sk.overrideParts||{}, gr=[];
     for(let i=0;i<4;i++){ const m=machine[i];
       const overridable=GATES[i].ov && !m.pending;          // nothing to flip until the check has run
       const overridden=overridable && !!ov[i];
       const finalStatus=m.pending ? "pending" : ((overridden ? !m.pass : m.pass) ? "pass" : "fail");
       gr.push({i, machine:m, overridable, overridden, finalStatus, finalPass:finalStatus==="pass",
-        pending:finalStatus==="pending", reached:true, reason:rs[i]||""}); }
+        pending:finalStatus==="pending", reached:true, reason:rs[i]||"", part:overridden&&i===PART_GATE?(ps[i]||""):""}); }
     const failedChecks=gr.filter(g=>g.finalStatus==="fail").map(g=>g.i);
     const pendingChecks=gr.filter(g=>g.pending).map(g=>g.i);
     // Roll-up: FAIL if any check fails; else PROVISIONAL if any is pending; else PASS.
@@ -463,7 +477,7 @@ function runPipeline(items){
 }
 function failureReason(i,gr){
   const g=gr[i], m=g.machine;
-  if(g.overridden) return "Reviewer override — "+(g.reason?g.reason:"no reason given");
+  if(g.overridden) return "Reviewer override"+(g.part?` (${partLabel(g.part)})`:"")+" — "+(g.reason?g.reason:"no reason given");
   if(i===0) return "Non-skill term — "+m.detail;
   if(i===1) return "Duplicate of existing taxonomy skill"+(m.matched?` “${m.matched}”`:"");
   if(i===2) return m.failureReason || (!m.learnable?"Learnability not met":"Demonstrability not met");
@@ -629,11 +643,14 @@ function checkPanelHTML(r,i,gi){
 </div>
         <div class="ctrl">${ctrl}</div>
       </div>
-      ${g.overridden?`<div class="reasonbox">
+      ${g.overridden?(()=>{ const [ok,msg]=overrideStatus(gi,g.reason,g.part); return `<div class="reasonbox">
+        ${gi===PART_GATE?`<div class="lbl" id="partl${i}">Which part do you disagree with? (required)</div>
+        <div class="parts" role="radiogroup" aria-labelledby="partl${i}">${Object.entries(PARTS).map(([v,t])=>
+          `<label class="part"><input type="radio" name="part${i}" data-part="${i}:${gi}" value="${v}" ${g.part===v?"checked":""}> ${t}</label>`).join("")}</div>`:""}
         <label class="lbl" for="rsn${i}_${gi}">Reason for override (required)</label>
         <textarea id="rsn${i}_${gi}" data-reason="${i}:${gi}" placeholder="Why are you overriding this check for this term?">${esc(g.reason)}</textarea>
-        <div class="${g.reason.trim()?"reason-ok":"reason-req"}">${g.reason.trim()?"✓ reason recorded":"A reason is required before the review can be marked complete."}</div>
-      </div>`:""}</div>`;
+        <div class="${ok?"reason-ok":"reason-req"}">${msg}</div>
+      </div>`; })():""}</div>`;
 }
 
 /* One term card: header summary + (when open) all four check panels. Pure — returns HTML. */
@@ -727,7 +744,7 @@ function renderCards(){
   wrap.querySelectorAll("[data-ov]").forEach(cb=>cb.onchange=()=>{
     const [i,gi]=cb.dataset.ov.split(":").map(Number); const sk=queue[i];
     sk.overrides=sk.overrides||{}; sk.overrides[gi]=cb.checked;
-    if(!cb.checked){ if(sk.overrideReasons) delete sk.overrideReasons[gi]; }
+    if(!cb.checked){ if(sk.overrideReasons) delete sk.overrideReasons[gi]; if(sk.overrideParts) delete sk.overrideParts[gi]; }
     expanded[i]=true; revPinned.add(i);
     reviewDone[1]=false; recompute(); renderCards(); renderStepper(); updateReview();
   });
@@ -736,8 +753,14 @@ function renderCards(){
     queue[i].overrideReasons=queue[i].overrideReasons||{}; queue[i].overrideReasons[gi]=ta.value;
     // live-update the little status line without re-rendering (keep focus)
     const box=ta.parentElement.querySelector(".reason-req,.reason-ok");
-    if(box){ const ok=ta.value.trim().length>0; box.className=ok?"reason-ok":"reason-req";
-      box.textContent=ok?"✓ reason recorded":"A reason is required before the review can be marked complete."; }
+    if(box){ const [ok,msg]=overrideStatus(gi,ta.value,(queue[i].overrideParts||{})[gi]); box.className=ok?"reason-ok":"reason-req"; box.textContent=msg; }
+    reviewDone[1]=false; recompute(); updateReview();
+  });
+  wrap.querySelectorAll("[data-part]").forEach(rb=>rb.onchange=()=>{
+    const [i,gi]=rb.dataset.part.split(":").map(Number);
+    queue[i].overrideParts=queue[i].overrideParts||{}; queue[i].overrideParts[gi]=rb.value;
+    const box=rb.closest(".reasonbox").querySelector(".reason-req,.reason-ok");
+    if(box){ const [ok,msg]=overrideStatus(gi,(queue[i].overrideReasons||{})[gi],rb.value); box.className=ok?"reason-ok":"reason-req"; box.textContent=msg; }
     reviewDone[1]=false; recompute(); updateReview();
   });
 }
@@ -746,7 +769,7 @@ function renderCards(){
 function reviewCanComplete(){
   if(!results||!results.length) return false;
   for(const r of results) for(const g of r.gateRows)
-    if(g.overridden && !(g.reason && g.reason.trim())) return false;
+    if(g.overridden && !overrideStatus(g.i,g.reason,g.part)[0]) return false;
   return true;
 }
 
@@ -756,10 +779,13 @@ function metrics(){
   // so they sum to more than `failed`. fc1..fc4 = terms failing exactly that many checks.
   // p0..p3 count terms whose check is still pending.
   const r=results||[]; const m={total:r.length,passed:0,provisional:0,failed:0,overridden:0,
-    f0:0,f1:0,f2:0,f3:0,p0:0,p1:0,p2:0,p3:0,fc1:0,fc2:0,fc3:0,fc4:0,singleFail:0,anyPending:0};
+    f0:0,f1:0,f2:0,f3:0,p0:0,p1:0,p2:0,p3:0,fc1:0,fc2:0,fc3:0,fc4:0,singleFail:0,anyPending:0,
+    defOv:0,defOvLearn:0,defOvDemo:0,defOvBoth:0,defOvNoPart:0};
   for(const row of r){
     if(row.passed)m.passed++; else if(row.provisional)m.provisional++; else m.failed++;
     if(row.overrideCount>0)m.overridden++;
+    { const g=row.gateRows[PART_GATE]; if(g.overridden){ m.defOv++;
+        if(g.part==="learn")m.defOvLearn++; else if(g.part==="demo")m.defOvDemo++; else if(g.part==="both")m.defOvBoth++; else m.defOvNoPart++; } }
     for(const i of row.failedChecks) m["f"+i]++;
     for(const i of row.pendingChecks) m["p"+i]++;
     if(row.pendingChecks.length) m.anyPending++;
@@ -791,6 +817,7 @@ function renderSummary(){
       <p class="hint" style="margin:0 0 10px">Every term is tested by all four checks, so a term can fail more than one — these rows can add up to more than the failed count.</p>
       <div class="subtiles">${fc}</div>
       <div class="grp-label" style="margin-top:18px">How many checks each failing term failed</div><div class="subtiles">${fn}</div>
+      <div class="grp-label" style="margin-top:18px">“Meets skill definition?” overrides, by the part reviewers disagreed with</div><div class="subtiles">${[["Learnability",m.defOvLearn],["Demonstrability",m.defOvDemo],["Both",m.defOvBoth]].map(([k,v])=>`<div class="subtile"><span>${k}</span><b>${v}</b></div>`).join("")}</div>
       <div class="row-flex" style="margin-top:22px"><div class="grp-label" style="margin:0">Per-term report</div><span class="spacer"></span>
         <div class="toggle-group" id="viewToggle"><button data-view="simple" class="${repView==="simple"?"on":""}">Simplified</button><button data-view="detailed" class="${repView==="detailed"?"on":""}">Detailed</button></div></div>
       <div class="table-scroll"><table class="report" id="reportTable"></table></div>
@@ -813,7 +840,7 @@ function renderSummary(){
   $("#resetBtn").onclick=()=>{ if(confirm("Clear every reviewer override and reason?")){ clearOverrides(); gotoPage(1); } };
   renderReport();
 }
-function clearOverrides(){ queue.forEach(sk=>{ sk.overrides={}; sk.overrideReasons={}; }); revPinned=new Set(); queueChanged(); }
+function clearOverrides(){ queue.forEach(sk=>{ sk.overrides={}; sk.overrideReasons={}; sk.overrideParts={}; }); revPinned=new Set(); queueChanged(); }
 function renderReport(){
   const t=$("#reportTable"); if(!t)return; const rows=results||[];
   const names=(ix)=>ix.length?ix.map(i=>CHECK_NAMES[i]).join(", "):"—";
@@ -864,7 +891,8 @@ function exportFailed(){ const rows=[["Term ID","Skill Title","Skill Description
   download("failed_skills.csv",toCSV(rows)); }
 function exportSummary(){ const m=metrics(); const rows=[["Metric","Count"],
     ["Total Terms Checked",m.total],["Final Status: PASS",m.passed],["Final Status: FAIL",m.failed],
-    ["Overridden by Reviewer (Any Check)",m.overridden],["Fail One Check Only (one override from not failing)",m.singleFail],
+    ["Overridden by Reviewer (Any Check)",m.overridden],
+    ["Meets skill definition? overrides — Learnability",m.defOvLearn],["Meets skill definition? overrides — Demonstrability",m.defOvDemo],["Meets skill definition? overrides — Both",m.defOvBoth],["Fail One Check Only (one override from not failing)",m.singleFail],
     ["Failed Terms — which checks failed (a term can fail several):",""],["Failed check: Is a skill?",m.f0],["Failed check: Already in taxonomy?",m.f1],["Failed check: Meets skill definition?",m.f2],["Failed check: Has market pulse?",m.f3],
     ["Failed Terms — how many checks each failed:",""],["Failed exactly 1 check",m.fc1],["Failed 2 checks",m.fc2],["Failed 3 checks",m.fc3],["Failed all 4 checks",m.fc4]];
   download("summary_metrics.csv",toCSV(rows)); }
@@ -878,7 +906,7 @@ function exportAudit(){
   const rows=[[...cols,
     ...chk("Is a skill?",["Term Type","Confidence","Reasoning"]),
     ...chk("Already in taxonomy?",["Closest Existing Skill","Similarity"]),
-    ...chk("Meets skill definition?",["Rationale","Learnability Evidence","Demonstrability Evidence"]),
+    ...chk("Meets skill definition?",["Rationale","Learnability Evidence","Demonstrability Evidence","Override Part"]),
     ...chk("Has market pulse?",["Passing Quarters","Annual Postings","Monthly Postings (Aug 2025–Jul 2026)","Note"]),
     "Failed Checks","Decisive Checks","Override Count","Final Status"]];
   for(const r of results){ const g=r.gateRows, e=evidenceFor(r.sk);
@@ -890,7 +918,7 @@ function exportAudit(){
     rows.push([r.sk.id,r.sk.title,r.sk.desc,r.sk.dq,
       out(g[0],"Skill","Not a skill"), g[0].machine.detail, g[0].machine.confidence, g[0].machine.reasoning, ...trio(g[0],"Skill","Not a skill"),
       out(g[1],"Non-duplicate","Duplicate"), g[1].machine.closest||"none", pct(g[1].machine.similarity), ...trio(g[1],"Non-duplicate","Duplicate"),
-      out(g[2],"Pass","Fail"), e.rationale, evidenceCell(e.learn), evidenceCell(e.demo), ...trio(g[2],"Pass","Fail"),
+      out(g[2],"Pass","Fail"), e.rationale, evidenceCell(e.learn), evidenceCell(e.demo), partLabel(g[2].part), ...trio(g[2],"Pass","Fail"),
       out(g[3],"Pass","Fail"), g[3].machine.passedQuarters.join("; ")||"none", g[3].machine.annual, g[3].machine.monthly.join(" "),
       g[3].machine.note||"", ...trio(g[3],"Pass","Fail"),
       csvNames(r.failedChecks), csvNames(r.decisive.map((d,i)=>d?i:-1).filter(i=>i>=0)),

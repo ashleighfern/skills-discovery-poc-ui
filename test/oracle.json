@@ -296,6 +296,11 @@
     "fc3": 1,
     "fc4": 0,
     "singleFail": 5,
-    "anyPending": 0
+    "anyPending": 0,
+    "defOv": 0,
+    "defOvLearn": 0,
+    "defOvDemo": 0,
+    "defOvBoth": 0,
+    "defOvNoPart": 0
   }
 }

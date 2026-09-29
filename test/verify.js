@@ -163,12 +163,49 @@ ok("clean batch: review can complete", api.fns("reviewCanComplete")() === true);
   q2.find(x=>x.id===ROLE.pass_a).overrideReasons = {3:"postings are noise"};
   api.setQueue(q2);
   ok("a reasoned market-pulse override unblocks the review", api.fns("reviewCanComplete")() === true);
+
+  // "Meets skill definition?" overrides also need the part the reviewer disagrees with (tag only)
+  const q3 = api.toQueue(fixture.terms), t3 = q3.find(x=>x.id===ROLE.g2_only_learnability);
+  t3.overrides = {2:true}; t3.overrideReasons = {2:"the course does teach it"};
+  let R3 = api.setQueue(q3);
+  ok("definition override with a reason but no part blocks the review", api.fns("reviewCanComplete")() === false);
+  ok("the override still flips the check (tag only): term no longer fails", !byId(R3, ROLE.g2_only_learnability).failed);
+  t3.overrideParts = {2:"learn"}; R3 = api.setQueue(q3);
+  ok("choosing a part unblocks the review", api.fns("reviewCanComplete")() === true);
+  const r3 = byId(R3, ROLE.g2_only_learnability), i3 = R3.indexOf(r3);
+  eq("the part is recorded on the check row", r3.gateRows[2].part, "learn");
+  const panel = api.fns("checkPanelHTML")(r3, i3, 2);
+  eq("the definition reason box offers Learnability / Demonstrability / Both", (panel.match(/data-part="/g)||[]).length, 3);
+  ok("the chosen part is checked", /value="learn" checked/.test(panel));
+  t3.overrideParts = {2:"both"}; t3.overrides = {2:true};
+  const q4 = api.toQueue(fixture.terms), t4 = q4.find(x=>x.id===ROLE.g1_only);
+  t4.overrides = {1:true}; t4.overrideReasons = {1:"distinct"}; t4.overrideParts = {1:"learn"};
+  const R4 = api.setQueue(q4), r4 = byId(R4, ROLE.g1_only);
+  eq("parts are ignored on other checks", r4.gateRows[1].part, "");
+  ok("other checks' reason boxes have no part picker", !/data-part=/.test(api.fns("checkPanelHTML")(r4, R4.indexOf(r4), 1)));
+  ok("other checks still need only a reason", api.fns("reviewCanComplete")() === true);
+})();
+(function(){
+  const q = api.toQueue(fixture.terms), t = q.find(x=>x.id===ROLE.g2_only_demonstrability);
+  t.overrides = {2:true}; t.overrideReasons = {2:"the exam covers it"}; t.overrideParts = {2:"demo"};
+  const R = api.setQueue(q), r = byId(R, ROLE.g2_only_demonstrability);
+  ok("fail reason names the part", /Reviewer override \(Demonstrability\) — the exam covers it/.test(r.failReason || api.fns("failureReason")(2, r.gateRows)));
+  const m = api.metrics();
+  eq("summary counts definition overrides by part", [m.defOv, m.defOvLearn, m.defOvDemo, m.defOvBoth], [1,0,1,0]);
+  api.exportAudit(); api.exportSummary();
+  const a = parseCSV(csv["audit_trail.csv"]), h = a[0], row = a.find(x=>x[0]===ROLE.g2_only_demonstrability);
+  ok("audit has a 'Meets skill definition? — Override Part' column", h.includes("Meets skill definition? — Override Part"));
+  eq("audit records the part", row[h.indexOf("Meets skill definition? — Override Part")], "Demonstrability");
+  const sm = parseCSV(csv["summary_metrics.csv"]);
+  eq("summary CSV counts demonstrability overrides", (sm.find(x=>x[0]==="Meets skill definition? overrides — Demonstrability")||[])[1], "1");
+  api.fns("clearOverrides")();
+  ok("clearing overrides clears parts", Object.keys(api.getQueue().find(x=>x.id===ROLE.g2_only_demonstrability).overrideParts||{}).length===0);
 })();
 fresh();
 api.setPage(1); ok("page 1 can complete via reviewCanComplete", api.fns("pageCanComplete")() === true);
 ok("queueChanged() clears card state + the review tick",
    /function queueChanged\(\)\{ expanded=\{\}; reviewDone\[1\]=false; recompute\(\); \}/.test(src));
-["queue=toQueue(displayOrder(TRIAL&&TRIAL.terms)); queueChanged()", "sk.overrideReasons={}; }); revPinned=new Set(); queueChanged()"].forEach(sig =>
+["queue=toQueue(displayOrder(TRIAL&&TRIAL.terms)); queueChanged()", "sk.overrideParts={}; }); revPinned=new Set(); queueChanged()"].forEach(sig =>
    ok(`queue mutation uses queueChanged: ${sig.slice(0,28)}…`, src.includes(sig)));
 ok("every queue mutation site routes through queueChanged (definition + 2 calls)",
    (src.match(/queueChanged\(\)/g)||[]).length === 3, String((src.match(/queueChanged\(\)/g)||[]).length));
@@ -181,9 +218,9 @@ const files = ["passed_skills.csv","failed_skills.csv","summary_metrics.csv","au
 files.forEach(f => ok(`${f} generated`, typeof csv[f]==="string" && csv[f].length>0));
 const rowsOf = f => parseCSV(csv[f]);
 const audit = rowsOf("audit_trail.csv");
-eq("audit_trail.csv column count", audit[0].length, 36);
+eq("audit_trail.csv column count", audit[0].length, 37);
 eq("audit_trail.csv row count (header + 9)", audit.length, 10);
-ok("audit_trail.csv rows all have 36 cells", audit.every(r=>r.length===36));
+ok("audit_trail.csv rows all have 37 cells", audit.every(r=>r.length===37));
 ok("audit_trail.csv contains no N/A cell", !audit.some(r=>r.some(c=>c.trim()==="N/A")),
    JSON.stringify((audit.find(r=>r.some(c=>c.trim()==="N/A"))||[]).slice(0,3)));
 ok("audit header 'Is a skill? — Final Decision'", audit[0].includes("Is a skill? — Final Decision"));
