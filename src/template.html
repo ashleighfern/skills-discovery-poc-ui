@@ -340,7 +340,7 @@ const GATES = [
   {id:"G0", key:"is_skill",         q:"Is a skill?",          d:"Filters out terms that are tasks, job roles, disciplines etc.", ov:true},
   {id:"G1", key:"not_in_taxonomy",  q:"Already in taxonomy?",    d:"Semantic similarity vs existing taxonomy skills → duplicate", ov:true},
   {id:"G2", key:"meets_definition", q:"Meets skill definition?", d:"Evidence it is learnable AND demonstrable", ov:true},
-  {id:"G3", key:"market_pulse",     q:"Has market pulse?",       d:"Demand in job postings, Aug 2025 – Jul 2026, per quarter", ov:true},
+  {id:"G3", key:"market_pulse",     q:"Has market pulse?",       d:"Expert-validated, or demand in job postings (Aug 2025 – Jul 2026, per quarter)", ov:true},
 ];
 const CHECK_NAMES = ["Is a skill?","Already in taxonomy?","Meets skill definition?","Has market pulse?"];
 const SHORT_NAMES = ["Skill?","Taxonomy","Definition","Market pulse"];
@@ -357,7 +357,7 @@ function overrideStatus(gi, reason, part){
   return [false, !hasP&&!hasR ? "Choose which part you disagree with and give a reason before the review can be marked complete."
     : !hasP ? "Choose which part you disagree with (Learnability, Demonstrability or Both)." : "A reason is required before the review can be marked complete."];
 }
-const MP_RULE = "A quarter passes if postings appear in all three months and either the quarterly total is in the top quarter of skills for that quarter (high volume), or demand is growing (last month above the first, or rising over six months).";
+const MP_RULE = "Expert-validated skills pass without needing demand. Otherwise a quarter passes if postings appear in all three months and either the quarterly total is in the top quarter of skills for that quarter (high volume), or demand is growing (last month above the first, or rising over six months).";
 const STEPS = [
   {t:"Overview", s:"The cohort and the four checks"},
   {t:"Review all checks", s:"All four checks per term · override any completed check"},
@@ -437,7 +437,7 @@ function evalGates(sk){
     mk("not_in_taxonomy", {matched:b.status==="fail"?(b.matched_skill_title||""):"", closest:b.matched_skill_title||"",
       similarity:typeof b.similarity==="number"?b.similarity:null}),
     mk("meets_definition", {learnable:!!L.met, demonstrable:!!D.met, failureReason:d.failure_reason||"", rationale:d.rationale||""}),
-    mk("market_pulse", {note:mp.note||"", monthly:mp.monthly||[], months:mp.months||[], quarters:mp.quarters||[],
+    mk("market_pulse", {note:mp.note||"", expert:!!mp.expert_validated, demand:mp.demand!==undefined?!!mp.demand:mp.status==="pass", monthly:mp.monthly||[], months:mp.months||[], quarters:mp.quarters||[],
       noData:(mp.status==="pass"||mp.status==="fail") && !(mp.quarters||[]).length, annual:mp.annual_mentions||0,
       passedQuarters:(mp.quarters||[]).filter(q=>q.pass).map(q=>`${q.q} (${q.cond})`)}),
   ];
@@ -481,7 +481,7 @@ function failureReason(i,gr){
   if(i===0) return "Non-skill term — "+m.detail;
   if(i===1) return "Duplicate of existing taxonomy skill"+(m.matched?` “${m.matched}”`:"");
   if(i===2) return m.failureReason || (!m.learnable?"Learnability not met":"Demonstrability not met");
-  if(i===3) return m.noData ? "No job postings found for this title" : "No quarter met high volume or growing demand";
+  if(i===3) return (m.noData ? "No job postings found for this title" : "No quarter met high volume or growing demand")+" (not expert-validated)";
   return "";
 }
 function recompute(){ results = queue.length?runPipeline(queue):null; }
@@ -508,6 +508,7 @@ function machineLabel(gi,m){
   if(gi===0) return m.pass?pill("yes","Skill"):pill("no","Not a skill — "+esc(m.detail));
   if(gi===1) return m.pass?pill("yes","Not in taxonomy"):pill("no","Duplicate of "+esc(m.matched||"existing skill"));
   if(gi===2) return m.pass?pill("yes","Meets definition"):pill("no",esc(m.failureReason||(!m.learnable?"Learnability not met":"Demonstrability not met")));
+  if(m.pass && m.expert && !m.demand) return pill("yes","Has market pulse — expert-validated");
   return m.pass?pill("yes","Has market pulse — "+esc(m.passedQuarters.join(", "))):pill("no",m.noData?"No market pulse — no postings found":"No market pulse");
 }
 
@@ -566,10 +567,11 @@ function sparkline(mm){ const max=Math.max(1,...mm);
   return `<span class="spark" title="Monthly postings: ${mm.join(", ")}">`+mm.map(v=>`<i style="height:${Math.max(2,Math.round(v/max*18))}px"></i>`).join("")+`</span>`; }
 function renderMarketPulse(m){
   if(m.pending) return `<div class="pending-note"><b>${PENDING_TEXT}.</b> This check has not run, so it is neither a pass nor a fail and cannot be overridden yet.</div>`;
-  if(m.noData) return `<div class="badges"><span class="badge">Market pulse: <b>no postings found</b></span></div>${m.note?`<div class="ev-note">${esc(m.note)}</div>`:""}`;
+  const ev=`<span class="badge" title="Expert-validated skills pass market pulse without needing job-posting demand">Expert-validated: <b>${m.expert?"Yes":"No"}</b></span>`;
+  if(m.noData) return `<div class="badges"><span class="badge">Market pulse: <b>no postings found</b></span>${ev}</div>${m.note?`<div class="ev-note">${esc(m.note)}</div>`:""}`;
   const grouped=m.quarters.map(q=>`${q.q} ${q.counts.join("·")}`).join(" | ");
-  const text=m.pass?"passed in "+m.passedQuarters.join(", "):"not met in any quarter";
-  return `<div class="badges"><span class="badge" title="${esc(MP_RULE)}">Market pulse: <b>${esc(text)}</b></span>`
+  const text=m.demand?"passed in "+m.passedQuarters.join(", "):"not met in any quarter";
+  return `<div class="badges"><span class="badge" title="${esc(MP_RULE)}">Job-posting demand: <b>${esc(text)}</b></span>${ev}`
     +`<span class="badge" title="Distinct job postings mentioning this skill each month, Aug 2025 (left) to Jul 2026 (right)">Postings (12 mo) ${sparkline(m.monthly)} <b>${esc(grouped)}</b></span>`
     +`<span class="badge">Annual postings: <b>${m.annual}</b></span></div>${m.note?`<div class="ev-note">${esc(m.note)}</div>`:""}`;
 }
@@ -907,7 +909,7 @@ function exportAudit(){
     ...chk("Is a skill?",["Term Type","Confidence","Reasoning"]),
     ...chk("Already in taxonomy?",["Closest Existing Skill","Similarity"]),
     ...chk("Meets skill definition?",["Rationale","Learnability Evidence","Demonstrability Evidence","Override Part"]),
-    ...chk("Has market pulse?",["Passing Quarters","Annual Postings","Monthly Postings (Aug 2025–Jul 2026)","Note"]),
+    ...chk("Has market pulse?",["Expert-Validated","Passing Quarters","Annual Postings","Monthly Postings (Aug 2025–Jul 2026)","Note"]),
     "Failed Checks","Decisive Checks","Override Count","Final Status"]];
   for(const r of results){ const g=r.gateRows, e=evidenceFor(r.sk);
     const out=(gr,pT,pF)=>gr.machine.pending?"Pending":(gr.machine.pass?pT:pF);
@@ -919,7 +921,7 @@ function exportAudit(){
       out(g[0],"Skill","Not a skill"), g[0].machine.detail, g[0].machine.confidence, g[0].machine.reasoning, ...trio(g[0],"Skill","Not a skill"),
       out(g[1],"Non-duplicate","Duplicate"), g[1].machine.closest||"none", pct(g[1].machine.similarity), ...trio(g[1],"Non-duplicate","Duplicate"),
       out(g[2],"Pass","Fail"), e.rationale, evidenceCell(e.learn), evidenceCell(e.demo), partLabel(g[2].part), ...trio(g[2],"Pass","Fail"),
-      out(g[3],"Pass","Fail"), g[3].machine.passedQuarters.join("; ")||"none", g[3].machine.annual, g[3].machine.monthly.join(" "),
+      out(g[3],"Pass","Fail"), g[3].machine.expert?"Yes":"No", g[3].machine.passedQuarters.join("; ")||"none", g[3].machine.annual, g[3].machine.monthly.join(" "),
       g[3].machine.note||"", ...trio(g[3],"Pass","Fail"),
       csvNames(r.failedChecks), csvNames(r.decisive.map((d,i)=>d?i:-1).filter(i=>i>=0)),
       r.overrideCount, r.status]); }

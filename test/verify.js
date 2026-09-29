@@ -218,9 +218,9 @@ const files = ["passed_skills.csv","failed_skills.csv","summary_metrics.csv","au
 files.forEach(f => ok(`${f} generated`, typeof csv[f]==="string" && csv[f].length>0));
 const rowsOf = f => parseCSV(csv[f]);
 const audit = rowsOf("audit_trail.csv");
-eq("audit_trail.csv column count", audit[0].length, 37);
+eq("audit_trail.csv column count", audit[0].length, 38);
 eq("audit_trail.csv row count (header + 9)", audit.length, 10);
-ok("audit_trail.csv rows all have 37 cells", audit.every(r=>r.length===37));
+ok("audit_trail.csv rows all have 38 cells", audit.every(r=>r.length===38));
 ok("audit_trail.csv contains no N/A cell", !audit.some(r=>r.some(c=>c.trim()==="N/A")),
    JSON.stringify((audit.find(r=>r.some(c=>c.trim()==="N/A"))||[]).slice(0,3)));
 ok("audit header 'Is a skill? — Final Decision'", audit[0].includes("Is a skill? — Final Decision"));
@@ -228,7 +228,7 @@ ok("audit has a market-pulse Reason column", audit[0].includes("Has market pulse
 ok("audit has Failed / Decisive Checks", ["Failed Checks","Decisive Checks"].every(h=>audit[0].includes(h)));
 ok("audit has no Pending Checks column", !audit[0].includes("Pending Checks"));
 eq("audit market-pulse columns", audit[0].filter(h=>h.startsWith("Has market pulse? — ")),
-   ["Output","Passing Quarters","Annual Postings","Monthly Postings (Aug 2025–Jul 2026)","Note","Override?","Reason","Final Decision"].map(x=>"Has market pulse? — "+x));
+   ["Output","Expert-Validated","Passing Quarters","Annual Postings","Monthly Postings (Aug 2025–Jul 2026)","Note","Override?","Reason","Final Decision"].map(x=>"Has market pulse? — "+x));
 (function(){
   const h = audit[0], row = audit.find(r=>r[0]===ROLE.g2_only_learnability), t = T("g2_only_learnability");
   const urls = t.checks.meets_definition.learnability.evidence.map(e=>e.url);
@@ -266,7 +266,7 @@ ok("failed_skills.csv uses 'Failed:' not 'Failed at:'", failed[0].includes("Fail
   const g3 = failed.find(r=>r[0]===ROLE.g3_only);
   eq("market-pulse-only row: flagged, decisive, PASS if overridden",
      ["Failed: Has market pulse?","Decisive Check","Status If Decisive Check Overridden","Failure Reason"].map(c=>g3[h.indexOf(c)]),
-     ["Yes","Has market pulse?","PASS","No quarter met high volume or growing demand"]);
+     ["Yes","Has market pulse?","PASS","No quarter met high volume or growing demand (not expert-validated)"]);
 })();
 const summ = rowsOf("summary_metrics.csv");
 ok("summary_metrics.csv uses 'Failed check:' rows", summ.some(r=>r[0]==="Failed check: Meets skill definition?"));
@@ -353,13 +353,25 @@ ok("is-it-a-skill reasoning rendered on check 1", checkPanelHTML(R[iOne],iOne,0)
   const f = checkPanelHTML(R[iMP],iMP,3);
   ok("g3_only panel says 'not met in any quarter' + sparkline", f.includes("not met in any quarter") && f.includes('class="spark"'));
   ok("g3_only machine label = No market pulse", f.includes('class="pill no">No market pulse<'));
-  eq("g3_only failReason", R[iMP].failReason, "No quarter met high volume or growing demand");
+  eq("g3_only failReason", R[iMP].failReason, "No quarter met high volume or growing demand (not expert-validated)");
   const t053 = DATA.terms.find(t=>t.id==="053");
   ok("term 053 has no quarters in the data and fails market pulse", t053 && t053.checks.market_pulse.status==="fail" && !t053.checks.market_pulse.quarters.length);
   const r053 = api.setQueue(api.toQueue([t053]))[0], h053 = checkPanelHTML(r053,0,3);
   ok("term 053 panel says 'no postings found' (no sparkline) + note", h053.includes("no postings found") && !h053.includes('class="spark"') && h053.includes(esc(t053.checks.market_pulse.note)));
   ok("term 053 machine label = no postings found", h053.includes("No market pulse — no postings found"));
-  ok("term 053 failReason names missing postings", r053.failReasons.includes("No job postings found for this title"));
+  ok("term 053 failReason names missing postings", r053.failReasons.includes("No job postings found for this title (not expert-validated)"));
+  ok("every market-pulse panel shows the expert-validated flag (No for the whole trial)",
+     [iMP].every(ix=>api.fns("checkPanelHTML")(R[ix],ix,3).includes("Expert-validated: <b>No</b>")) &&
+     DATA.terms.every(t=>t.checks.market_pulse.expert_validated===false));
+  // expert route: a synthetic expert-validated term with no demand still passes market pulse
+  { const t = JSON.parse(JSON.stringify(T("g3_only")));
+    Object.assign(t.checks.market_pulse, {status:"pass", expert_validated:true, demand:false});
+    t.failed_checks = []; t.overall = "PASS";
+    const Rx = api.setQueue(api.toQueue([t])), rx = Rx[0], px = api.fns("checkPanelHTML")(rx,0,3);
+    eq("expert-validated term with no demand: market pulse passes, term PASSES", [rx.gateRows[3].finalStatus, rx.status], ["pass","PASS"]);
+    ok("its label says expert-validated", api.fns("machineLabel")(3, rx.gateRows[3].machine).includes("expert-validated"));
+    ok("its panel shows Expert-validated: Yes and no demand", px.includes("Expert-validated: <b>Yes</b>") && px.includes("not met in any quarter"));
+    fresh(); }
   fresh();
 })();
 ok("reason box appears once a check is overridden", (function(){

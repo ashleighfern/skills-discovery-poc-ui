@@ -25,6 +25,8 @@
     },
     "market_pulse": {
      "annual_mentions": 653,
+     "demand": true,
+     "expert_validated": false,
      "monthly": [
       55,
       50,
@@ -212,6 +214,8 @@
     },
     "market_pulse": {
      "annual_mentions": 295,
+     "demand": true,
+     "expert_validated": false,
      "monthly": [
       25,
       19,
@@ -401,6 +405,8 @@
     },
     "market_pulse": {
      "annual_mentions": 5998,
+     "demand": true,
+     "expert_validated": false,
      "monthly": [
       393,
       339,
@@ -591,6 +597,8 @@
     },
     "market_pulse": {
      "annual_mentions": 10022,
+     "demand": true,
+     "expert_validated": false,
      "monthly": [
       507,
       556,
@@ -770,6 +778,8 @@
     },
     "market_pulse": {
      "annual_mentions": 11473,
+     "demand": true,
+     "expert_validated": false,
      "monthly": [
       823,
       760,
@@ -959,6 +969,8 @@
     },
     "market_pulse": {
      "annual_mentions": 249,
+     "demand": true,
+     "expert_validated": false,
      "monthly": [
       16,
       21,
@@ -1150,6 +1162,8 @@
     },
     "market_pulse": {
      "annual_mentions": 8909,
+     "demand": true,
+     "expert_validated": false,
      "monthly": [
       663,
       561,
@@ -1354,6 +1368,8 @@
     },
     "market_pulse": {
      "annual_mentions": 333,
+     "demand": true,
+     "expert_validated": false,
      "monthly": [
       20,
       26,
@@ -1545,6 +1561,8 @@
     },
     "market_pulse": {
      "annual_mentions": 4,
+     "demand": false,
+     "expert_validated": false,
      "monthly": [
       1,
       1,

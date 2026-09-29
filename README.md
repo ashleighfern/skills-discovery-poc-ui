@@ -7,8 +7,9 @@ was lost or unreadable. Each term was tested by all four checks:
 1. **Is a skill?** — term type, reasoning and confidence
 2. **Already in taxonomy?** — closest existing skill and similarity score; duplicates fail
 3. **Meets skill definition?** — learnability and demonstrability, backed by real evidence sources (provider, title, link, Local/International, direct/adjacent, quote)
-4. **Has market pulse?** — demand in job postings Aug 2025–Jul 2026, per quarter: passes
-   if any quarter shows high volume (top-quartile total) or growing demand. The panel shows
+4. **Has market pulse?** — passes if the skill is expert-validated (no demand needed), or if
+   job postings Aug 2025–Jul 2026 show demand: any quarter with high volume (top-quartile total)
+   or growing demand. No term in this trial was expert-validated. The panel shows
    the passing quarters, a 12-month sparkline and annual postings.
 
 A term **PASSES** only when all four checks pass, and **FAILS** if any check fails
