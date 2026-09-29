@@ -213,8 +213,6 @@
   details.more summary { cursor:pointer; font-weight:600; color:var(--ink-3); }
   details.more ul { margin:4px 0 0; padding-left:18px; }
   .ev-nc { font-size:10.5px; font-weight:650; padding:1px 7px; border-radius:20px; color:var(--warn); background:var(--warn-bg); }
-  .spark { display:inline-flex; align-items:flex-end; gap:2px; height:18px; vertical-align:middle; }
-  .spark i { width:5px; background:var(--accent); border-radius:1px; opacity:.85; display:block; }
   .pending-note { font-size:12px; color:var(--ink-2); background:var(--na-bg); border:1px dashed var(--na); border-radius:6px; padding:8px 11px; margin-top:8px; }
   @media (max-width:640px){ .evidence { grid-template-columns:1fr; } }
 
@@ -508,8 +506,7 @@ function machineLabel(gi,m){
   if(gi===0) return m.pass?pill("yes","Skill"):pill("no","Not a skill — "+esc(m.detail));
   if(gi===1) return m.pass?pill("yes","Not in taxonomy"):pill("no","Duplicate of "+esc(m.matched||"existing skill"));
   if(gi===2) return m.pass?pill("yes","Meets definition"):pill("no",esc(m.failureReason||(!m.learnable?"Learnability not met":"Demonstrability not met")));
-  if(m.pass && m.expert && !m.demand) return pill("yes","Has market pulse — expert-validated");
-  return m.pass?pill("yes","Has market pulse — "+esc(m.passedQuarters.join(", "))):pill("no",m.noData?"No market pulse — no postings found":"No market pulse");
+  return `<span title="${esc(MP_RULE)}">`+(m.pass?pill("yes","Has market pulse — "+esc(mpCondition(m))):pill("no","No market pulse — "+esc(mpCondition(m))))+`</span>`;
 }
 
 /* ============================ Evidence (check 3) ============================ */
@@ -563,17 +560,19 @@ function renderClosest(m){
     ? `<span class="badge" style="color:var(--fail)" title="The de-duplication run flagged this term as a duplicate of the existing skill">flagged as duplicate</span>` : "";
   return `<div class="badges"><span class="badge" title="Nearest skill in the existing taxonomy">Closest existing skill: <b>${esc(m.closest)}</b></span>${flag}</div>`;
 }
-function sparkline(mm){ const max=Math.max(1,...mm);
-  return `<span class="spark" title="Monthly postings: ${mm.join(", ")}">`+mm.map(v=>`<i style="height:${Math.max(2,Math.round(v/max*18))}px"></i>`).join("")+`</span>`; }
+/* One line per term: pass/fail and the condition that decided it, e.g. "growing demand (Q1, Q4)".
+   The monthly detail stays in the CSV exports. */
+function mpCondition(m){
+  if(m.pass && m.expert && !m.demand) return "expert-validated";
+  if(m.pass){
+    const by={}; (m.quarters||[]).filter(q=>q.pass).forEach(q=>{ (by[q.cond]=by[q.cond]||[]).push(q.q); });
+    return [["high volume","high volume"],["growing","growing demand"]].filter(([c])=>by[c]).map(([c,t])=>`${t} (${by[c].join(", ")})`).join(" · ");
+  }
+  return m.noData ? "no job postings found" : "no quarter showed high volume or growing demand";
+}
 function renderMarketPulse(m){
   if(m.pending) return `<div class="pending-note"><b>${PENDING_TEXT}.</b> This check has not run, so it is neither a pass nor a fail and cannot be overridden yet.</div>`;
-  const ev=`<span class="badge" title="Expert-validated skills pass market pulse without needing job-posting demand">Expert-validated: <b>${m.expert?"Yes":"No"}</b></span>`;
-  if(m.noData) return `<div class="badges"><span class="badge">Market pulse: <b>no postings found</b></span>${ev}</div>${m.note?`<div class="ev-note">${esc(m.note)}</div>`:""}`;
-  const grouped=m.quarters.map(q=>`${q.q} ${q.counts.join("·")}`).join(" | ");
-  const text=m.demand?"passed in "+m.passedQuarters.join(", "):"not met in any quarter";
-  return `<div class="badges"><span class="badge" title="${esc(MP_RULE)}">Job-posting demand: <b>${esc(text)}</b></span>${ev}`
-    +`<span class="badge" title="Distinct job postings mentioning this skill each month, Aug 2025 (left) to Jul 2026 (right)">Postings (12 mo) ${sparkline(m.monthly)} <b>${esc(grouped)}</b></span>`
-    +`<span class="badge">Annual postings: <b>${m.annual}</b></span></div>${m.note?`<div class="ev-note">${esc(m.note)}</div>`:""}`;
+  return "";
 }
 
 /* ============================ Stepper ============================ */

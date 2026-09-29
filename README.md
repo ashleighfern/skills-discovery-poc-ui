@@ -9,8 +9,8 @@ was lost or unreadable. Each term was tested by all four checks:
 3. **Meets skill definition?** — learnability and demonstrability, backed by real evidence sources (provider, title, link, Local/International, direct/adjacent, quote)
 4. **Has market pulse?** — passes if the skill is expert-validated (no demand needed), or if
    job postings Aug 2025–Jul 2026 show demand: any quarter with high volume (top-quartile total)
-   or growing demand. No term in this trial was expert-validated. The panel shows
-   the passing quarters, a 12-month sparkline and annual postings.
+   or growing demand. No term in this trial was expert-validated. The panel shows one line: pass or fail and the condition (e.g. "growing demand (Q1, Q4)");
+   monthly counts are in the CSV exports.
 
 A term **PASSES** only when all four checks pass, and **FAILS** if any check fails
 (currently 32 PASS / 272 FAIL).

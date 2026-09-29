@@ -344,24 +344,26 @@ ok("is-it-a-skill reasoning rendered on check 1", checkPanelHTML(R[iOne],iOne,0)
   // Market-pulse panel (check 4) with real job-posting results.
   const mp = T("pass_a").checks.market_pulse, pq = mp.quarters.filter(q=>q.pass).map(q=>`${q.q} (${q.cond})`);
   const html = checkPanelHTML(R[iPass],iPass,3);
-  ok("passing market-pulse panel says 'passed in' + its passing quarters", pq.length>0 && html.includes("passed in "+pq.join(", ")), pq.join(", "));
-  ok("passing market-pulse panel has a sparkline", html.includes('class="spark"'));
-  eq("sparkline has one bar per month (12)", (html.match(/<i style="height:/g)||[]).length, 12);
-  ok("panel shows per-quarter counts and annual postings", mp.quarters.every(q=>html.includes(`${q.q} ${q.counts.join("·")}`)) && html.includes(`Annual postings: <b>${mp.annual_mentions}</b>`));
+  const cond = mp.quarters.filter(q=>q.pass);
+  ok("passing market pulse shows one line: pass + condition with quarters", html.includes("Has market pulse — ") &&
+     cond.every(q=>html.includes(q.q)) && (cond.some(q=>q.cond==="growing") ? html.includes("growing demand (") : true), cond.map(q=>q.q+" "+q.cond).join(", "));
+  ok("no posting breakdown on the page (kept in exports) — passing market-pulse panel has a sparkline", !/class="spark"|Annual postings|Postings \(12 mo\)|Expert-validated: <b>/.test(html));
+  ok("no posting breakdown on the page (kept in exports) — sparkline has one bar per month (12)", !/class="spark"|Annual postings|Postings \(12 mo\)|Expert-validated: <b>/.test(html));
+  ok("no posting breakdown on the page (kept in exports) — panel shows per-quarter counts and annual postings", !/class="spark"|Annual postings|Postings \(12 mo\)|Expert-validated: <b>/.test(html));
   ok("check 4 has an override switch, no pending note", html.includes(`data-ov="${iPass}:3"`) && !html.includes('class="pending-note"'));
-  ok("machine label names the passing quarters", html.includes("Has market pulse — "+esc(pq.join(", "))));
+  ok("machine label groups passing quarters by condition", html.includes("Has market pulse — "+esc(api.fns("mpCondition")(R[iPass].gateRows[3].machine))) && pq.length>0);
   const f = checkPanelHTML(R[iMP],iMP,3);
-  ok("g3_only panel says 'not met in any quarter' + sparkline", f.includes("not met in any quarter") && f.includes('class="spark"'));
-  ok("g3_only machine label = No market pulse", f.includes('class="pill no">No market pulse<'));
+  ok("g3_only shows 'No market pulse — no quarter showed …' and no breakdown", f.includes("No market pulse — no quarter showed high volume or growing demand") && !f.includes('class="spark"'));
+  ok("g3_only machine label = No market pulse + reason", f.includes('class="pill no">No market pulse — no quarter showed high volume or growing demand<'));
   eq("g3_only failReason", R[iMP].failReason, "No quarter met high volume or growing demand (not expert-validated)");
   const t053 = DATA.terms.find(t=>t.id==="053");
   ok("term 053 has no quarters in the data and fails market pulse", t053 && t053.checks.market_pulse.status==="fail" && !t053.checks.market_pulse.quarters.length);
   const r053 = api.setQueue(api.toQueue([t053]))[0], h053 = checkPanelHTML(r053,0,3);
-  ok("term 053 panel says 'no postings found' (no sparkline) + note", h053.includes("no postings found") && !h053.includes('class="spark"') && h053.includes(esc(t053.checks.market_pulse.note)));
-  ok("term 053 machine label = no postings found", h053.includes("No market pulse — no postings found"));
+  ok("term 053 shows 'No market pulse — no job postings found'", h053.includes("No market pulse — no job postings found"));
+  ok("term 053 panel has no extra note or badges", !h053.includes("Title not found") && !h053.includes('class="badge"'));
   ok("term 053 failReason names missing postings", r053.failReasons.includes("No job postings found for this title (not expert-validated)"));
-  ok("every market-pulse panel shows the expert-validated flag (No for the whole trial)",
-     [iMP].every(ix=>api.fns("checkPanelHTML")(R[ix],ix,3).includes("Expert-validated: <b>No</b>")) &&
+  ok("the expert-validated flag is not shown when No (the whole trial is No)",
+     [iMP].every(ix=>!api.fns("checkPanelHTML")(R[ix],ix,3).includes("Expert-validated:")) &&
      DATA.terms.every(t=>t.checks.market_pulse.expert_validated===false));
   // expert route: a synthetic expert-validated term with no demand still passes market pulse
   { const t = JSON.parse(JSON.stringify(T("g3_only")));
@@ -370,7 +372,7 @@ ok("is-it-a-skill reasoning rendered on check 1", checkPanelHTML(R[iOne],iOne,0)
     const Rx = api.setQueue(api.toQueue([t])), rx = Rx[0], px = api.fns("checkPanelHTML")(rx,0,3);
     eq("expert-validated term with no demand: market pulse passes, term PASSES", [rx.gateRows[3].finalStatus, rx.status], ["pass","PASS"]);
     ok("its label says expert-validated", api.fns("machineLabel")(3, rx.gateRows[3].machine).includes("expert-validated"));
-    ok("its panel shows Expert-validated: Yes and no demand", px.includes("Expert-validated: <b>Yes</b>") && px.includes("not met in any quarter"));
+    ok("its panel says 'Has market pulse — expert-validated'", px.includes("Has market pulse — expert-validated"));
     fresh(); }
   fresh();
 })();
