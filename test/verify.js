@@ -343,7 +343,16 @@ ok("review note no longer explains decisive marks", !src.includes("⚡ decisive"
 ok("closest-match badges rendered on check 2", checkPanelHTML(R[iOne],iOne,1).includes('class="badges"') && checkPanelHTML(R[iOne],iOne,1).includes(esc(T("g1_only").checks.not_in_taxonomy.matched_skill_title)));
 { const h0 = checkPanelHTML(R[iOne],iOne,0), rsn = R[iOne].gateRows[0].machine.reasoning;
   ok("is-a-skill reasoning rendered on check 1 as one plain note", rsn && h0.includes(esc(rsn)) && !h0.includes("Reasoning:"));
-  ok("no Term type badge on check 1 (the verdict already names the type)", !h0.includes("Term type:")); }
+  ok("no Term type badge on check 1 (the verdict already names the type)", !h0.includes("Term type:"));
+  const g0 = R[iOne].gateRows[0].machine, want = g0.pass ? "Doubts considered (" : "Why it's not a skill (";
+  ok("signals toggle is labelled by verdict", !g0.signalsAgainst.length || h0.includes(want), want);
+  ok("old toggle label is gone", !src.includes("Signals against being a skill")); }
+{ const q=api.toQueue(fixture.terms), R2=api.setQueue(q);
+  const rej=R2.find(r=>!r.gateRows[0].machine.pass && r.gateRows[0].machine.signalsAgainst.length),
+        acc=R2.find(r=>r.gateRows[0].machine.pass && r.gateRows[0].machine.signalsAgainst.length);
+  ok("a rejected term's toggle reads \"Why it's not a skill\"", rej && checkPanelHTML(rej,R2.indexOf(rej),0).includes("Why it's not a skill ("));
+  ok("an accepted term's toggle reads \"Doubts considered\"", acc && checkPanelHTML(acc,R2.indexOf(acc),0).includes("Doubts considered ("));
+  fresh(); }
 { const h2 = checkPanelHTML(R[iDef],iDef,2);
   ok("definition sources sit behind collapsed 'Show sources' toggles", /<details class="more ev-more"><summary>Show sources \(\d+\)<\/summary>/.test(h2) && !/<details[^>]*open/.test(h2));
   ok("definition panel headers show only Met / Not met per part", (h2.match(/class="ev-h"/g)||[]).length===2 && !h2.includes('class="ev-sub"')); }

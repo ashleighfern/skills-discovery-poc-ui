@@ -554,7 +554,7 @@ function renderEvidence(sk){
     +`</div>`;
 }
 function renderIsSkill(m){
-  const sa=m.signalsAgainst.length?`<details class="more"><summary>Signals against being a skill, as weighed (${m.signalsAgainst.length})</summary><ul>${m.signalsAgainst.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:"";
+  const sa=m.signalsAgainst.length?`<details class="more"><summary>${m.pass?"Doubts considered":"Why it's not a skill"} (${m.signalsAgainst.length})</summary><ul>${m.signalsAgainst.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:"";
   return (m.reasoning?`<div class="ev-note">${esc(m.reasoning)}</div>`:"")+sa;
 }
 function renderClosest(m){
