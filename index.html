@@ -883,7 +883,7 @@ function download(name,text){ const b=new Blob(["﻿"+text],{type:"text/csv;char
 const csvNames=ix=>ix.length?ix.map(i=>CHECK_NAMES[i]).join(" | "):"none";
 function exportPassed(){ const rows=[["Term ID","Skill Title","Skill Description","Closest Existing Skill","Market Pulse — Passing Quarters","Annual Postings","Override Count","Data Quality Note","Final Status"]];
   for(const r of results){ if(r.failed)continue; const g1=r.gateRows[1].machine, g3=r.gateRows[3].machine;
-    rows.push([r.sk.id,r.sk.title,r.sk.desc,g1.closest?`${g1.closest} (${pct(g1.similarity)})`:"none",g3.passedQuarters.join("; ")||"none",g3.annual,r.overrideCount,r.sk.dq,r.status]); }
+    rows.push([r.sk.id,r.sk.title,r.sk.desc,g1.closest||"none",g3.passedQuarters.join("; ")||"none",g3.annual,r.overrideCount,r.sk.dq,r.status]); }
   download("passed_skills.csv",toCSV(rows)); }
 function exportFailed(){ const rows=[["Term ID","Skill Title","Skill Description","Failed: Is a skill?","Term Type","Failed: Already in taxonomy?","Duplicate to Existing Skill","Similarity","Failed: Meets skill definition?","Failed: Has market pulse?","Failed Check Count","One Override From Not Failing?","Decisive Check","Status If Decisive Check Overridden","Failure Reason","Final Status"]];
   for(const r of results){ if(!r.failed)continue; const g=r.gateRows, f=r.failedChecks, one=f.length===1;

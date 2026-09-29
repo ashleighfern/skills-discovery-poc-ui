@@ -274,6 +274,8 @@ ok("summary_metrics.csv has no 'Stopped at' rows", !summ.some(r=>/Stopped at/.te
 ok("summary_metrics.csv reports one-override-from-not-failing", summ.some(r=>/^Fail One Check Only/.test(r[0]) && r[1]==="5"));
 eq("summary_metrics.csv: failed market pulse = 1", (summ.find(r=>r[0]==="Failed check: Has market pulse?")||[])[1], "1");
 const passedCsv = rowsOf("passed_skills.csv");
+ok("passed_skills.csv 'Closest Existing Skill' is the skill title only, no %",
+   passedCsv.slice(1).every(r=>{ const t=DATA.terms.find(x=>x.id===r[0]); return r[3]===(t.checks.not_in_taxonomy.matched_skill_title||"none") && !/%/.test(r[3]); }));
 eq("passed_skills.csv columns", passedCsv[0], ["Term ID","Skill Title","Skill Description","Closest Existing Skill",
    "Market Pulse — Passing Quarters","Annual Postings","Override Count","Data Quality Note","Final Status"]);
 eq("passed_skills.csv rows = the two PASS terms", passedCsv.slice(1).map(r=>r[0]), [ROLE.pass_a, ROLE.pass_b]);
