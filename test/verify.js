@@ -279,10 +279,9 @@ const iPass = R.findIndex(r=>r.sk.id===ROLE.pass_a),
 });
 ok("passing term card is marked PASS", termCardHTML(R[iPass],iPass,false).includes('class="pill pass dot">PASS<'));
 ok("failing term card is marked FAIL", termCardHTML(R[iMany],iMany,false).includes(">FAIL<"));
-eq("decisive marks on a single-fail card", (termCardHTML(R[iOne],iOne,true).match(/⚡ decisive/g)||[]).length, 1);
-eq("decisive marks on a multi-fail card", (termCardHTML(R[iMany],iMany,true).match(/⚡ decisive/g)||[]).length, 0);
-eq("decisive marks on a passing card (all 4 checks)", (termCardHTML(R[iPass],iPass,true).match(/⚡ decisive/g)||[]).length, 4);
-eq("decisive marks on the market-pulse-only card (market pulse)", (termCardHTML(R[iMP],iMP,true).match(/⚡ decisive/g)||[]).length, 1);
+[iOne,iMany,iPass,iMP].forEach(ix=>ok(`no decisive mark on card ${R[ix].sk.id} (removed 2026-09-29)`,
+  !/decisive/i.test(termCardHTML(R[ix],ix,true).replace(/data-[a-z-]*="[^"]*"/g,""))));
+ok("review note no longer explains decisive marks", !src.includes("⚡ decisive"));
 (function(){
   const t = T("g2_only_learnability"), d = t.checks.meets_definition;
   const ev = [...d.learnability.evidence, ...d.demonstrability.evidence];
@@ -324,7 +323,7 @@ ok("reason box appears once a check is overridden", (function(){
   return checkPanelHTML(out[0],0,1).includes('data-reason="0:1"'); })());
 fresh();
 ok("renderReport (simple) has a 'Failed checks' column", src.includes(">Failed checks</th>"));
-ok("report has a Decisive column", src.includes(">Decisive</th>"));
+ok("report no longer has a Decisive column (removed 2026-09-29)", !src.includes(">Decisive</th>"));
 (function(){
   // DOM-driven renderers run end-to-end on the full cohort without throwing, and every term's
   // expanded card renders (catches data-shape edge cases across all 304).

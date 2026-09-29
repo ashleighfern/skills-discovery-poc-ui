@@ -162,11 +162,7 @@
   .chip.pass { color:var(--pass); background:var(--pass-bg); }
   .chip.fail { color:var(--fail); background:var(--fail-bg); }
   .chip.pend { color:var(--na); background:var(--na-bg); border:1px dashed var(--na); }
-  .chip.dec { border-color:var(--warn); }
-  .decisive { font-size:9.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
-    padding:2px 7px; border-radius:20px; color:var(--warn); background:var(--warn-bg); white-space:nowrap; }
   .flipnote { font-size:11.5px; color:var(--ink-3); margin-top:8px; line-height:1.4; }
-  .flipnote.dec { color:var(--warn); font-weight:650; }
   @media (max-width:640px){ .tcard-head { grid-template-columns:auto 1fr; gap:8px 12px; } .chipstrip, .tcard-head .tstat { grid-column:1/-1; justify-content:flex-start; } }
   .gcard.ovon { border-color:var(--override); box-shadow:0 0 0 1px var(--override) inset; }
   .gcard-top { display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:start; padding:13px 15px; }
@@ -184,7 +180,7 @@
   .badges { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
   .badge { font-size:11px; font-weight:600; padding:2px 8px; border-radius:6px; background:var(--surface-3); color:var(--ink-2); }
   .badge b { font-family:var(--mono); }
-  .chip[title], .decisive[title], .flipnote[title], .badge[title], .ev-tag[title], .ev-h[title], .ev-rg[title], .tile[title], .ov-tag[title], .switch[title], .vlabel[title], [data-tip] { cursor:help; }
+  .chip[title], .flipnote[title], .badge[title], .ev-tag[title], .ev-h[title], .ev-rg[title], .tile[title], .ov-tag[title], .switch[title], .vlabel[title], [data-tip] { cursor:help; }
   .tooltip { position:fixed; z-index:9999; left:0; top:0; max-width:300px; background:#111a24; color:#f2f6fa;
     font-size:12px; line-height:1.45; padding:8px 11px; border-radius:8px; border:1px solid rgba(255,255,255,.12);
     box-shadow:0 8px 28px rgba(0,0,0,.38); pointer-events:none; }
@@ -613,13 +609,12 @@ function renderPipelineStrip(){
 /* ===================== Page 1 — Review (the single human gate) ===================== */
 /* One check panel inside a term card. Pure — returns HTML. */
 function checkPanelHTML(r,i,gi){
-  const g=r.gateRows[gi], m=g.machine, dec=r.decisive[gi];
+  const g=r.gateRows[gi], m=g.machine;
   let badges="";
   if(gi===0) badges=renderIsSkill(m);
   if(gi===1) badges=renderClosest(m);
   if(gi===2) badges=renderEvidence(r.sk);
   if(gi===3) badges=renderMarketPulse(m);
-  const decTag = dec?` <span class="decisive" title="Overriding this check alone changes the term's overall result.">⚡ decisive</span>`:"";
   const ctrl = g.overridable
     ? `<label class="switch" title="Flip this check's verdict for this term (a written reason is required)"><input type="checkbox" data-ov="${i}:${gi}" ${g.overridden?"checked":""}> Override</label>
       <div>${g.overridden?`<span class="ov-tag" title="A reviewer overrode the machine on this check">overridden → ${g.finalPass?"Pass":"Fail"}</span>`:`<span class="vlabel">Final: </span>${finalPill(g)}`}</div>`
@@ -627,10 +622,10 @@ function checkPanelHTML(r,i,gi){
   return `<div class="gcard${g.overridden?" ovon":""}">
       <div class="gcard-top">
         <div class="gn">${gi+1}</div>
-        <div><div class="gt">${esc(GATES[gi].q)}${decTag}</div>
+        <div><div class="gt">${esc(GATES[gi].q)}</div>
           <div class="gd">${esc(GATES[gi].d)}</div>
           <div class="verdicts"><span class="vlabel" title="The automated verdict, before any human override">Machine:</span> ${machineLabel(gi,m)}</div>${badges}
-          <div class="flipnote${dec?" dec":""}" title="What happens to this term's overall result if you override this one check and change nothing else">What-if: ${esc(r.flipNote[gi])}</div></div>
+          <div class="flipnote" title="What happens to this term's overall result if you override this one check and change nothing else">What-if: ${esc(r.flipNote[gi])}</div></div>
         <div class="ctrl">${ctrl}</div>
       </div>
       ${g.overridden?`<div class="reasonbox">
@@ -644,7 +639,7 @@ function checkPanelHTML(r,i,gi){
 function termCardHTML(r,i,open){
   const chips=r.gateRows.map((g,gi)=>{
     const cls=g.pending?"pend":(g.finalPass?"pass":"fail"), sym=g.pending?"…":(g.finalPass?"✔":"✘"), word=g.pending?"Pending":(g.finalPass?"Pass":"Fail");
-    return `<span class="chip ${cls}${r.decisive[gi]?" dec":""}" title="${esc(GATES[gi].q)} — ${word}${g.overridden?" (overridden by reviewer)":""}. ${esc(r.flipNote[gi])}">${sym} ${esc(SHORT_NAMES[gi])}${r.decisive[gi]?" ⚡":""}${g.overridden?" ov":""}</span>`; }).join("");
+    return `<span class="chip ${cls}" title="${esc(GATES[gi].q)} — ${word}${g.overridden?" (overridden by reviewer)":""}. ${esc(r.flipNote[gi])}">${sym} ${esc(SHORT_NAMES[gi])}${r.decisive[gi]?" ⚡":""}${g.overridden?" ov":""}</span>`; }).join("");
   const head=`<div class="tcard-head" data-term="${i}" title="Click to ${open?"collapse":"expand"} the four check panels for this term">
       <div class="tn">${esc(r.sk.id)}</div>
       <div><div class="tt">${esc(r.sk.title)}</div>
@@ -682,7 +677,7 @@ function renderReview(){
       <h2>Review all checks</h2>
       <p>Every term below was tested by all four checks — nothing was skipped, so you can see the full picture before deciding. Toggle <b>Override</b> on any completed check where your judgement differs; a written reason is required for each one.</p></div>
     <div class="page-b">
-      <div class="note ov">Human-in-the-loop: this is the only review gate. A term fails if <b>any</b> check fails, and passes only when all four pass. A <span class="decisive">⚡ decisive</span> mark means overriding that one check on its own would change the term between FAIL and not-FAIL — anything unmarked can be overridden without changing the outcome.</div>
+      <div class="note ov">Human-in-the-loop: this is the only review gate. A term fails if <b>any</b> check fails, and passes only when all four pass.</div>
       <div class="filters" style="margin-top:14px">
         <input type="search" id="revSearch" placeholder="Search title, description or ID" aria-label="Search terms" value="${esc(revFilter.q)}">
         <select id="revCheck" aria-label="Filter by failed check">${checkOpts.map(([v,t])=>`<option value="${v}" ${revFilter.check===v?"selected":""}>${t}</option>`).join("")}</select>
@@ -831,7 +826,7 @@ function renderReport(){
   } else {
     t.innerHTML=`<thead><tr><th>ID</th><th>Skill title</th>
       <th>Skill?</th><th>In taxonomy?</th><th>Learnable?</th><th>Demonstrable?</th><th>Market pulse?</th>
-      <th>Overrides</th><th>Final</th><th title="Every check runs for every term, so a term can fail more than one">Failed checks</th><th title="Checks where a single override would move this term between FAIL and not-FAIL">Decisive</th><th>Reason</th></tr></thead><tbody>`+
+      <th>Overrides</th><th>Final</th><th title="Every check runs for every term, so a term can fail more than one">Failed checks</th><th>Reason</th></tr></thead><tbody>`+
       rows.map(r=>{ const g=r.gateRows;
         const ovt=gr=>gr.overridden?` <span class="ov-tag">ov</span>`:"";
         const g0=(g[0].finalPass?pill("yes","Skill"):pill("no","Not skill"))+ovt(g[0]);
@@ -839,13 +834,11 @@ function renderReport(){
         const g2l=(g[2].machine.learnable?pill("yes","Yes"):pill("no","No"))+ovt(g[2]);
         const g2d=(g[2].machine.demonstrable?pill("yes","Yes"):pill("no","No"));
         const g3=(g[3].pending?pill("pend","Pending"):(g[3].finalPass?pill("yes","Yes"):pill("no","No")))+ovt(g[3]);
-        const dec=r.decisive.map((d,ix)=>d?ix:-1).filter(ix=>ix>=0);
         return `<tr><td class="rownum">${esc(r.sk.id)}</td><td><b>${esc(r.sk.title)}</b></td>
           <td>${g0}</td><td>${g1}</td><td>${g2l}</td><td>${g2d}</td><td>${g3}</td>
           <td class="rownum">${r.overrideCount||"—"}</td>
           <td>${statusPill(r)}</td>
           <td>${esc(names(r.failedChecks))}</td>
-          <td class="wrapcell" title="${r.failed?"Overriding this check alone lifts the term out of FAIL":"This term is not failing — overriding any one completed check would make it fail"}">${esc(names(dec))}</td>
           <td class="wrapcell ${r.failed?"":"muted"}">${why(r)}</td></tr>`;
       }).join("")+`</tbody>`;
   }
