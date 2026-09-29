@@ -291,8 +291,9 @@ ok("review note no longer explains decisive marks", !src.includes("⚡ decisive"
   ok("every real evidence URL is a clickable link", ev.length>0 && ev.every(e=>html.includes(`href="${e.url.replace(/&/g,"&amp;")}"`)), String(ev.length));
   eq("one evidence item rendered per source", (html.match(/class="ev-item"/g)||[]).length, ev.length);
   ok("region groups use Local (Singapore) / International", ev.some(e=>e.region==="Local") ? html.includes("Local (Singapore)") : html.includes(">International<"));
-  eq("relevance badges (direct/adjacent) per item", (html.match(/class="ev-tag rel-(direct|adjacent)"/g)||[]).length, ev.length);
-  ok("gap note and rationale shown", html.includes("Search notes:") && html.includes("Rationale:"));
+  ok("no direct/adjacent or formal/informal badges (removed 2026-09-29)", !/class="ev-tag[ "]/.test(html) && !/Formal<|Informal<|>Direct<|>Adjacent</.test(html));
+  ok("no rationale, confidence or search-pass count (removed 2026-09-29)", !/Rationale:|confidence<|search pass/.test(html));
+  ok("gap note still shown", html.includes("Search notes:"));
   ok("no synthetic Google-search links", !html.includes("google.com/search"));
 })();
 ok("closest-match badges rendered on check 2", checkPanelHTML(R[iOne],iOne,1).includes('class="badges"') && checkPanelHTML(R[iOne],iOne,1).includes(esc(T("g1_only").checks.not_in_taxonomy.matched_skill_title)));

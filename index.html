@@ -504,13 +504,10 @@ function evidenceFor(sk){
   return {learn:side(d.learnability), demo:side(d.demonstrability), rationale:d.rationale||""};
 }
 function evItem(it){
-  const rel=it.relevance==="direct"?"direct":"adjacent";
   const typ=EV_TYPES[it.evidence_type]||String(it.evidence_type||"").replace(/_/g," ");
   const title=esc(it.title||it.url||"(untitled)");
   const link=safeUrl(it.url)?`<a class="ev-title" href="${esc(it.url.trim())}" target="_blank" rel="noopener noreferrer" title="Open the source page in a new tab">${title} ↗</a>`:title;
   return `<div class="ev-item"><div class="ev-tags">`
-    +`<span class="ev-tag ${it.formal?"formal":"informal"}" title="${it.formal?"Formal provision — structured course, training programme, certification, test or assessment":"Informal provision — e.g. unstructured on-the-job learning"}">${it.formal?"Formal":"Informal"}</span>`
-    +`<span class="ev-tag rel-${rel}" title="${rel==="direct"?"Direct — the source teaches or assesses this skill itself":"Adjacent — related provision that covers nearby ground, not this exact skill"}">${rel==="direct"?"Direct":"Adjacent"}</span>`
     +`<span class="ev-type">${esc(typ)}</span></div>`
     +`<div class="ev-txt">${it.provider?`<b>${esc(it.provider)}</b> — `:""}${link}${it.as_of&&it.as_of!=="unknown"?` <span class="hint">(as of ${esc(it.as_of)})</span>`:""}`
     +`${it.quote?`<blockquote class="ev-quote">“${esc(it.quote)}”</blockquote>`:""}</div></div>`;
@@ -521,14 +518,12 @@ function evGroups(items){ const regions=[["Local","Local (Singapore)","Singapore
 function renderEvidence(sk){
   const e=evidenceFor(sk);
   const col=(title,def,side,tip)=>{
-    const head=`<div class="ev-h" title="${tip}">${title} ${side.met?pill("yes","Met"):pill("no","Not met")}${side.confidence?` <span class="hint">${esc(side.confidence)} confidence</span>`:""}</div><div class="ev-sub">${def}</div>`;
+    const head=`<div class="ev-h" title="${tip}">${title} ${side.met?pill("yes","Met"):pill("no","Not met")}</div><div class="ev-sub">${def}</div>`;
     const body=(side.items.length?evGroups(side.items):`<div class="ev-gap">⚠ No qualifying source was recorded.</div>`)
-      +(side.gap?`<div class="ev-note"><b>Search notes:</b> ${esc(side.gap)}</div>`:"")
-      +(side.searches?`<div class="hint" style="margin-top:4px">${side.searches} search pass${side.searches===1?"":"es"} (Singapore first, then international)</div>`:"");
+      +(side.gap?`<div class="ev-note"><b>Search notes:</b> ${esc(side.gap)}</div>`:"");
     return `<div class="ev-col">${head}${body}</div>`;
   };
-  return (e.rationale?`<div class="ev-note"><b>Rationale:</b> ${esc(e.rationale)}</div>`:"")
-    +`<div class="evidence">`
+  return `<div class="evidence">`
     +col("Learnability","Course syllabus · training programme · workplace learning — with learning outcomes",e.learn,"Learnability — can the skill be taught? Met when structured learning provision with defined learning outcomes exists.")
     +col("Demonstrability","Certification · test · assessment for the skill",e.demo,"Demonstrability — can the skill be assessed? Met when a certification, test or assessment for the skill exists.")
     +`</div>`;
