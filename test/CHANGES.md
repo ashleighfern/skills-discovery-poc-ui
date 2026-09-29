@@ -1,5 +1,25 @@
 # Test suite changes (mock → real-data review UI)
 
+## 2026-09-29 — market pulse switched from pending to live results
+
+`data/trial_results.json` now carries real market-pulse results for all 304 terms (job postings
+Aug 2025–Jul 2026, per quarter: high volume or growing demand), so the cohort is 32 PASS /
+272 FAIL / 0 PROVISIONAL. The fixture has **9** terms: roles `provisional_a`/`provisional_b`
+were renamed `pass_a`/`pass_b` (PASS terms) and `g3_only` (fails market pulse alone) was added.
+Oracle regenerated (2 / 0 / 7). Converted: batch outcome and metrics (f3=1, singleFail 5, no
+pending); decisive (PASS ⇒ all four decisive, g3_only ⇒ [3]); sole-failure override ⇒ PASS;
+market pulse is overridable (switch on 4 checks, reason required, override takes effect,
+g3_only override ⇒ PASS and moves between exports); exports (`passed_skills.csv` with passing
+quarters + annual postings, failed CSV 16 columns without Pending Checks, audit CSV 36 columns
+with Passing Quarters / Annual / Monthly / Note, summary without PROVISIONAL or Pending rows);
+status filter PASS; banner wording. Added: market-pulse panel rendering ("passed in" +
+quarters + 12-bar sparkline, "not met in any quarter", term 053 "no postings found"), and
+DOM-captured checks that Provisional tiles / filter only appear when the count is > 0. The
+pending / PROVISIONAL path is kept in one synthetic block (a fixture term copy with
+`market_pulse: {status:"pending"}`). §12b: the display-order "failed" key is now
+`overall==="FAIL"` (it was `!== "PROVISIONAL"`, which stopped ranking PASS before FAIL).
+The tables below describe the earlier (pending-era) migration from the mock.
+
 The original mock's suite ran 143 checks over 8 synthetic samples, pinned to an oracle
 captured from the mock. That data is gone from the page. The suite now runs on
 `fixture.json`: 8 real terms that `make_fixture.py` picks from `data/trial_results.json`, lowest id first within each role.
@@ -7,7 +27,7 @@ captured from the mock. That data is gone from the page. The suite now runs on
 | Role | Covers |
 |---|---|
 | `provisional_a`, `provisional_b` | all completed checks pass, market pulse pending → PROVISIONAL |
-| `g0_only` | fails "Is it a skill?" alone |
+| `g0_only` | fails "Is a skill?" alone |
 | `g1_only` | fails "Already in taxonomy?" alone (used for the decisive-with-pending checks) |
 | `g2_only_learnability`, `g2_only_demonstrability` | fails "Meets skill definition?" alone, one for each failure reason |
 | `multi_g1_g2`, `multi_g0_g1_g2` | two and three failures |

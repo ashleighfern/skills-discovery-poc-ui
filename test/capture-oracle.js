@@ -1,4 +1,4 @@
-// Snapshots the machine-verdict contract for the 8-term real fixture from the CURRENT build.
+// Snapshots the machine-verdict contract for the 9-term real fixture from the CURRENT build.
 //   node test/capture-oracle.js > test/oracle.json
 // verify.js asserts the build against this snapshot term by term. Regenerate it only when a
 // verdict change is intended (e.g. after refreshing the data and re-running make_fixture.py).

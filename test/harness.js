@@ -43,7 +43,7 @@ function load(htmlPath){
 download = function(n,t){ globalThis.__CSV[n] = t; };
 globalThis.__api = {
   TRIAL, GATES, STEPS, CHECK_NAMES, PENDING_TEXT, REV_PAGE_SIZE,
-  toQueue, evalGates, runPipeline, failureReason, evidenceFor, metrics, machineLabel,
+  toQueue, displayOrder, skillLikeScore, CONTESTED, evalGates, runPipeline, failureReason, evidenceFor, metrics, machineLabel,
   exportPassed, exportFailed, exportSummary, exportAudit, toCSV,
   fns: (n)=> (typeof eval(n)==="function" ? eval(n) : undefined),
   setQueue(q){ queue = q; queueChanged(); return results; },

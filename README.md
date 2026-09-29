@@ -4,18 +4,21 @@ An interactive review page for the Skills Discovery proof of concept. It shows t
 recorded trial results for **304 real candidate terms**, left after removing 34 whose text
 was lost or unreadable. Each term was tested by all four checks:
 
-1. **Is it a skill?** — term type, reasoning and confidence
+1. **Is a skill?** — term type, reasoning and confidence
 2. **Already in taxonomy?** — closest existing skill and similarity score; duplicates fail
 3. **Meets skill definition?** — learnability and demonstrability, backed by real evidence sources (provider, title, link, Local/International, direct/adjacent, quote)
-4. **Has market pulse?** — **pending**: job-posting data is not yet available
+4. **Has market pulse?** — demand in job postings Aug 2025–Jul 2026, per quarter: passes
+   if any quarter shows high volume (top-quartile total) or growing demand. The panel shows
+   the passing quarters, a 12-month sparkline and annual postings.
 
-A term is **FAIL** if any completed check fails. It is **PROVISIONAL** if nothing failed
-but market pulse is still pending, so provisional terms may still fail once job-posting
-data is added. No term can **PASS** until then.
+A term **PASSES** only when all four checks pass, and **FAILS** if any check fails
+(currently 32 PASS / 272 FAIL).
 
-Reviewers can override any completed check. Each override needs a written reason, and
-pending checks cannot be overridden. The page also has a summary, a per-term report and
-four CSV exports.
+Reviewers can override any of the four checks, market pulse included. Each override needs
+a written reason. Overriding a term's only failing check makes it PASS; overriding any
+check on a passing term makes it FAIL. The page also has a summary, a per-term report and
+four CSV exports: `passed_skills.csv`, `failed_skills.csv`, `summary_metrics.csv` and
+`audit_trail.csv`.
 
 ## Open it
 
@@ -50,7 +53,7 @@ node test/verify.js      # prints "RESULT: N/N passed"
 ```
 
 Node ≥ 18, no packages needed. The suite loads `index.html` headlessly (`test/harness.js`)
-and runs on an 8-term real fixture (`test/fixture.json`). It also checks that the embedded
+and runs on a 9-term real fixture (`test/fixture.json`). It also checks that the embedded
 cohort matches `data/trial_results.json` exactly.
 
 After refreshing the data, regenerate the fixture and oracle:

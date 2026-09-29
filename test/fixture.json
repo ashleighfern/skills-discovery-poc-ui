@@ -1,30 +1,135 @@
 {
  "source": "data/trial_results.json",
  "roles": {
-  "provisional_a": "002",
-  "provisional_b": "004",
+  "pass_a": "002",
+  "pass_b": "004",
   "g0_only": "007",
   "g1_only": "003",
   "g2_only_learnability": "001",
   "g2_only_demonstrability": "013",
   "multi_g1_g2": "020",
-  "multi_g0_g1_g2": "187"
+  "multi_g0_g1_g2": "033",
+  "g3_only": "018"
  },
  "terms": [
   {
    "checks": {
     "is_skill": {
-     "confidence": "medium",
-     "reasoning": "A bare verb naming an applied ability to improve processes or systems. Broadness is not a rejection ground; no signal places it in a non-skill type.",
+     "confidence": "high",
+     "reasoning": "A bare verb naming an action a person performs. Breadth and brevity are not grounds for rejection.",
      "signals_against": [
-      "Bare, very broad single verb; not a non-skill type though"
+      "Very broad single word; no non-skill type signal"
      ],
      "status": "pass",
      "term_type": "skill"
     },
     "market_pulse": {
-     "note": "Job-posting data not yet available",
-     "status": "pending"
+     "annual_mentions": 653,
+     "monthly": [
+      55,
+      50,
+      54,
+      47,
+      57,
+      65,
+      50,
+      44,
+      51,
+      34,
+      70,
+      76
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 12,
+     "note": "",
+     "quarters": [
+      {
+       "cond": null,
+       "consistent": true,
+       "counts": [
+        55,
+        50,
+        54
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": false,
+       "q": "Q1",
+       "total": 159
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        47,
+        57,
+        65
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": true,
+       "q": "Q2",
+       "total": 169
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        50,
+        44,
+        51
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": true,
+       "q": "Q3",
+       "total": 145
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        34,
+        70,
+        76
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": true,
+       "q": "Q4",
+       "total": 180
+      }
+     ],
+     "status": "pass"
     },
     "meets_definition": {
      "demonstrability": {
@@ -90,24 +195,126 @@
    "description": "The skill of improving processes or systems to achieve maximum efficiency and effectiveness.",
    "failed_checks": [],
    "id": "002",
-   "overall": "PROVISIONAL",
-   "pending_checks": [
-    "market_pulse"
-   ],
+   "overall": "PASS",
+   "pending_checks": [],
    "title": "optimise"
   },
   {
    "checks": {
     "is_skill": {
      "confidence": "high",
-     "reasoning": "Visualising is an individual cognitive/creative ability with clear variation in proficiency. No non-skill signal.",
+     "reasoning": "A gerund naming a mental/representational activity a person performs; no non-skill signal present.",
      "signals_against": [],
      "status": "pass",
      "term_type": "skill"
     },
     "market_pulse": {
-     "note": "Job-posting data not yet available",
-     "status": "pending"
+     "annual_mentions": 295,
+     "monthly": [
+      25,
+      19,
+      34,
+      25,
+      31,
+      24,
+      19,
+      14,
+      27,
+      24,
+      26,
+      27
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 12,
+     "note": "",
+     "quarters": [
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        25,
+        19,
+        34
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": true,
+       "q": "Q1",
+       "total": 78
+      },
+      {
+       "cond": null,
+       "consistent": true,
+       "counts": [
+        25,
+        31,
+        24
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": false,
+       "q": "Q2",
+       "total": 80
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        19,
+        14,
+        27
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": true,
+       "q": "Q3",
+       "total": 60
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        24,
+        26,
+        27
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": true,
+       "q": "Q4",
+       "total": 77
+      }
+     ],
+     "status": "pass"
     },
     "meets_definition": {
      "demonstrability": {
@@ -173,28 +380,129 @@
    "description": "The ability to create mental images or visual representations of ideas and concepts.",
    "failed_checks": [],
    "id": "004",
-   "overall": "PROVISIONAL",
-   "pending_checks": [
-    "market_pulse"
-   ],
+   "overall": "PASS",
+   "pending_checks": [],
    "title": "visualising"
   },
   {
    "checks": {
     "is_skill": {
-     "confidence": "medium",
-     "reasoning": "The term and its description name organisational programmes/projects aimed at change, which is the subject area that skills like 'leading change initiatives' or 'change management' act upon, not the ability itself. Search of job postings and frameworks confirms the usage pattern 'lead/implement change initiatives', with the ability sitting in the verb. A reviewer may wish to redirect the submitter to 'change management' or 'leading change initiatives'.",
+     "confidence": "high",
+     "reasoning": "The term names programmes of organisational change, a thing pursued rather than an ability. The description confirms it names programmes or projects.",
      "signals_against": [
-      "concept_or_domain: the description defines the term as 'programs or projects designed to implement significant changes within an organization' - it names organisational undertakings (things an organisation runs and pursues toward an outcome), not an ability a person holds",
-      "'Able to change initiatives' does not read as an ability; in practice the term is the object of a skill ('lead/manage/implement change initiatives') rather than the skill itself",
-      "Alternative considered: task_or_activity - rejected because the term does not describe a single procedure being carried out, but a class of organisational programmes"
+      "concept_or_domain: main word 'initiatives' names programmes/projects (outcome/thing); description itself says 'Programs or projects'",
+      "'Able to change initiatives' only reads by reinterpreting 'change' as a verb, which alters the term's meaning"
      ],
      "status": "fail",
      "term_type": "concept_or_domain"
     },
     "market_pulse": {
-     "note": "Job-posting data not yet available",
-     "status": "pending"
+     "annual_mentions": 5998,
+     "monthly": [
+      393,
+      339,
+      462,
+      521,
+      580,
+      636,
+      543,
+      399,
+      372,
+      366,
+      607,
+      780
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 12,
+     "note": "",
+     "quarters": [
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        393,
+        339,
+        462
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": true,
+       "q": "Q1",
+       "total": 1194
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        521,
+        580,
+        636
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": true,
+       "q": "Q2",
+       "total": 1737
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        543,
+        399,
+        372
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": true,
+       "q": "Q3",
+       "total": 1314
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        366,
+        607,
+        780
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": true,
+       "q": "Q4",
+       "total": 1753
+      }
+     ],
+     "status": "pass"
     },
     "meets_definition": {
      "demonstrability": {
@@ -263,25 +571,127 @@
    ],
    "id": "007",
    "overall": "FAIL",
-   "pending_checks": [
-    "market_pulse"
-   ],
+   "pending_checks": [],
    "title": "change initiatives"
   },
   {
    "checks": {
     "is_skill": {
      "confidence": "medium",
-     "reasoning": "The term names the act of implementing continuous improvement, which is an individual applied ability rather than the philosophy itself. No concrete non-skill signal.",
+     "reasoning": "The main word is the action noun 'implementation', so the term names an action. 'Initiatives' is only the object of that action, so the outcome signal does not attach to the main word.",
      "signals_against": [
-      "'Continuous improvement' alone could be a concept/philosophy, but the term names implementing it"
+      "Object 'continuous improvement initiatives' names outcomes/programmes (concept_or_domain considered), but it is the object, not the main word"
      ],
      "status": "pass",
      "term_type": "skill"
     },
     "market_pulse": {
-     "note": "Job-posting data not yet available",
-     "status": "pending"
+     "annual_mentions": 10022,
+     "monthly": [
+      507,
+      556,
+      690,
+      814,
+      911,
+      971,
+      851,
+      703,
+      610,
+      677,
+      1208,
+      1524
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 12,
+     "note": "",
+     "quarters": [
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        507,
+        556,
+        690
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": true,
+       "q": "Q1",
+       "total": 1753
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        814,
+        911,
+        971
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": true,
+       "q": "Q2",
+       "total": 2696
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        851,
+        703,
+        610
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": true,
+       "q": "Q3",
+       "total": 2164
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        677,
+        1208,
+        1524
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": true,
+       "q": "Q4",
+       "total": 3409
+      }
+     ],
+     "status": "pass"
     },
     "meets_definition": {
      "demonstrability": {
@@ -339,25 +749,127 @@
    ],
    "id": "003",
    "overall": "FAIL",
-   "pending_checks": [
-    "market_pulse"
-   ],
+   "pending_checks": [],
    "title": "implementation of continuous improvement initiatives"
   },
   {
    "checks": {
     "is_skill": {
      "confidence": "medium",
-     "reasoning": "The term names an applied ability to lead and execute trading strategy; 'Able to direct and implement strategic trading plans' reads naturally. No concrete non-skill signal.",
+     "reasoning": "The term is a verb phrase naming what a person does (directing and implementing trading plans). 'Plans' is the object of the verbs rather than the main word, so the outcome signal does not apply.",
      "signals_against": [
-      "Could be read as a manager's duty (task_or_activity or job_role_or_function), but it is an ongoing ability, not a single procedure or a job title"
+      "'plans' is an output noun, but it is the object, not the main word"
      ],
      "status": "pass",
      "term_type": "skill"
     },
     "market_pulse": {
-     "note": "Job-posting data not yet available",
-     "status": "pending"
+     "annual_mentions": 11473,
+     "monthly": [
+      823,
+      760,
+      919,
+      1151,
+      1130,
+      1166,
+      1030,
+      780,
+      763,
+      707,
+      962,
+      1282
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 12,
+     "note": "",
+     "quarters": [
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        823,
+        760,
+        919
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": true,
+       "q": "Q1",
+       "total": 2502
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        1151,
+        1130,
+        1166
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": true,
+       "q": "Q2",
+       "total": 3447
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        1030,
+        780,
+        763
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": true,
+       "q": "Q3",
+       "total": 2573
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        707,
+        962,
+        1282
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": true,
+       "q": "Q4",
+       "total": 2951
+      }
+     ],
+     "status": "pass"
     },
     "meets_definition": {
      "demonstrability": {
@@ -426,25 +938,125 @@
    ],
    "id": "001",
    "overall": "FAIL",
-   "pending_checks": [
-    "market_pulse"
-   ],
+   "pending_checks": [],
    "title": "directs and implements strategic trading plans"
   },
   {
    "checks": {
     "is_skill": {
      "confidence": "high",
-     "reasoning": "Co-designing names a practical collaborative design ability; 'Able to co-design' reads naturally. No non-skill signal.",
-     "signals_against": [
-      "Could be seen as a methodology (concept_or_domain), but the term names the doing"
-     ],
+     "reasoning": "A gerund naming a collaborative design activity a person performs; no non-skill signal present.",
+     "signals_against": [],
      "status": "pass",
      "term_type": "skill"
     },
     "market_pulse": {
-     "note": "Job-posting data not yet available",
-     "status": "pending"
+     "annual_mentions": 249,
+     "monthly": [
+      16,
+      21,
+      15,
+      22,
+      29,
+      31,
+      22,
+      20,
+      15,
+      14,
+      22,
+      22
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 12,
+     "note": "",
+     "quarters": [
+      {
+       "cond": null,
+       "consistent": true,
+       "counts": [
+        16,
+        21,
+        15
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": false,
+       "q": "Q1",
+       "total": 52
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        22,
+        29,
+        31
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": true,
+       "q": "Q2",
+       "total": 82
+      },
+      {
+       "cond": null,
+       "consistent": true,
+       "counts": [
+        22,
+        20,
+        15
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": false,
+       "q": "Q3",
+       "total": 57
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        14,
+        22,
+        22
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": true,
+       "q": "Q4",
+       "total": 58
+      }
+     ],
+     "status": "pass"
     },
     "meets_definition": {
      "demonstrability": {
@@ -513,25 +1125,127 @@
    ],
    "id": "013",
    "overall": "FAIL",
-   "pending_checks": [
-    "market_pulse"
-   ],
+   "pending_checks": [],
    "title": "co designing"
   },
   {
    "checks": {
     "is_skill": {
      "confidence": "medium",
-     "reasoning": "Names an applied procurement/supplier-management ability. Awkward phrasing is not a reason to reject.",
+     "reasoning": "Both parts of this awkwardly joined term name actions (deciding, implementing). Awkward phrasing is not a reason to reject.",
      "signals_against": [
-      "Awkwardly combines two elements, but neither is a non-skill type"
+      "'plans' is an output noun but is the object of 'implements', not the main word"
      ],
      "status": "pass",
      "term_type": "skill"
     },
     "market_pulse": {
-     "note": "Job-posting data not yet available",
-     "status": "pending"
+     "annual_mentions": 8909,
+     "monthly": [
+      663,
+      561,
+      709,
+      813,
+      755,
+      873,
+      809,
+      748,
+      600,
+      595,
+      857,
+      926
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 12,
+     "note": "",
+     "quarters": [
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        663,
+        561,
+        709
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": true,
+       "q": "Q1",
+       "total": 1933
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        813,
+        755,
+        873
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": true,
+       "q": "Q2",
+       "total": 2441
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        809,
+        748,
+        600
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": true,
+       "q": "Q3",
+       "total": 2157
+      },
+      {
+       "cond": "high volume",
+       "consistent": true,
+       "counts": [
+        595,
+        857,
+        926
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": true,
+       "q": "Q4",
+       "total": 2378
+      }
+     ],
+     "status": "pass"
     },
     "meets_definition": {
      "demonstrability": {
@@ -612,50 +1326,339 @@
    ],
    "id": "020",
    "overall": "FAIL",
-   "pending_checks": [
-    "market_pulse"
-   ],
+   "pending_checks": [],
    "title": "decision making and implements supplier capability development plans"
   },
   {
    "checks": {
     "is_skill": {
-     "confidence": "medium",
-     "reasoning": "The term and its description both name a category of challenges (staffing, scheduling, labour relations) rather than an ability to do something; it is a subject/problem area. The skill would be resolving or managing these issues, but the term as submitted does not name that action. A search found no established use of the phrase as a skill label.",
+     "confidence": "high",
+     "reasoning": "The term contains no verb or action noun; it names a category of things (new processes and technology). The description's 'implementing and adapting' supplies a missing verb, which cannot rescue the term.",
      "signals_against": [
-      "concept_or_domain: the term names a set of 'issues' and the description defines it as 'Challenges related to workforce management' - a problem area, not an ability; 'Able to complex manpower issues' does not read as an ability",
-      "No verb or action names what the person does with the issues; the ability would require rewriting the term (e.g. 'resolve complex manpower issues'), which is out of scope",
-      "Alternative considered: discipline_or_field (workforce management) - rejected because the term names problems/challenges within that area rather than a branch of study",
-      "Search found no usage of the phrase as a named skill in frameworks or job postings"
+      "concept_or_domain: the term names things ('new processes and technology'), not an action; 'Able to new processes and technology' does not read without inserting a verb",
+      "Considered tool_or_technology, but no named product or platform is given"
      ],
      "status": "fail",
      "term_type": "concept_or_domain"
     },
     "market_pulse": {
-     "note": "Job-posting data not yet available",
-     "status": "pending"
+     "annual_mentions": 333,
+     "monthly": [
+      20,
+      26,
+      23,
+      26,
+      37,
+      30,
+      20,
+      31,
+      27,
+      22,
+      34,
+      37
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 12,
+     "note": "",
+     "quarters": [
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        20,
+        26,
+        23
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": true,
+       "q": "Q1",
+       "total": 69
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        26,
+        37,
+        30
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": true,
+       "q": "Q2",
+       "total": 93
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        20,
+        31,
+        27
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": true,
+       "q": "Q3",
+       "total": 78
+      },
+      {
+       "cond": "growing",
+       "consistent": true,
+       "counts": [
+        22,
+        34,
+        37
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": true,
+       "q": "Q4",
+       "total": 93
+      }
+     ],
+     "status": "pass"
     },
     "meets_definition": {
      "demonstrability": {
       "confidence": "low",
       "evidence": [
        {
-        "as_of": "2010-11-01",
-        "evidence_type": "certification",
+        "as_of": "2026",
+        "evidence_type": "assessment",
         "formal": true,
-        "provider": "NTUC Ong Teng Cheong Institute (OTCi) / WDA",
-        "quote": "Each module consists of a two-day course and one hour assessment on a separate day.",
+        "provider": "Tertiary Infotech Academy / SkillsFuture Singapore (WSQ, TSC Business Innovation)",
+        "quote": "Assessment Written Exam Oral Questioning",
         "region": "Local",
         "relevance": "adjacent",
-        "title": "WSQ Certified HR Professional (Industrial Relations)",
-        "url": "https://www.ntuc.org.sg/uportal/news/OTCi-promotes-Professionalsim-and-Know-how-in-Industrial-Relations-through-Inaugural-HR-WSQ/"
+        "title": "WSQ Business Innovation with Artificial Intelligence assessment",
+        "url": "https://www.tertiarycourses.com.sg/wsq-artificial-intelligence.html"
        }
       ],
-      "gap_note": "One Singapore search for certifications/assessments on manpower issues, workforce management and industrial relations. The nearest was the 2010 WSQ Certified HR Professional (Industrial Relations), which assesses industrial relations only (one part of the description) and is dated; SHRI employment-law courses and IHRP certification are broader HR credentials. No international search was run because learnability had already failed and the budget was prioritised there.",
+      "gap_note": "Singapore pass (WSQ assessment for implementing new processes and technology) returned only generic WSQ and IAL research pages; the closest local assessment is the written exam and oral questioning on the WSQ Business Innovation with AI course, which assesses AI-specific innovation rather than this general skill. International pass surfaced change-management (APMG), AI transformation, BPM, Agile and FinOps certifications, all neighbouring disciplines described only in a secondary listing; none assesses implementing and adapting to new processes and technology as such.",
       "met": false,
-      "searches": 1
+      "searches": 2
      },
      "failure_reason": "Learnability not met",
+     "learnability": {
+      "confidence": "low",
+      "evidence": [
+       {
+        "as_of": "2026",
+        "evidence_type": "course_syllabus",
+        "formal": true,
+        "provider": "Tertiary Infotech Academy (Tertiary Courses Singapore), WSQ TSC Business Innovation ICT-SNA-4003-1.1",
+        "quote": "LO5: Implement business innovation processes with artificial intelligence",
+        "region": "Local",
+        "relevance": "adjacent",
+        "title": "WSQ Business Innovation with Artificial Intelligence - Transform Operations & Strategy",
+        "url": "https://www.tertiarycourses.com.sg/wsq-artificial-intelligence.html"
+       },
+       {
+        "as_of": "unknown",
+        "evidence_type": "training_programme",
+        "formal": true,
+        "provider": "CXO Transform",
+        "quote": "This dual-course program is meticulously designed to equip managers, leaders, and consultants with the essential skills needed to effectively manage and lead transformation initiatives",
+        "region": "International",
+        "relevance": "adjacent",
+        "title": "THRIVE-AI Transformation Management Practitioner Program (Digital Transformation Course)",
+        "url": "https://cxotransform.com/p/digital-transformation-course"
+       }
+      ],
+      "gap_note": "Singapore pass: two searches (WSQ courses on implementing new technology/processes; WSQ technology adoption/application) returned generic WSQ pages, IAL learning-and-performance programmes (about learning technology for trainers) and one relevant course, Tertiary Courses' WSQ Business Innovation with AI, whose outcomes include adopting AI and implementing AI-enabled innovation processes. It is recorded as adjacent because it teaches adoption of one specific technology (AI) rather than implementing and adapting to new processes and technology in general. International: a search for technology-implementation course outcomes surfaced only articles and CXO Transform's digital transformation programme, which publishes marketing-style 'key outcomes' rather than learning outcomes. No course teaching general new-process/technology adoption with published outcomes was retrieved.",
+      "met": false,
+      "searches": 3
+     },
+     "rationale": "The term is very broad, and no course or assessment teaching or testing general adoption of new processes and technology was found. The nearest match is Tertiary Courses' WSQ Business Innovation with AI (outcomes on adopting AI and implementing AI-enabled innovation processes; written exam and oral questioning), recorded as adjacent because it covers one technology. A reviewer who reads the term as satisfied by a technology-specific adoption course could override both criteria on that page.",
+     "status": "fail"
+    },
+    "not_in_taxonomy": {
+     "matched_skill_title": "process improvement and optimisation",
+     "similarity": 0.720929503,
+     "status": "fail"
+    }
+   },
+   "data_quality_note": "",
+   "description": "Implementing and adapting to new methods and technological advancements to improve efficiency and outcomes.",
+   "failed_checks": [
+    "is_skill",
+    "not_in_taxonomy",
+    "meets_definition"
+   ],
+   "id": "033",
+   "overall": "FAIL",
+   "pending_checks": [],
+   "title": "new processes and technology"
+  },
+  {
+   "checks": {
+    "is_skill": {
+     "confidence": "high",
+     "reasoning": "A verb phrase naming what a person does with large datasets. Awkward inflection is not grounds for rejection.",
+     "signals_against": [],
+     "status": "pass",
+     "term_type": "skill"
+    },
+    "market_pulse": {
+     "annual_mentions": 4,
+     "monthly": [
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+     ],
+     "months_present": 4,
+     "note": "",
+     "quarters": [
+      {
+       "cond": null,
+       "consistent": false,
+       "counts": [
+        1,
+        1,
+        0
+       ],
+       "months": [
+        "2025-08",
+        "2025-09",
+        "2025-10"
+       ],
+       "p75": 672.5,
+       "pass": false,
+       "q": "Q1",
+       "total": 2
+      },
+      {
+       "cond": null,
+       "consistent": false,
+       "counts": [
+        1,
+        0,
+        0
+       ],
+       "months": [
+        "2025-11",
+        "2025-12",
+        "2026-01"
+       ],
+       "p75": 921.75,
+       "pass": false,
+       "q": "Q2",
+       "total": 1
+      },
+      {
+       "cond": null,
+       "consistent": false,
+       "counts": [
+        0,
+        0,
+        1
+       ],
+       "months": [
+        "2026-02",
+        "2026-03",
+        "2026-04"
+       ],
+       "p75": 720.0,
+       "pass": false,
+       "q": "Q3",
+       "total": 1
+      },
+      {
+       "cond": null,
+       "consistent": false,
+       "counts": [
+        0,
+        0,
+        0
+       ],
+       "months": [
+        "2026-05",
+        "2026-06",
+        "2026-07"
+       ],
+       "p75": 806.0,
+       "pass": false,
+       "q": "Q4",
+       "total": 0
+      }
+     ],
+     "status": "fail"
+    },
+    "meets_definition": {
+     "demonstrability": {
+      "confidence": "medium",
+      "evidence": [
+       {
+        "as_of": "unknown",
+        "evidence_type": "assessment",
+        "formal": true,
+        "provider": "Tertiary Infotech Academy Pte Ltd / SkillsFuture Singapore (WSQ)",
+        "quote": "After passing the assessment(s) and achieving at least 75% attendance, participants will receive a OpenCert (aka Statement of Achievement) from SkillsFuture Singapore, certifying that they have achieved the Competency Standard(s) in the above Skills Framework.",
+        "region": "Local",
+        "relevance": "direct",
+        "title": "WSQ - Mastering Elasticsearch and Kibana for Real Time Data Analysis - WSQ assessment (TSC Big Data Analysis)",
+        "url": "https://www.tertiarycourses.com.sg/wsq-mastering-elasticsearch-and-kibana-for-real-time-data-analysis.html"
+       }
+      ],
+      "gap_note": "",
+      "met": true,
+      "searches": 2
+     },
+     "failure_reason": null,
      "learnability": {
       "confidence": "medium",
       "evidence": [
@@ -663,40 +1666,36 @@
         "as_of": "unknown",
         "evidence_type": "course_syllabus",
         "formal": true,
-        "provider": "Singapore University of Social Sciences (SUSS)",
-        "quote": "Identify organizational implications of implementation of national manpower initiatives",
+        "provider": "Tertiary Infotech Academy Pte Ltd (WSQ, TSC Big Data Analysis BPM-PST-3001-1.1)",
+        "quote": "The WSQ Mastering Elasticsearch and Kibana for Real Time Data Analysis course is designed to empower participants with the skills to manage and analyze large datasets using the Elastic Stack.",
         "region": "Local",
-        "relevance": "adjacent",
-        "title": "HRM257 Labour and Manpower Policies in Singapore",
-        "url": "https://sims1.suss.edu.sg/eservice/Public/ViewCourse/ViewCourse.aspx?crsecd=HRM257&viewtype=pdf&isft=0"
+        "relevance": "direct",
+        "title": "WSQ - Mastering Elasticsearch and Kibana for Real Time Data Analysis",
+        "url": "https://www.tertiarycourses.com.sg/wsq-mastering-elasticsearch-and-kibana-for-real-time-data-analysis.html"
        }
       ],
-      "gap_note": "Searched MySkillsFuture/SkillsFuture for manpower-issue courses (Singapore), escalated to the named SUSS HRM257 course, then searched internationally for courses on complex workforce/manpower issues. The closest is SUSS HRM257, which teaches national manpower policy responses rather than handling complex staffing, scheduling and labour-relations issues as such; international results were general HR/labour-relations degree pages and workforce-management blogs with no course dedicated to the skill. Both regions covered; the term reads as a problem domain rather than a discrete skill, so provision exists only for broader parent skills (HR management, labour relations).",
-      "met": false,
-      "searches": 3
+      "gap_note": "",
+      "met": true,
+      "searches": 2
      },
-     "rationale": "No course was found that teaches 'complex manpower issues' itself; SUSS HRM257 (national manpower policy) is the closest and is adjacent. Demonstrability also fails, with only a dated WSQ industrial-relations credential as a near-miss. The term describes a problem area rather than a skill, which likely explains the gap.",
-     "status": "fail"
+     "rationale": "A Singapore WSQ course mapped to the SSG TSC 'Big Data Analysis' (BPM-PST-3001-1.1) states it teaches participants to manage and analyze large datasets, publishes three learning outcomes, and assesses them by written and practical exam leading to an SSG Statement of Achievement. The NTU-FTA 'Big Data and Data Analytics' course was also surfaced but its MySkillsFuture page returned 403, so it is not recorded. Confidence is medium: one solid local source, tool-specific (Elastic Stack); no international pass was run.",
+     "status": "pass"
     },
     "not_in_taxonomy": {
-     "matched_skill_title": "workforce planning",
-     "similarity": 0.730818629,
-     "status": "fail"
+     "matched_skill_title": "research data collection and management",
+     "similarity": 0.517697692,
+     "status": "pass"
     }
    },
    "data_quality_note": "",
-   "description": "Challenges related to workforce management, including staffing, scheduling, and labor relations.",
+   "description": "Proficiency in handling and analyzing large datasets to derive meaningful conclusions.",
    "failed_checks": [
-    "is_skill",
-    "not_in_taxonomy",
-    "meets_definition"
-   ],
-   "id": "187",
-   "overall": "FAIL",
-   "pending_checks": [
     "market_pulse"
    ],
-   "title": "complex manpower issues"
+   "id": "018",
+   "overall": "FAIL",
+   "pending_checks": [],
+   "title": "works with large data sets"
   }
  ]
 }

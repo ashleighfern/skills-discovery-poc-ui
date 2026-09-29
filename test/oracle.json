@@ -1,13 +1,14 @@
 {
   "roles": {
-    "provisional_a": "002",
-    "provisional_b": "004",
+    "pass_a": "002",
+    "pass_b": "004",
     "g0_only": "007",
     "g1_only": "003",
     "g2_only_learnability": "001",
     "g2_only_demonstrability": "013",
     "multi_g1_g2": "020",
-    "multi_g0_g1_g2": "187"
+    "multi_g0_g1_g2": "033",
+    "g3_only": "018"
   },
   "terms": [
     {
@@ -17,7 +18,7 @@
         "pass",
         "pass",
         "pass",
-        "pending"
+        "pass"
       ],
       "g0detail": "Skill",
       "g1matched": "",
@@ -26,16 +27,14 @@
       "learnable": true,
       "demonstrable": true,
       "g2failureReason": "",
-      "status": "PROVISIONAL",
+      "status": "PASS",
       "failedChecks": [],
-      "pendingChecks": [
-        3
-      ],
+      "pendingChecks": [],
       "decisive": [
         true,
         true,
         true,
-        false
+        true
       ],
       "failReason": ""
     },
@@ -46,7 +45,7 @@
         "pass",
         "pass",
         "pass",
-        "pending"
+        "pass"
       ],
       "g0detail": "Skill",
       "g1matched": "",
@@ -55,16 +54,14 @@
       "learnable": true,
       "demonstrable": true,
       "g2failureReason": "",
-      "status": "PROVISIONAL",
+      "status": "PASS",
       "failedChecks": [],
-      "pendingChecks": [
-        3
-      ],
+      "pendingChecks": [],
       "decisive": [
         true,
         true,
         true,
-        false
+        true
       ],
       "failReason": ""
     },
@@ -75,7 +72,7 @@
         "fail",
         "pass",
         "pass",
-        "pending"
+        "pass"
       ],
       "g0detail": "Concept / domain",
       "g1matched": "",
@@ -88,9 +85,7 @@
       "failedChecks": [
         0
       ],
-      "pendingChecks": [
-        3
-      ],
+      "pendingChecks": [],
       "decisive": [
         true,
         false,
@@ -106,7 +101,7 @@
         "pass",
         "fail",
         "pass",
-        "pending"
+        "pass"
       ],
       "g0detail": "Skill",
       "g1matched": "continuous quality improvement",
@@ -119,9 +114,7 @@
       "failedChecks": [
         1
       ],
-      "pendingChecks": [
-        3
-      ],
+      "pendingChecks": [],
       "decisive": [
         false,
         true,
@@ -137,7 +130,7 @@
         "pass",
         "pass",
         "fail",
-        "pending"
+        "pass"
       ],
       "g0detail": "Skill",
       "g1matched": "",
@@ -150,9 +143,7 @@
       "failedChecks": [
         2
       ],
-      "pendingChecks": [
-        3
-      ],
+      "pendingChecks": [],
       "decisive": [
         false,
         false,
@@ -168,7 +159,7 @@
         "pass",
         "pass",
         "fail",
-        "pending"
+        "pass"
       ],
       "g0detail": "Skill",
       "g1matched": "",
@@ -181,9 +172,7 @@
       "failedChecks": [
         2
       ],
-      "pendingChecks": [
-        3
-      ],
+      "pendingChecks": [],
       "decisive": [
         false,
         false,
@@ -199,7 +188,7 @@
         "pass",
         "fail",
         "fail",
-        "pending"
+        "pass"
       ],
       "g0detail": "Skill",
       "g1matched": "supplier management and capability development",
@@ -213,9 +202,7 @@
         1,
         2
       ],
-      "pendingChecks": [
-        3
-      ],
+      "pendingChecks": [],
       "decisive": [
         false,
         false,
@@ -225,18 +212,18 @@
       "failReason": "Duplicate of existing taxonomy skill “supplier management and capability development”; Demonstrability not met"
     },
     {
-      "id": "187",
-      "title": "complex manpower issues",
+      "id": "033",
+      "title": "new processes and technology",
       "machineStatus": [
         "fail",
         "fail",
         "fail",
-        "pending"
+        "pass"
       ],
       "g0detail": "Concept / domain",
-      "g1matched": "workforce planning",
-      "g1closest": "workforce planning",
-      "g1similarity": 0.730818629,
+      "g1matched": "process improvement and optimisation",
+      "g1closest": "process improvement and optimisation",
+      "g1similarity": 0.720929503,
       "learnable": false,
       "demonstrable": false,
       "g2failureReason": "Learnability not met",
@@ -246,42 +233,69 @@
         1,
         2
       ],
-      "pendingChecks": [
-        3
-      ],
+      "pendingChecks": [],
       "decisive": [
         false,
         false,
         false,
         false
       ],
-      "failReason": "Non-skill term — Concept / domain; Duplicate of existing taxonomy skill “workforce planning”; Learnability not met"
+      "failReason": "Non-skill term — Concept / domain; Duplicate of existing taxonomy skill “process improvement and optimisation”; Learnability not met"
+    },
+    {
+      "id": "018",
+      "title": "works with large data sets",
+      "machineStatus": [
+        "pass",
+        "pass",
+        "pass",
+        "fail"
+      ],
+      "g0detail": "Skill",
+      "g1matched": "",
+      "g1closest": "research data collection and management",
+      "g1similarity": 0.517697692,
+      "learnable": true,
+      "demonstrable": true,
+      "g2failureReason": "",
+      "status": "FAIL",
+      "failedChecks": [
+        3
+      ],
+      "pendingChecks": [],
+      "decisive": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "failReason": "No quarter met high volume or growing demand"
     }
   ],
   "summary": {
-    "PASS": 0,
-    "PROVISIONAL": 2,
-    "FAIL": 6
+    "PASS": 2,
+    "PROVISIONAL": 0,
+    "FAIL": 7
   },
   "metrics": {
-    "total": 8,
-    "passed": 0,
-    "provisional": 2,
-    "failed": 6,
+    "total": 9,
+    "passed": 2,
+    "provisional": 0,
+    "failed": 7,
     "overridden": 0,
     "f0": 2,
     "f1": 3,
     "f2": 4,
-    "f3": 0,
+    "f3": 1,
     "p0": 0,
     "p1": 0,
     "p2": 0,
-    "p3": 8,
-    "fc1": 4,
+    "p3": 0,
+    "fc1": 5,
     "fc2": 1,
     "fc3": 1,
     "fc4": 0,
-    "singleFail": 4,
-    "anyPending": 8
+    "singleFail": 5,
+    "anyPending": 0
   }
 }

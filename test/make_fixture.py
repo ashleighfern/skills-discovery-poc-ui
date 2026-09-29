@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pick 8 REAL terms from data/trial_results.json that cover every roll-up combination
+"""Pick 9 REAL terms from data/trial_results.json that cover every roll-up combination
 the tests need, and write them to test/fixture.json. Deterministic: within each role the
 lowest term id wins.
 
@@ -18,8 +18,8 @@ OUT = os.path.join(HERE, "fixture.json")
 
 # role -> predicate over a term. Order here is the fixture order.
 ROLES = [
-    ("provisional_a", lambda t: t["failed_checks"] == []),
-    ("provisional_b", lambda t: t["failed_checks"] == []),
+    ("pass_a", lambda t: t["failed_checks"] == []),
+    ("pass_b", lambda t: t["failed_checks"] == []),
     ("g0_only", lambda t: t["failed_checks"] == ["is_skill"]),
     ("g1_only", lambda t: t["failed_checks"] == ["not_in_taxonomy"]),
     ("g2_only_learnability", lambda t: t["failed_checks"] == ["meets_definition"]
@@ -28,6 +28,7 @@ ROLES = [
         and t["checks"]["meets_definition"]["failure_reason"] == "Demonstrability not met"),
     ("multi_g1_g2", lambda t: t["failed_checks"] == ["not_in_taxonomy", "meets_definition"]),
     ("multi_g0_g1_g2", lambda t: t["failed_checks"] == ["is_skill", "not_in_taxonomy", "meets_definition"]),
+    ("g3_only", lambda t: t["failed_checks"] == ["market_pulse"]),
 ]
 
 
@@ -42,8 +43,8 @@ def main():
         used.add(hit["id"])
         roles[role] = hit["id"]
         picked.append(hit)
-    # Every fixture term must have market pulse pending, as the whole cohort does today.
-    assert all(t["checks"]["market_pulse"]["status"] == "pending" for t in picked)
+    # Market pulse has run for the whole cohort: no fixture term may still be pending.
+    assert all(t["checks"]["market_pulse"]["status"] in ("pass", "fail") for t in picked)
     out = {"source": "data/trial_results.json", "roles": roles, "terms": picked}
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)

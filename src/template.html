@@ -215,6 +215,8 @@
   details.more { font-size:11.5px; color:var(--ink-2); margin-top:6px; }
   details.more summary { cursor:pointer; font-weight:600; color:var(--ink-3); }
   details.more ul { margin:4px 0 0; padding-left:18px; }
+  .spark { display:inline-flex; align-items:flex-end; gap:2px; height:18px; vertical-align:middle; }
+  .spark i { width:5px; background:var(--accent); border-radius:1px; opacity:.85; display:block; }
   .pending-note { font-size:12px; color:var(--ink-2); background:var(--na-bg); border:1px dashed var(--na); border-radius:6px; padding:8px 11px; margin-top:8px; }
   @media (max-width:640px){ .evidence { grid-template-columns:1fr; } }
 
@@ -313,7 +315,7 @@
 </header>
 
 <div class="wrap">
-  <div class="banner" role="note"><span class="banner-i" aria-hidden="true">!</span><span>Market pulse check not yet run — provisional results may still fail when job-posting data is added.</span></div>
+  <div class="banner" role="note"><span class="banner-i" aria-hidden="true">!</span><span>Market pulse uses job postings from Aug 2025 to Jul 2026, analysed inside the organisation; only monthly counts per skill title were used here.</span></div>
   <p class="cohort-note">Trial cohort: __COHORT_SIZE__ terms after removing 34 whose text was lost or unreadable.</p>
   <div class="stepper" id="stepper"></div>
   <div id="pageHost"></div>
@@ -334,17 +336,18 @@
 const TRIAL = /*__TRIAL_DATA__*/null;
 
 /* ============================ Config ============================ */
-// ov = the check can be overridden by a reviewer. A check whose data is still pending
-// cannot be overridden whatever this flag says (see runPipeline).
+// ov = the check can be overridden by a reviewer. A check whose data is pending (none are, now that
+// market pulse has run) cannot be overridden whatever this flag says (see runPipeline).
 const GATES = [
-  {id:"G0", key:"is_skill",         q:"Is it a skill?",          d:"Not a task, job role, or concept / knowledge statement", ov:true},
+  {id:"G0", key:"is_skill",         q:"Is a skill?",          d:"Filters out terms that are tasks, job roles, disciplines etc.", ov:true},
   {id:"G1", key:"not_in_taxonomy",  q:"Already in taxonomy?",    d:"Semantic similarity vs existing taxonomy skills → duplicate", ov:true},
   {id:"G2", key:"meets_definition", q:"Meets skill definition?", d:"Evidence it is learnable AND demonstrable", ov:true},
-  {id:"G3", key:"market_pulse",     q:"Has market pulse?",       d:"Demand in job postings over the past year", ov:true},
+  {id:"G3", key:"market_pulse",     q:"Has market pulse?",       d:"Demand in job postings, Aug 2025 – Jul 2026, per quarter", ov:true},
 ];
-const CHECK_NAMES = ["Is it a skill?","Already in taxonomy?","Meets skill definition?","Has market pulse?"];
+const CHECK_NAMES = ["Is a skill?","Already in taxonomy?","Meets skill definition?","Has market pulse?"];
 const SHORT_NAMES = ["Skill?","Taxonomy","Definition","Market pulse"];
-const PENDING_TEXT = "Pending — job-posting data not yet available";
+const PENDING_TEXT = "Pending — no data yet";
+const MP_RULE = "A quarter passes if postings appear in all three months and either the quarterly total is in the top quarter of skills for that quarter (high volume), or demand is growing (last month above the first, or rising over six months).";
 const STEPS = [
   {t:"Overview", s:"The cohort and the four checks"},
   {t:"Review all checks", s:"All four checks per term · override any completed check"},
@@ -353,7 +356,9 @@ const STEPS = [
 const LAST = STEPS.length - 1;
 const REV_PAGE_SIZE = 20;
 const TERM_TYPES = {skill:"Skill", concept_or_domain:"Concept / domain", job_role_or_function:"Job role / function",
-  task_or_activity:"Task / activity", knowledge_or_ability:"Knowledge / ability statement"};
+  task_or_activity:"Task / activity", discipline_or_field:"Discipline / field",
+  qualification_or_credential:"Qualification / credential", tool_or_technology:"Tool / technology",
+  knowledge_or_ability:"Knowledge / ability statement"};
 const EV_TYPES = {course_syllabus:"Course syllabus", training_programme:"Training programme", workplace_learning:"Workplace learning",
   certification:"Certification", test:"Test", assessment:"Assessment"};
 
@@ -373,6 +378,39 @@ function toQueue(terms){
   return (terms||[]).map(t=>({ id:String(t.id), title:t.title||"", desc:t.description||"", dq:t.data_quality_note||"",
     checks:t.checks||{}, overrides:{}, overrideReasons:{} }));
 }
+/* Display order: the terms we are most confident in come first, so reviewers (and a briefing audience) meet clean,
+   well-supported verdicts before odd ones. Keys, in order: no data-quality flag first; verdicts not contested in the
+   POC first (evidence-audit re-runs and known run-to-run flips); terms that passed "Is a skill?" before non-skills;
+   then the most taxonomy-like titles first (skillLikeScore); terms with no failed check before failed ones; then shorter
+   titles; then term id. The data file keeps id order; only the queue is reordered. */
+const CONTESTED = new Set("004 005 011 013 016 021 029 039 062 091 122 161 164 184 197 211 221 226 240 267 296 315 332".split(" "));
+/* How much a title reads like an existing taxonomy label ("data analytics", "waste management operations",
+   "data analysis"): a short noun phrase that ends in an activity or field noun. Transparent rules, no model. */
+const LEAD_OFF = new Set("the a an new all overall complex smooth optimal innovative continuous routine strategic effective proper adequate timely".split(" "));
+const BASE_VERBS = new Set("maintain optimise visualise rectify improve operationalise revitalise spearhead enhance develop deploy implement manage lead drive prevent validate co correctly ensure conduct provide perform create establish identify".split(" "));
+const LINK_WORDS = new Set("of for with to on in into between and or at by from as about through within under".split(" "));
+const HEAD_NOUNS = new Set("design control research security care audit maintenance analysis analytics operations engineering planning delivery recovery assistance support governance modelling logistics sales marketing procurement".split(" "));
+const isPluralThing = w => /s$/.test(w) && !/(ss|ics|sis|us)$/.test(w) && !HEAD_NOUNS.has(w);
+function skillLikeScore(title){
+  const w = String(title||"").toLowerCase().split(/\s+/).filter(Boolean);
+  if(!w.length) return -99;
+  let sc = w.length<=1 ? 0 : w.length<=3 ? 2 : w.length===4 ? 1 : -(w.length-4);
+  const first=w[0], last=w[w.length-1];
+  if(LEAD_OFF.has(first) || /ly$/.test(first)) sc-=2;
+  if(BASE_VERBS.has(first) || (w.length>1 && isPluralThing(first))) sc-=2;
+  sc -= w.filter(x=>LINK_WORDS.has(x)).length;
+  if(HEAD_NOUNS.has(last) || /(ment|tion|sion|sis|ics|ing|ance|ence|ogy|ship)$/.test(last)) sc+=2;
+  else if(isPluralThing(last)) sc-=1;
+  return sc;
+}
+function displayOrder(terms){
+  const key=t=>[t.data_quality_note?1:0, CONTESTED.has(String(t.id))?1:0,
+    ((t.checks||{}).is_skill||{}).status==="fail"?1:0, -skillLikeScore(t.title),
+    t.overall==="FAIL"?1:0, String(t.title||"").length];
+  return (terms||[]).slice().sort((a,b)=>{ const ka=key(a), kb=key(b);
+    for(let i=0;i<ka.length;i++) if(ka[i]!==kb[i]) return ka[i]-kb[i];
+    return String(a.id).localeCompare(String(b.id)); });
+}
 function termTypeLabel(t){ return TERM_TYPES[t] || String(t||"unknown").replace(/_/g," "); }
 function statusOf(c){ return c && (c.status==="pass"||c.status==="fail") ? c.status : "pending"; }
 
@@ -389,7 +427,9 @@ function evalGates(sk){
     mk("not_in_taxonomy", {matched:b.status==="fail"?(b.matched_skill_title||""):"", closest:b.matched_skill_title||"",
       similarity:typeof b.similarity==="number"?b.similarity:null}),
     mk("meets_definition", {learnable:!!L.met, demonstrable:!!D.met, failureReason:d.failure_reason||"", rationale:d.rationale||""}),
-    mk("market_pulse", {note:mp.note||"Job-posting data not yet available"}),
+    mk("market_pulse", {note:mp.note||"", monthly:mp.monthly||[], months:mp.months||[], quarters:mp.quarters||[],
+      noData:(mp.status==="pass"||mp.status==="fail") && !(mp.quarters||[]).length, annual:mp.annual_mentions||0,
+      passedQuarters:(mp.quarters||[]).filter(q=>q.pass).map(q=>`${q.q} (${q.cond})`)}),
   ];
 }
 function runPipeline(items){
@@ -414,9 +454,9 @@ function runPipeline(items){
     // A pending check has no verdict to flip, so it is never decisive.
     const decisive=gr.map(g=>!g.pending && (!failed || (failedChecks.length===1 && failedChecks[0]===g.i)));
     const flipNote=gr.map((g,i)=>{
-      if(g.pending) return "Pending — cannot be overridden until job-posting data is available";
+      if(g.pending) return "Pending — cannot be overridden until the check has run";
       if(!failed) return "Override → this term FAILS";
-      if(decisive[i]) return pendingChecks.length ? "Override → this term becomes PROVISIONAL (market pulse still pending)" : "Override → this term PASSES";
+      if(decisive[i]) return pendingChecks.length ? "Override → this term becomes PROVISIONAL (a check is still pending)" : "Override → this term PASSES";
       if(g.finalStatus==="fail"){ const o=failedChecks.length-1; return `Override → still fails (${o} other check${o===1?"":"s"} failing)`; }
       return `Override → this term still fails (${failedChecks.length} check${failedChecks.length===1?"":"s"} failing)`;
     });
@@ -431,7 +471,7 @@ function failureReason(i,gr){
   if(i===0) return "Non-skill term — "+m.detail;
   if(i===1) return "Duplicate of existing taxonomy skill"+(m.matched?` “${m.matched}”`:"");
   if(i===2) return m.failureReason || (!m.learnable?"Learnability not met":"Demonstrability not met");
-  if(i===3) return "No market pulse";
+  if(i===3) return m.noData ? "No job postings found for this title" : "No quarter met high volume or growing demand";
   return "";
 }
 function recompute(){ results = queue.length?runPipeline(queue):null; }
@@ -458,7 +498,7 @@ function machineLabel(gi,m){
   if(gi===0) return m.pass?pill("yes","Skill"):pill("no","Not a skill — "+esc(m.detail));
   if(gi===1) return m.pass?pill("yes","Not in taxonomy"):pill("no","Duplicate of "+esc(m.matched||"existing skill"));
   if(gi===2) return m.pass?pill("yes","Meets definition"):pill("no",esc(m.failureReason||(!m.learnable?"Learnability not met":"Demonstrability not met")));
-  return m.pass?pill("yes","Has market pulse"):pill("no","No market pulse");
+  return m.pass?pill("yes","Has market pulse — "+esc(m.passedQuarters.join(", "))):pill("no",m.noData?"No market pulse — no postings found":"No market pulse");
 }
 
 /* ============================ Evidence (check 3) ============================ */
@@ -511,8 +551,16 @@ function renderClosest(m){
     : `<span class="badge" title="The de-duplication run did not flag this term — it is treated as distinct from the closest skill">not flagged — treated as distinct</span>`;
   return `<div class="badges"><span class="badge" title="Nearest skill in the existing taxonomy">Closest existing skill: <b>${esc(m.closest)}</b></span><span class="badge" title="Similarity score from the taxonomy de-duplication run">Similarity: <b>${pct(m.similarity)}</b></span>${flag}</div>`;
 }
+function sparkline(mm){ const max=Math.max(1,...mm);
+  return `<span class="spark" title="Monthly postings: ${mm.join(", ")}">`+mm.map(v=>`<i style="height:${Math.max(2,Math.round(v/max*18))}px"></i>`).join("")+`</span>`; }
 function renderMarketPulse(m){
-  return `<div class="pending-note"><b>${PENDING_TEXT}.</b> This check has not run, so it is neither a pass nor a fail and cannot be overridden yet. A term with no failed check is shown as PROVISIONAL until it does.</div>`;
+  if(m.pending) return `<div class="pending-note"><b>${PENDING_TEXT}.</b> This check has not run, so it is neither a pass nor a fail and cannot be overridden yet.</div>`;
+  if(m.noData) return `<div class="badges"><span class="badge">Market pulse: <b>no postings found</b></span></div>${m.note?`<div class="ev-note">${esc(m.note)}</div>`:""}`;
+  const grouped=m.quarters.map(q=>`${q.q} ${q.counts.join("·")}`).join(" | ");
+  const text=m.pass?"passed in "+m.passedQuarters.join(", "):"not met in any quarter";
+  return `<div class="badges"><span class="badge" title="${esc(MP_RULE)}">Market pulse: <b>${esc(text)}</b></span>`
+    +`<span class="badge" title="Distinct job postings mentioning this skill each month, Aug 2025 (left) to Jul 2026 (right)">Postings (12 mo) ${sparkline(m.monthly)} <b>${esc(grouped)}</b></span>`
+    +`<span class="badge">Annual postings: <b>${m.annual}</b></span></div>${m.note?`<div class="ev-note">${esc(m.note)}</div>`:""}`;
 }
 
 /* ============================ Stepper ============================ */
@@ -537,7 +585,7 @@ function renderOverview(){
   const host=$("#pageHost"); const m=metrics();
   const p=el("div","page");
   const tiles=[["Terms checked",m.total,"accent","Every term in the trial cohort"],["Failed",m.failed,"bad","Failed at least one completed check"],
-    ["Provisional",m.provisional,"provt","No completed check failed, but market pulse is still pending"],["Passed",m.passed,"good","Passed all four checks"]]
+    ...(m.provisional?[["Provisional",m.provisional,"provt","No completed check failed, but a check is still pending"]]:[]),["Passed",m.passed,"good","Passed all four checks"]]
     .map(([k,v,c,tip])=>`<div class="tile ${c}" title="${tip}"><div class="t-k">${k}</div><div class="t-v">${v}</div></div>`).join("");
   p.innerHTML=`
     <div class="page-h"><div class="eyebrow">Step 1 of ${STEPS.length}</div>
@@ -547,7 +595,7 @@ function renderOverview(){
       <div class="pipeline" id="pipelineStrip"></div>
       <div class="subhead">Cohort at a glance</div>
       <div class="tiles">${tiles}</div>
-      <div class="note" style="margin-top:14px"><b>How to read the result.</b> A term is <b>FAIL</b> if any completed check fails. It is <b>PROVISIONAL</b> if nothing failed but a check is still pending — market pulse has not run yet. It would be <b>PASS</b> only when all four checks pass, so no term can pass until job-posting data is added.</div>
+      <div class="note" style="margin-top:14px"><b>How to read the result.</b> A term <b>PASSES</b> only when all four checks pass, and <b>FAILS</b> if any check fails. Market pulse passes when at least one quarter between Aug 2025 and Jul 2026 shows high volume or growing demand in job postings.</div>
     </div>`;
   host.innerHTML=""; host.appendChild(p);
   renderPipelineStrip();
@@ -628,13 +676,13 @@ function renderReview(){
   recompute();
   const host=$("#pageHost");
   const p=el("div","page");
-  const checkOpts=[["any","Any check"],["0","Failed: Is it a skill?"],["1","Failed: Already in taxonomy?"],["2","Failed: Meets skill definition?"],["single","Fails exactly one check"],["multi","Fails two or more checks"]];
+  const checkOpts=[["any","Any check"],["0","Failed: Is a skill?"],["1","Failed: Already in taxonomy?"],["2","Failed: Meets skill definition?"],["single","Fails exactly one check"],["multi","Fails two or more checks"]];
   p.innerHTML=`
     <div class="page-h"><div class="eyebrow">Step 2 of ${STEPS.length}</div>
       <h2>Review all checks</h2>
-      <p>Every term below was tested by all four checks — nothing was skipped, so you can see the full picture before deciding. Toggle <b>Override</b> on any completed check where your judgement differs; a written reason is required for each one. Market pulse is pending and cannot be overridden yet.</p></div>
+      <p>Every term below was tested by all four checks — nothing was skipped, so you can see the full picture before deciding. Toggle <b>Override</b> on any completed check where your judgement differs; a written reason is required for each one.</p></div>
     <div class="page-b">
-      <div class="note ov">Human-in-the-loop: this is the only review gate. A term fails if <b>any</b> completed check fails, and is <b>provisional</b> while market pulse is pending. A <span class="decisive">⚡ decisive</span> mark means overriding that one check on its own would change the term between FAIL and not-FAIL — anything unmarked can be overridden without changing the outcome.</div>
+      <div class="note ov">Human-in-the-loop: this is the only review gate. A term fails if <b>any</b> check fails, and passes only when all four pass. A <span class="decisive">⚡ decisive</span> mark means overriding that one check on its own would change the term between FAIL and not-FAIL — anything unmarked can be overridden without changing the outcome.</div>
       <div class="filters" style="margin-top:14px">
         <input type="search" id="revSearch" placeholder="Search title, description or ID" aria-label="Search terms" value="${esc(revFilter.q)}">
         <select id="revCheck" aria-label="Filter by failed check">${checkOpts.map(([v,t])=>`<option value="${v}" ${revFilter.check===v?"selected":""}>${t}</option>`).join("")}</select>
@@ -660,7 +708,7 @@ function pageSlice(idx){ return idx.slice(revPageNo*REV_PAGE_SIZE, (revPageNo+1)
 function renderCards(){
   const wrap=$("#tcards"); if(!wrap||!results) return;
   const R=results, cnt=s=>R.filter(r=>r.status===s).length, nov=R.filter(r=>r.overrideCount>0).length;
-  const opts=[["all","All",R.length],["FAIL","Fail",cnt("FAIL")],["PROVISIONAL","Provisional",cnt("PROVISIONAL")],["PASS","Pass",cnt("PASS")],["OVERRIDDEN","Overridden",nov]];
+  const opts=[["all","All",R.length],["FAIL","Fail",cnt("FAIL")],...(cnt("PROVISIONAL")?[["PROVISIONAL","Provisional",cnt("PROVISIONAL")]]:[]),["PASS","Pass",cnt("PASS")],["OVERRIDDEN","Overridden",nov]];
   const sg=$("#revStatus");
   sg.innerHTML=opts.map(([v,t,n])=>`<button data-st="${v}" class="${revFilter.status===v?"on":""}">${t} (${n})</button>`).join("");
   sg.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>setFilter("status",b.dataset.st));
@@ -671,7 +719,7 @@ function renderCards(){
   shown.forEach(i=>{ if(expanded[i]===undefined) expanded[i] = R[i].overrideCount>0; });
   wrap.innerHTML=shown.length?shown.map(i=>termCardHTML(R[i],i,!!expanded[i])).join(""):`<div class="empty">No terms match these filters.</div>`;
   const nd=R.filter(r=>r.failed&&r.failedChecks.length===1).length;
-  $("#revCount").textContent=`${idx.length} of ${R.length} terms shown · ${cnt("FAIL")} fail · ${cnt("PROVISIONAL")} provisional · ${cnt("PASS")} pass · ${nd} fail one check only · ${nov} with overrides`;
+  $("#revCount").textContent=`${idx.length} of ${R.length} terms shown · ${cnt("FAIL")} fail${cnt("PROVISIONAL")?` · ${cnt("PROVISIONAL")} provisional`:""} · ${cnt("PASS")} pass · ${nd} fail one check only · ${nov} with overrides`;
   const pg=$("#revPager");
   pg.innerHTML=pages>1?`<button class="small ghost" id="pgPrev" ${revPageNo===0?"disabled":""}>◂ Prev</button><span class="hint">Page ${revPageNo+1} of ${pages}</span><button class="small ghost" id="pgNext" ${revPageNo>=pages-1?"disabled":""}>Next ▸</button>`:"";
   const go=d=>{ revPageNo+=d; renderCards(); const s=$("#revStatus"); if(s&&s.scrollIntoView) s.scrollIntoView({block:"start"}); };
@@ -727,12 +775,12 @@ function renderSummary(){
   recompute();
   const host=$("#pageHost"); const m=metrics();
   const tiles=[["Terms checked",m.total,"accent","Every term in the trial cohort"],["Passed",m.passed,"good","Passed all four checks (after any overrides)"],
-    ["Provisional",m.provisional,"provt","No completed check failed, but market pulse is still pending — may still fail once it runs"],
+    ...(m.provisional?[["Provisional",m.provisional,"provt","No completed check failed, but a check is still pending"]]:[]),
     ["Failed",m.failed,"bad","Failed one or more completed checks"],
-    ["Fail one check only",m.singleFail,"warnt","Terms failing exactly one check — a single override on that check would lift them to Provisional"],
+    ["Fail one check only",m.singleFail,"warnt","Terms failing exactly one check — a single override on that check would lift them to Pass"],
     ["Overridden (any check)",m.overridden,"warnt","Terms where a reviewer overrode the machine on at least one check"]]
     .map(([k,v,c,tip])=>`<div class="tile ${c}" title="${tip}"><div class="t-k">${k}</div><div class="t-v">${v}</div></div>`).join("");
-  const fc=[["Failed “Is it a skill?”",m.f0],["Failed “Already in taxonomy?”",m.f1],["Failed “Meets skill definition?”",m.f2],
+  const fc=[["Failed “Is a skill?”",m.f0],["Failed “Already in taxonomy?”",m.f1],["Failed “Meets skill definition?”",m.f2],
     m.p3?["“Has market pulse?” — pending",m.p3]:["Failed “Has market pulse?”",m.f3]]
     .map(([k,v])=>`<div class="subtile"><span>${k}</span><b>${v}</b></div>`).join("");
   const fn=[["Failed exactly 1 check",m.fc1],["Failed 2 checks",m.fc2],["Failed 3 checks",m.fc3],["Failed all 4 checks",m.fc4]]
@@ -751,9 +799,9 @@ function renderSummary(){
         <div class="toggle-group" id="viewToggle"><button data-view="simple" class="${repView==="simple"?"on":""}">Simplified</button><button data-view="detailed" class="${repView==="detailed"?"on":""}">Detailed</button></div></div>
       <div class="table-scroll"><table class="report" id="reportTable"></table></div>
       <div class="grp-label">Download CSV files</div>
-      <p class="hint" style="margin:0 0 10px">Each file is a curated view of a different subset of the cohort: the terms that passed or are provisional, those that failed, the aggregate metrics, or the full decision trail for every term. Every file carries the final status.</p>
+      <p class="hint" style="margin:0 0 10px">Each file is a curated view of a different subset of the cohort: the terms that passed, those that failed, the aggregate metrics, or the full decision trail for every term. Every file carries the final status.</p>
       <div class="exports">
-        <button class="exp" data-exp="passed"><span class="exp-i">✓</span><span><span class="exp-t">Passed &amp; provisional</span><span class="exp-s" id="cntPassed"></span></span></button>
+        <button class="exp" data-exp="passed"><span class="exp-i">✓</span><span><span class="exp-t">Passed terms</span><span class="exp-s" id="cntPassed"></span></span></button>
         <button class="exp" data-exp="failed"><span class="exp-i">✕</span><span><span class="exp-t">Failed terms</span><span class="exp-s" id="cntFailed"></span></span></button>
         <button class="exp" data-exp="summary"><span class="exp-i">Σ</span><span><span class="exp-t">Summary metrics</span><span class="exp-s">Counts &amp; breakdowns</span></span></button>
         <button class="exp" data-exp="audit"><span class="exp-i">⋔</span><span><span class="exp-t">Full audit trail</span><span class="exp-s">Every check, evidence, overrides &amp; reasons</span></span></button>
@@ -761,7 +809,7 @@ function renderSummary(){
       <div class="row-flex" style="margin-top:20px"><button class="ghost" id="resetBtn">↺ Clear all overrides</button></div>
     </div>`;
   host.innerHTML=""; host.appendChild(p);
-  $("#cntPassed").textContent=`${m.passed} passed · ${m.provisional} provisional`;
+  $("#cntPassed").textContent=`${m.passed} passed`+(m.provisional?` · ${m.provisional} provisional`:"");
   $("#cntFailed").textContent=m.failed+" term"+(m.failed===1?"":"s");
   $("#viewToggle").querySelectorAll("button").forEach(b=>b.onclick=()=>{ repView=b.dataset.view;
     $("#viewToggle").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b)); renderReport(); });
@@ -773,7 +821,7 @@ function clearOverrides(){ queue.forEach(sk=>{ sk.overrides={}; sk.overrideReaso
 function renderReport(){
   const t=$("#reportTable"); if(!t)return; const rows=results||[];
   const names=(ix)=>ix.length?ix.map(i=>CHECK_NAMES[i]).join(", "):"—";
-  const why=r=>r.failed?esc(r.failReason):(r.provisional?"Market pulse pending":"—");
+  const why=r=>r.failed?esc(r.failReason):(r.provisional?"A check is still pending":"—");
   if(repView==="simple"){
     t.innerHTML=`<thead><tr><th>ID</th><th>Skill title</th><th>Final status</th><th title="Every check runs for every term, so a term can fail more than one">Failed checks</th><th>Failure reason / override</th></tr></thead><tbody>`+
       rows.map(r=>`<tr><td class="rownum">${esc(r.sk.id)}</td><td><b>${esc(r.sk.title)}</b></td>
@@ -808,23 +856,22 @@ function toCSV(rows){ return rows.map(r=>r.map(c=>{ const s=(c==null?"":String(c
 function download(name,text){ const b=new Blob(["﻿"+text],{type:"text/csv;charset=utf-8"}); const u=URL.createObjectURL(b);
   const a=document.createElement("a"); a.href=u; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1000); }
 const csvNames=ix=>ix.length?ix.map(i=>CHECK_NAMES[i]).join(" | "):"none";
-function exportPassed(){ const rows=[["Term ID","Skill Title","Skill Description","Pending Checks","Closest Existing Skill","Override Count","Data Quality Note","Final Status"]];
-  for(const r of results){ if(r.failed)continue; const g1=r.gateRows[1].machine;
-    rows.push([r.sk.id,r.sk.title,r.sk.desc,csvNames(r.pendingChecks),g1.closest?`${g1.closest} (${pct(g1.similarity)})`:"none",r.overrideCount,r.sk.dq,r.status]); }
-  download("passed_and_provisional_skills.csv",toCSV(rows)); }
-function exportFailed(){ const rows=[["Term ID","Skill Title","Skill Description","Failed: Is it a skill?","Term Type","Failed: Already in taxonomy?","Duplicate to Existing Skill","Similarity","Failed: Meets skill definition?","Failed: Has market pulse?","Pending Checks","Failed Check Count","One Override From Not Failing?","Decisive Check","Status If Decisive Check Overridden","Failure Reason","Final Status"]];
+function exportPassed(){ const rows=[["Term ID","Skill Title","Skill Description","Closest Existing Skill","Market Pulse — Passing Quarters","Annual Postings","Override Count","Data Quality Note","Final Status"]];
+  for(const r of results){ if(r.failed)continue; const g1=r.gateRows[1].machine, g3=r.gateRows[3].machine;
+    rows.push([r.sk.id,r.sk.title,r.sk.desc,g1.closest?`${g1.closest} (${pct(g1.similarity)})`:"none",g3.passedQuarters.join("; ")||"none",g3.annual,r.overrideCount,r.sk.dq,r.status]); }
+  download("passed_skills.csv",toCSV(rows)); }
+function exportFailed(){ const rows=[["Term ID","Skill Title","Skill Description","Failed: Is a skill?","Term Type","Failed: Already in taxonomy?","Duplicate to Existing Skill","Similarity","Failed: Meets skill definition?","Failed: Has market pulse?","Failed Check Count","One Override From Not Failing?","Decisive Check","Status If Decisive Check Overridden","Failure Reason","Final Status"]];
   for(const r of results){ if(!r.failed)continue; const g=r.gateRows, f=r.failedChecks, one=f.length===1;
     const yn=i=>g[i].pending?"Pending":(f.includes(i)?"Yes":"No");
     rows.push([r.sk.id,r.sk.title,r.sk.desc,
       yn(0), g[0].machine.detail, yn(1), g[1].machine.matched||"", pct(g[1].machine.similarity),
-      yn(2), yn(3), csvNames(r.pendingChecks),
+      yn(2), yn(3),
       f.length, one?"Yes":"No", one?CHECK_NAMES[f[0]]:"—", one?(r.pendingChecks.length?"PROVISIONAL":"PASS"):"—", r.failReason, r.status]); }
   download("failed_skills.csv",toCSV(rows)); }
 function exportSummary(){ const m=metrics(); const rows=[["Metric","Count"],
-    ["Total Terms Checked",m.total],["Final Status: PASS",m.passed],["Final Status: PROVISIONAL",m.provisional],["Final Status: FAIL",m.failed],
+    ["Total Terms Checked",m.total],["Final Status: PASS",m.passed],["Final Status: FAIL",m.failed],
     ["Overridden by Reviewer (Any Check)",m.overridden],["Fail One Check Only (one override from not failing)",m.singleFail],
-    ["Pending checks (not yet run):",""],["Pending: Has market pulse?",m.p3],["Terms With Any Pending Check",m.anyPending],
-    ["Failed Terms — which checks failed (a term can fail several):",""],["Failed check: Is it a skill?",m.f0],["Failed check: Already in taxonomy?",m.f1],["Failed check: Meets skill definition?",m.f2],["Failed check: Has market pulse?",m.f3],
+    ["Failed Terms — which checks failed (a term can fail several):",""],["Failed check: Is a skill?",m.f0],["Failed check: Already in taxonomy?",m.f1],["Failed check: Meets skill definition?",m.f2],["Failed check: Has market pulse?",m.f3],
     ["Failed Terms — how many checks each failed:",""],["Failed exactly 1 check",m.fc1],["Failed 2 checks",m.fc2],["Failed 3 checks",m.fc3],["Failed all 4 checks",m.fc4]];
   download("summary_metrics.csv",toCSV(rows)); }
 function evidenceCell(side){
@@ -835,11 +882,11 @@ function exportAudit(){
   const cols=["Term ID","Skill Title","Skill Description","Data Quality Note"];
   const chk=(n,extra)=>[`${n} — Output`,...extra.map(x=>`${n} — ${x}`),`${n} — Override?`,`${n} — Reason`,`${n} — Final Decision`];
   const rows=[[...cols,
-    ...chk("Is it a skill?",["Term Type","Confidence","Reasoning"]),
+    ...chk("Is a skill?",["Term Type","Confidence","Reasoning"]),
     ...chk("Already in taxonomy?",["Closest Existing Skill","Similarity"]),
     ...chk("Meets skill definition?",["Rationale","Learnability Evidence","Demonstrability Evidence"]),
-    ...chk("Has market pulse?",["Note"]),
-    "Failed Checks","Pending Checks","Decisive Checks","Override Count","Final Status"]];
+    ...chk("Has market pulse?",["Passing Quarters","Annual Postings","Monthly Postings (Aug 2025–Jul 2026)","Note"]),
+    "Failed Checks","Decisive Checks","Override Count","Final Status"]];
   for(const r of results){ const g=r.gateRows, e=evidenceFor(r.sk);
     const out=(gr,pT,pF)=>gr.machine.pending?"Pending":(gr.machine.pass?pT:pF);
     const fin=(gr,pT,pF)=>gr.pending?"Pending":(gr.finalPass?pT:pF);
@@ -850,8 +897,9 @@ function exportAudit(){
       out(g[0],"Skill","Not a skill"), g[0].machine.detail, g[0].machine.confidence, g[0].machine.reasoning, ...trio(g[0],"Skill","Not a skill"),
       out(g[1],"Non-duplicate","Duplicate"), g[1].machine.closest||"none", pct(g[1].machine.similarity), ...trio(g[1],"Non-duplicate","Duplicate"),
       out(g[2],"Pass","Fail"), e.rationale, evidenceCell(e.learn), evidenceCell(e.demo), ...trio(g[2],"Pass","Fail"),
-      out(g[3],"Pass","Fail"), g[3].machine.note||"", ...trio(g[3],"Pass","Fail"),
-      csvNames(r.failedChecks), csvNames(r.pendingChecks), csvNames(r.decisive.map((d,i)=>d?i:-1).filter(i=>i>=0)),
+      out(g[3],"Pass","Fail"), g[3].machine.passedQuarters.join("; ")||"none", g[3].machine.annual, g[3].machine.monthly.join(" "),
+      g[3].machine.note||"", ...trio(g[3],"Pass","Fail"),
+      csvNames(r.failedChecks), csvNames(r.decisive.map((d,i)=>d?i:-1).filter(i=>i>=0)),
       r.overrideCount, r.status]); }
   download("audit_trail.csv",toCSV(rows)); }
 
@@ -910,7 +958,7 @@ function initTooltips(){
 }
 function init(){
   initTheme(); initTooltips();
-  queue=toQueue(TRIAL&&TRIAL.terms); queueChanged();
+  queue=toQueue(displayOrder(TRIAL&&TRIAL.terms)); queueChanged();
   $("#backBtn").onclick=()=>gotoPage(page-1);
   $("#nextBtn").onclick=()=>{ if(!reviewDone[page])return; gotoPage(page+1); };
   gotoPage(0);
