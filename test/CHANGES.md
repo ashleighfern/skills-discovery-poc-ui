@@ -1,5 +1,33 @@
 # Test suite changes (mock → real-data review UI)
 
+## 2026-10-07 — "Submit skills" page reinstated (upload only)
+
+The scope decision that stripped the submission step was reversed. `STEPS` is 4 again
+(`Overview`, `Submit skills`, `Review all checks`, `Summary`) and the review page moved from index
+1 to index 2, now named `REVIEW_PAGE` so a future insert cannot silently break the `reviewDone`
+bookkeeping. `data/trial_results.json` gained `discovery_source` and `expert_validated` on every
+term plus a top-level `submission_provenance` block; the fixture was regenerated.
+
+**Tests changed, not weakened.** `STEPS = 3` → `STEPS = 4`; the titles assertion gained the new
+step; the `reviewDone[1]` regex became `reviewDone[REVIEW_PAGE]` with an added guard that no
+`reviewDone[1]` survives; `setPage(1)` split into one check for the review page (via
+`REVIEW_PAGE`) and one for the submit page. Two source guards previously asserted `"Upload CSV"`
+and `"Download CSV template"` were **absent** — they are now asserted **present**, because the
+decision they encoded was reversed. The synthetic-mock-data guards (`SAMPLE_TITLES`,
+`generateSignals`, `samples(`, demo controls, `addSkill`, `ingestCSV`) all stay: the CSV template
+ships angle-bracket placeholders precisely so it trips none of them.
+
+**New §14, 38 checks.** Column spec and allowed sources; both tags present on all 304 terms and
+reaching the queue; provenance recorded in the data rather than only asserted in the UI;
+`readSubmission` happy path, missing-header, empty file, missing title, missing description (with
+the reason text), unknown source, non-Yes/No expert flag, and quoted fields containing commas; the
+integrity property that an upload **stages** without touching `queue` or `results`; partial files
+staging good rows while reporting bad ones; `renderSubmit` running without throwing; and the
+downloadable template being itself a valid submission whose row is a placeholder.
+
+`submissionTemplateRows()` was extracted as a pure function so the template can be tested without
+driving the DOM. 364 → 402 checks.
+
 ## 2026-09-29 — market pulse switched from pending to live results
 
 `data/trial_results.json` now carries real market-pulse results for all 304 terms (job postings

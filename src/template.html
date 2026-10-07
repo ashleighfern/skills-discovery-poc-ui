@@ -225,6 +225,22 @@
   .switch.acc input:checked { background:var(--accent); }
 
 
+  /* submit page */
+  .srows { display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line);
+    border-radius:var(--radius-sm); overflow:hidden; }
+  .srow { display:grid; grid-template-columns:auto 1fr auto auto; gap:12px; align-items:center;
+    padding:9px 13px; background:var(--surface); font-size:13px; }
+  .srow .sn { font-family:var(--mono); font-size:11.5px; color:var(--ink-3); }
+  .srow .st { font-weight:650; }
+  .srow .sd { font-size:12px; color:var(--ink-3); margin-top:1px; line-height:1.35; }
+  .srow.stagedrow { background:var(--warn-bg); }
+  .colspec { width:100%; border-collapse:collapse; font-size:12.5px; }
+  .colspec th, .colspec td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); }
+  .colspec th { font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-3); }
+  .colspec code { font-family:var(--mono); font-size:11.5px; }
+  .uprow { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:10px 0 4px; }
+  @media (max-width:640px){ .srow { grid-template-columns:auto 1fr; } }
+
   /* summary */
   .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; }
   .tile { background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--radius-sm); padding:14px 16px; }
@@ -355,9 +371,12 @@ function overrideStatus(gi, reason, part){
 const MP_RULE = "Expert-validated skills pass without needing demand. Otherwise a quarter passes if postings appear in all three months and either the quarterly total is in the top quarter of skills for that quarter (high volume), or demand is growing (last month above the first, or rising over six months).";
 const STEPS = [
   {t:"Overview", s:"The cohort and the four checks"},
+  {t:"Submit skills", s:"Terms tagged by discovery source and expert validation"},
   {t:"Review all checks", s:"All four checks per term · override any completed check"},
   {t:"Summary", s:"Report & export"},
 ];
+const REVIEW_PAGE = 2;   // the single human gate; kept as a name so page inserts don't silently break it
+const SOURCES = ["Sector Agency","Skills Discovery Algorithm","Prospectus","Crosswalk","Training Provider","Individual","Enterprise"];
 const LAST = STEPS.length - 1;
 const REV_PAGE_SIZE = 20;
 const TERM_TYPES = {skill:"Skill", concept_or_domain:"Concept / domain", job_role_or_function:"Job role / function",
@@ -381,6 +400,7 @@ let revPinned = new Set();   // terms touched under the current filter stay visi
 /* ============================ Model ============================ */
 function toQueue(terms){
   return (terms||[]).map(t=>({ id:String(t.id), title:t.title||"", desc:t.description||"", dq:t.data_quality_note||"",
+    source:t.discovery_source||"", expert:t.expert_validated||"",
     checks:t.checks||{}, overrides:{}, overrideReasons:{}, overrideParts:{} }));
 }
 /* Display order: the terms we are most confident in come first, so reviewers (and a briefing audience) meet clean,
@@ -482,7 +502,7 @@ function failureReason(i,gr){
 function recompute(){ results = queue.length?runPipeline(queue):null; }
 /* The review page keys card state by queue index, so any change to the queue itself
    invalidates the open/closed state and the "review completed" tick for that page. */
-function queueChanged(){ expanded={}; reviewDone[1]=false; recompute(); }
+function queueChanged(){ expanded={}; reviewDone[REVIEW_PAGE]=false; recompute(); }
 
 /* ============================ Helpers ============================ */
 const $=s=>document.querySelector(s);
@@ -621,7 +641,130 @@ function renderPipelineStrip(){
     strip.appendChild(d); });
 }
 
-/* ===================== Page 1 — Review (the single human gate) ===================== */
+/* ===================== Page 1 — Submit skills ===================== */
+/* Terms staged from an uploaded CSV. Deliberately NOT added to `queue`: the four checks run
+   server-side, so a staged term has no verdicts and must never sit among the assessed ones. */
+let staged = [];
+let uploadMsg = null;   // {ok:bool, text:string}
+
+function parseCSV(text){
+  const rows=[]; let row=[],cur="",q=false;
+  for(let i=0;i<text.length;i++){ const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else { if(c==='"')q=true; else if(c===','){row.push(cur);cur="";} else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur="";}
+      else if(c==='\r'){} else cur+=c; } }
+  if(cur!==""||row.length){ row.push(cur); rows.push(row); }
+  return rows.filter(r=>r.some(x=>x.trim()!==""));
+}
+
+const SUBMIT_COLS = ["Skill Title","Skill Description","Source","Expert-Validated"];
+/* The downloadable template. Angle-bracket placeholders on purpose: the page must never show an
+   invented term that could be mistaken for cohort data. */
+function submissionTemplateRows(){
+  return [SUBMIT_COLS, ["<the skill-like term>","<what the term means>","Skills Discovery Algorithm","No"]];
+}
+
+/* Pure: rows -> {terms,errors}. Validates the header and every row. */
+function readSubmission(rows){
+  const errors=[];
+  if(!rows.length) return {terms:[], errors:["the file is empty"]};
+  const head=rows[0].map(h=>h.trim());
+  const missing=SUBMIT_COLS.filter(c=>!head.some(h=>h.toLowerCase()===c.toLowerCase()));
+  if(missing.length) return {terms:[], errors:[`missing column${missing.length===1?"":"s"}: ${missing.join(", ")}`]};
+  const ix=SUBMIT_COLS.map(c=>head.findIndex(h=>h.toLowerCase()===c.toLowerCase()));
+  const terms=[];
+  rows.slice(1).forEach((r,k)=>{
+    const [title,desc,src,exp]=ix.map(i=>(r[i]||"").trim());
+    const line=k+2, bad=[];
+    if(!title) bad.push("no skill title");
+    if(!desc) bad.push("no description — the definition check cannot assess a bare title");
+    if(src && !SOURCES.some(o=>o.toLowerCase()===src.toLowerCase())) bad.push(`unknown source "${src}"`);
+    if(exp && !/^(yes|no)$/i.test(exp)) bad.push(`expert-validated must be Yes or No, got "${exp}"`);
+    if(bad.length){ errors.push(`row ${line}: ${bad.join("; ")}`); return; }
+    terms.push({title, desc, source:src||"not given", expert:exp?exp[0].toUpperCase()+exp.slice(1).toLowerCase():"No"});
+  });
+  return {terms, errors};
+}
+
+function renderSubmit(){
+  recompute();
+  const host=$("#pageHost"); const p=el("div","page");
+  const prov=(TRIAL&&TRIAL.submission_provenance)||{};
+  const count=o=>{ const m={}; queue.forEach(x=>{ const k=(x[o]||"not recorded"); m[k]=(m[k]||0)+1; }); return m; };
+  const one=o=>{ const e=Object.entries(count(o)); return e.length===1?e[0][0]:e.map(([k,v])=>`${k} (${v})`).join(", "); };
+  const colspec=SUBMIT_COLS.map((c,i)=>`<tr><td><code>${c}</code></td><td>${[
+      "The skill-like term, as the source produced it.",
+      "What the term means. <b>Required</b> — without it the definition check would assess a title, not a skill.",
+      `Where it came from. One of: ${SOURCES.map(x=>`<code>${x}</code>`).join(", ")}.`,
+      "<code>Yes</code> or <code>No</code>. A <code>Yes</code> passes market pulse without needing demand evidence."
+    ][i]}</td></tr>`).join("");
+  p.innerHTML=`
+    <div class="page-h"><div class="eyebrow">Step 2 of ${STEPS.length}</div>
+      <h2>Submit skills</h2>
+      <p>Skill-like terms enter the process here. Each carries two tags that travel with it: the <b>discovery source</b> it came from, and whether a <b>domain expert</b> has already validated it. The source is how a result is routed back to whoever raised the term; expert validation is an alternative route through the market-pulse check.</p></div>
+    <div class="page-b">
+      <div class="subhead">The batch in this trial</div>
+      <div class="tiles">
+        <div class="tile accent" title="Terms submitted and checked in this trial"><div class="t-k">Terms submitted</div><div class="t-v">${queue.length}</div></div>
+        <div class="tile" title="The discovery source every term in this batch carries"><div class="t-k">Discovery source</div><div class="t-v" style="font-size:16px;line-height:1.3">${esc(one("source"))}</div></div>
+        <div class="tile" title="Whether a domain expert had already validated the term"><div class="t-k">Expert-validated</div><div class="t-v" style="font-size:16px;line-height:1.3">${esc(one("expert"))}</div></div>
+      </div>
+      ${(prov.discovery_source||prov.expert_validated)?`<div class="note" style="margin-top:14px"><b>Where these two tags come from.</b>
+        ${prov.discovery_source?`<div style="margin-top:6px">${esc(prov.discovery_source)}</div>`:""}
+        ${prov.expert_validated?`<div style="margin-top:6px">${esc(prov.expert_validated)}</div>`:""}</div>`:""}
+
+      <div class="subhead" style="margin-top:22px">Upload a batch</div>
+      <p class="hint" style="margin:0 0 4px">A submission is a CSV with these four columns. Terms read from a file are listed below as staged — they are <b>not</b> assessed here, because the four checks run server-side.</p>
+      <div class="table-scroll"><table class="colspec"><thead><tr><th>Column</th><th>What it holds</th></tr></thead><tbody>${colspec}</tbody></table></div>
+      <div class="uprow">
+        <button class="primary" id="uploadBtn">⬆ Upload CSV</button>
+        <input type="file" id="fileInput" accept=".csv,text/csv" style="display:none">
+        <button class="ghost" id="templateBtn">Download CSV template</button>
+        ${staged.length?`<button class="ghost small" id="clearStaged">Clear ${staged.length} staged</button>`:""}
+      </div>
+      <div id="upStatus"></div>
+
+      <div class="subhead" style="margin-top:22px">Submitted terms (${queue.length}${staged.length?` + ${staged.length} staged`:""})</div>
+      <div class="srows" id="srows"></div>
+    </div>`;
+  host.innerHTML=""; host.appendChild(p);
+
+  const rows=$("#srows");
+  rows.innerHTML =
+    staged.map(t=>`<div class="srow stagedrow"><div class="sn">new</div>
+        <div><div class="st">${esc(t.title)}</div><div class="sd">${esc(t.desc)}</div></div>
+        <div><span class="badge">${esc(t.source)}</span></div>
+        <div>${pill("na","staged — not yet checked")}</div></div>`).join("")
+    + queue.map(sk=>`<div class="srow"><div class="sn">${esc(sk.id)}</div>
+        <div><div class="st">${esc(sk.title)}</div><div class="sd">${esc(sk.desc||"—")}</div></div>
+        <div><span class="badge">${esc(sk.source||"not recorded")}</span></div>
+        <div><span class="badge" title="Whether a domain expert had already validated this term">expert: <b>${esc(sk.expert||"not recorded")}</b></span></div>
+      </div>`).join("");
+
+  const st=$("#upStatus");
+  if(uploadMsg) st.innerHTML=`<div class="${uploadMsg.ok?"note":"note ov"}" style="margin-top:10px">${uploadMsg.text}</div>`;
+
+  $("#uploadBtn").onclick=()=>$("#fileInput").click();
+  $("#fileInput").onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(!f)return;
+    const rd=new FileReader();
+    rd.onload=()=>{ ingestSubmission(String(rd.result)); e.target.value=""; renderSubmit(); updateReview(); };
+    rd.readAsText(f); };
+  $("#templateBtn").onclick=()=>download("skills_submission_template.csv",
+    toCSV(submissionTemplateRows()));
+  const cs=$("#clearStaged"); if(cs) cs.onclick=()=>{ staged=[]; uploadMsg=null; renderSubmit(); updateReview(); };
+}
+
+function ingestSubmission(text){
+  const {terms, errors} = readSubmission(parseCSV(text));
+  if(terms.length) staged = staged.concat(terms);
+  const parts=[];
+  if(terms.length) parts.push(`<b>Read ${terms.length} term${terms.length===1?"":"s"}.</b> They are staged below and will be checked on the next run; nothing about the ${queue.length} assessed terms has changed.`);
+  if(errors.length) parts.push(`<b>${errors.length} row${errors.length===1?"":"s"} not read:</b><br>${errors.slice(0,8).map(esc).join("<br>")}${errors.length>8?`<br>… and ${errors.length-8} more`:""}`);
+  if(!parts.length) parts.push("Nothing was read from that file.");
+  uploadMsg = {ok: errors.length===0 && terms.length>0, text: parts.join("<br><br>")};
+}
+
+/* ===================== Page 2 — Review (the single human gate) ===================== */
 /* One check panel inside a term card. Pure — returns HTML. */
 function checkPanelHTML(r,i,gi){
   const g=r.gateRows[gi], m=g.machine;
@@ -691,7 +834,7 @@ function renderReview(){
   const p=el("div","page");
   const checkOpts=[["any","Any check"],["0","Failed: Is a skill?"],["1","Failed: Already in taxonomy?"],["2","Failed: Meets skill definition?"],["single","Fails exactly one check"],["multi","Fails two or more checks"]];
   p.innerHTML=`
-    <div class="page-h"><div class="eyebrow">Step 2 of ${STEPS.length}</div>
+    <div class="page-h"><div class="eyebrow">Step ${REVIEW_PAGE+1} of ${STEPS.length}</div>
       <h2>Review all checks</h2>
       <p>Every term below was tested by all four checks — nothing was skipped, so you can see the full picture before deciding. Toggle <b>Override</b> on any completed check where your judgement differs; a written reason is required for each one.</p></div>
     <div class="page-b">
@@ -746,7 +889,7 @@ function renderCards(){
     sk.overrides=sk.overrides||{}; sk.overrides[gi]=cb.checked;
     if(!cb.checked){ if(sk.overrideReasons) delete sk.overrideReasons[gi]; if(sk.overrideParts) delete sk.overrideParts[gi]; }
     expanded[i]=true; revPinned.add(i);
-    reviewDone[1]=false; recompute(); renderCards(); renderStepper(); updateReview();
+    reviewDone[REVIEW_PAGE]=false; recompute(); renderCards(); renderStepper(); updateReview();
   });
   wrap.querySelectorAll("[data-reason]").forEach(ta=>ta.oninput=()=>{
     const [i,gi]=ta.dataset.reason.split(":").map(Number);
@@ -754,14 +897,14 @@ function renderCards(){
     // live-update the little status line without re-rendering (keep focus)
     const box=ta.parentElement.querySelector(".reason-req,.reason-ok");
     if(box){ const [ok,msg]=overrideStatus(gi,ta.value,(queue[i].overrideParts||{})[gi]); box.className=ok?"reason-ok":"reason-req"; box.textContent=msg; }
-    reviewDone[1]=false; recompute(); updateReview();
+    reviewDone[REVIEW_PAGE]=false; recompute(); updateReview();
   });
   wrap.querySelectorAll("[data-part]").forEach(rb=>rb.onchange=()=>{
     const [i,gi]=rb.dataset.part.split(":").map(Number);
     queue[i].overrideParts=queue[i].overrideParts||{}; queue[i].overrideParts[gi]=rb.value;
     const box=rb.closest(".reasonbox").querySelector(".reason-req,.reason-ok");
     if(box){ const [ok,msg]=overrideStatus(gi,(queue[i].overrideReasons||{})[gi],rb.value); box.className=ok?"reason-ok":"reason-req"; box.textContent=msg; }
-    reviewDone[1]=false; recompute(); updateReview();
+    reviewDone[REVIEW_PAGE]=false; recompute(); updateReview();
   });
 }
 
@@ -928,7 +1071,8 @@ function exportAudit(){
 /* ============================ Navigation ============================ */
 function pageCanComplete(){
   if(page===0) return queue.length>0;
-  if(page===1) return reviewCanComplete();
+  if(page===1) return queue.length>0;
+  if(page===REVIEW_PAGE) return reviewCanComplete();
   return true;
 }
 function updateReview(){
@@ -943,9 +1087,10 @@ function updateReview(){
   const cls = checked?"reviewcheck done":(canComplete?"reviewcheck ready":"reviewcheck blocked");
   let hint="";
   if(page===0) hint = queue.length? "Tick to confirm you have read the overview." : "No terms loaded.";
+  else if(page===1) hint = queue.length? "Tick to confirm this is the batch that was checked." : "No terms submitted.";
   else if(!canComplete) hint = "Add a reason for every override to continue.";
   else hint = "Tick to confirm you have reviewed the checks.";
-  slot.innerHTML=`<div class="${cls}"><label><input type="checkbox" id="reviewChk" ${checked?"checked":""} ${canComplete?"":"disabled"}> ${page===0?"Read":"Review completed"}</label><span class="rc-hint">${hint}</span></div>`;
+  slot.innerHTML=`<div class="${cls}"><label><input type="checkbox" id="reviewChk" ${checked?"checked":""} ${canComplete?"":"disabled"}> ${page===0?"Read":page===1?"Batch confirmed":"Review completed"}</label><span class="rc-hint">${hint}</span></div>`;
   const chk=$("#reviewChk"); if(chk) chk.onchange=()=>{ reviewDone[page]=chk.checked; renderStepper(); updateReview(); };
   next.disabled = !reviewDone[page];
 }
@@ -953,7 +1098,8 @@ function gotoPage(i){
   page=Math.max(0,Math.min(LAST,i));
   window.scrollTo({top:0,behavior:"instant"});
   if(page===0) renderOverview();
-  else if(page===1) renderReview();
+  else if(page===1) renderSubmit();
+  else if(page===REVIEW_PAGE) renderReview();
   else renderSummary();
   renderStepper(); updateReview();
 }

@@ -54,8 +54,9 @@ const pageHTML = els => ((els["#pageHost"]||{}).children||[]).map(c=>c.innerHTML
 // ---------------------------------------------------------------- 1. structure
 hdr("1. Structure / config");
 eq("GATES overridable = all four (a pending row would still be gated per term, not per check)", api.GATES.map(g=>g.ov), [true,true,true,true]);
-eq("STEPS = 3", api.STEPS.length, 3);
-eq("STEPS titles", api.STEPS.map(s=>s.t), ["Overview","Review all checks","Summary"]);
+eq("STEPS = 4", api.STEPS.length, 4);
+eq("STEPS titles", api.STEPS.map(s=>s.t), ["Overview","Submit skills","Review all checks","Summary"]);
+eq("REVIEW_PAGE points at the review step", api.STEPS[api.REVIEW_PAGE].t, "Review all checks");
 eq("GATES questions == CHECK_NAMES", api.GATES.map(g=>g.q), api.CHECK_NAMES);
 eq("CHECK_NAMES normalised", api.CHECK_NAMES,
    ["Is a skill?","Already in taxonomy?","Meets skill definition?","Has market pulse?"]);
@@ -202,9 +203,11 @@ ok("clean batch: review can complete", api.fns("reviewCanComplete")() === true);
   ok("clearing overrides clears parts", Object.keys(api.getQueue().find(x=>x.id===ROLE.g2_only_demonstrability).overrideParts||{}).length===0);
 })();
 fresh();
-api.setPage(1); ok("page 1 can complete via reviewCanComplete", api.fns("pageCanComplete")() === true);
+api.setPage(api.REVIEW_PAGE); ok("review page can complete via reviewCanComplete", api.fns("pageCanComplete")() === true);
+api.setPage(1); ok("submit page completes once a batch is loaded", api.fns("pageCanComplete")() === true);
 ok("queueChanged() clears card state + the review tick",
-   /function queueChanged\(\)\{ expanded=\{\}; reviewDone\[1\]=false; recompute\(\); \}/.test(src));
+   /function queueChanged\(\)\{ expanded=\{\}; reviewDone\[REVIEW_PAGE\]=false; recompute\(\); \}/.test(src));
+ok("no reviewDone[1] left over from the 3-step layout", !/reviewDone\[1\]/.test(src));
 ["queue=toQueue(displayOrder(TRIAL&&TRIAL.terms)); queueChanged()", "sk.overrideParts={}; }); revPinned=new Set(); queueChanged()"].forEach(sig =>
    ok(`queue mutation uses queueChanged: ${sig.slice(0,28)}…`, src.includes(sig)));
 ok("every queue mutation site routes through queueChanged (definition + 2 calls)",
@@ -571,8 +574,14 @@ ok("fixture terms are verbatim terms from the data (re-run make_fixture.py if no
 const SAMPLE_TITLES = ["AI Governance","Prompt Engineering","Clinical Documentation Improvement","Product Lifecycle Management",
   "AI-Native Mindset","Customer Delight","Green Transformation Readiness","Design Skills Discovery Process"];
 SAMPLE_TITLES.forEach(t=>ok(`no sample title "${t}" in index.html`, !src.includes(t)));
-for(const s of ["generateSignals","samples(","Load 8 sample","Demo controls","demoToggle","Upload CSV","Download CSV template","addSkill","ingestCSV","google.com/search"])
+for(const s of ["generateSignals","samples(","Load 8 sample","Demo controls","demoToggle","addSkill","ingestCSV","google.com/search"])
   ok(`index.html free of "${s}"`, !src.includes(s));
+// Submit page reinstated 2026-10-07 (upload only, no one-at-a-time add). These two were previously
+// asserted ABSENT; the scope decision was reversed, so they are now asserted present.
+for(const s of ["Upload CSV","Download CSV template","Submit skills"])
+  ok(`index.html contains "${s}"`, src.includes(s));
+ok("submit page offers no one-at-a-time add form", !src.includes('id="addBtn"') && !src.includes('id="fTitle"'));
+ok("CSV template ships placeholders, not a plausible invented term", src.includes("<the skill-like term>"));
 const FOOT = `${DATA.terms.length} terms after removing 34 whose text was lost or unreadable`;
 eq("cohort footnote appears exactly once", src.split(FOOT).length-1, 1);
 ok("no banner above the stepper (moved to the deck, 2026-09-29)", !src.includes('class="banner"') && !src.includes("analysed inside the organisation; only monthly counts"));
@@ -580,6 +589,97 @@ for(const s of ["Market pulse check not yet run","No term can PASS","no term can
   ok(`index.html free of stale pending wording "${s}"`, !src.includes(s));
 ok("no mention of an 18-term set", !/18[- ]term|\b18 terms\b|11\/18/.test(src));
 ok("template (UI text, no data) never mentions v1 / v2", !/\bv[12]\b/i.test(TEMPLATE));
+
+hdr("14. Submit page — CSV submission (reinstated 2026-10-07)");
+
+eq("expected columns", api.SUBMIT_COLS, ["Skill Title","Skill Description","Source","Expert-Validated"]);
+eq("Skills Discovery Algorithm is an allowed source", api.SOURCES.includes("Skills Discovery Algorithm"), true);
+
+// every cohort term carries both submission tags
+fresh();
+ok("every cohort term carries a discovery source",
+   api.TRIAL.terms.every(t=>t.discovery_source==="Skills Discovery Algorithm"));
+ok("every cohort term carries an expert-validated flag",
+   api.TRIAL.terms.every(t=>t.expert_validated==="No"));
+ok("the two tags reach the queue", api.getQueue().every(sk=>sk.source && sk.expert));
+ok("provenance of both tags is recorded in the data, not just asserted on the page",
+   !!(api.TRIAL.submission_provenance && /INFERRED/.test(api.TRIAL.submission_provenance.discovery_source)));
+
+const CSV = h => [api.SUBMIT_COLS.join(","), h].join("\n");
+
+// happy path
+(function(){
+  const r = api.readSubmission(api.parseCSV(CSV('Battery Diagnostics,Diagnosing faults in battery packs,Sector Agency,Yes')));
+  eq("valid row: no errors", r.errors, []);
+  eq("valid row: one term", r.terms.length, 1);
+  eq("valid row: tags carried", [r.terms[0].source, r.terms[0].expert], ["Sector Agency","Yes"]);
+})();
+
+// header validation
+(function(){
+  const r = api.readSubmission(api.parseCSV("Skill Title,Source\nX,Sector Agency"));
+  eq("missing columns: no terms", r.terms.length, 0);
+  ok("missing columns: names them", /missing columns: Skill Description, Expert-Validated/.test(r.errors[0]), r.errors[0]);
+})();
+eq("empty file is rejected", api.readSubmission(api.parseCSV("")).errors.length, 1);
+
+// row validation — a bare title is the one that matters most
+(function(){
+  const r = api.readSubmission(api.parseCSV(CSV('Battery Diagnostics,,Sector Agency,No')));
+  eq("row with no description is rejected", r.terms.length, 0);
+  ok("rejection says why a bare title is useless", /definition check cannot assess a bare title/.test(r.errors[0]), r.errors[0]);
+})();
+eq("row with no title is rejected",
+   api.readSubmission(api.parseCSV(CSV(',Some description,Sector Agency,No'))).terms.length, 0);
+ok("unknown source is rejected",
+   /unknown source "Ministry of Magic"/.test(api.readSubmission(api.parseCSV(CSV('X,A description,Ministry of Magic,No'))).errors[0] || ""));
+ok("non Yes/No expert flag is rejected",
+   /must be Yes or No/.test(api.readSubmission(api.parseCSV(CSV('X,A description,Sector Agency,maybe'))).errors[0] || ""));
+// quoted fields containing commas survive the parser
+(function(){
+  const r = api.readSubmission(api.parseCSV(CSV('"Analysis, advanced","Reading, cleaning and interpreting data",Crosswalk,No')));
+  eq("quoted commas parse as single fields", r.terms.length, 1);
+  eq("quoted title intact", r.terms[0].title, "Analysis, advanced");
+})();
+
+// the integrity property: a staged upload never joins the assessed cohort
+(function(){
+  fresh(); api.resetStaged();
+  const before = api.getQueue().length, beforeRes = api.getResults().length;
+  api.ingestSubmission(CSV('Battery Diagnostics,Diagnosing faults in battery packs,Sector Agency,No'));
+  eq("staged term is held separately", api.getStaged().length, 1);
+  eq("queue is untouched by an upload", api.getQueue().length, before);
+  eq("results are untouched by an upload", api.getResults().length, beforeRes);
+  ok("upload message says the assessed terms are unchanged",
+     /nothing about the \d+ assessed terms has changed/.test(api.getUploadMsg().text));
+  api.resetStaged();
+  eq("staged clears", api.getStaged().length, 0);
+})();
+
+// a partially bad file stages the good rows and reports the bad ones
+(function(){
+  api.resetStaged();
+  api.ingestSubmission([api.SUBMIT_COLS.join(","),
+    'Good One,A real description,Crosswalk,No',
+    'Bad One,,Crosswalk,No'].join("\n"));
+  eq("good row staged", api.getStaged().length, 1);
+  ok("bad row reported", /1 row not read/.test(api.getUploadMsg().text), api.getUploadMsg().text);
+  ok("mixed result is not marked ok", api.getUploadMsg().ok === false);
+  api.resetStaged();
+})();
+
+// the downloadable template is itself a valid submission shape
+(function(){
+  fresh(); api.setPage(1);
+  try { api.fns("renderSubmit")(); } catch(e) { ok("renderSubmit runs", false, String(e)); }
+  ok("renderSubmit runs without throwing", true);
+  const tpl = api.toCSV(api.submissionTemplateRows());
+  const r = api.readSubmission(api.parseCSV(tpl));
+  eq("the downloadable template is itself a valid submission", r.errors, []);
+  eq("template has the four columns and one row", r.terms.length, 1);
+  eq("template row is a placeholder, not a plausible invented skill", r.terms[0].title, "<the skill-like term>");
+  eq("template header matches the expected columns", api.parseCSV(tpl)[0], api.SUBMIT_COLS);
+})();
 
 // ------------------------------------------------------------------- result
 console.log("\n" + (fails ? `RESULT: ${fails} FAILED of ${checks}` : `RESULT: ${checks}/${checks} passed`));

@@ -12,6 +12,24 @@ was lost or unreadable. Each term was tested by all four checks:
    or growing demand. No term in this trial was expert-validated. The panel shows one line: pass or fail and the condition (e.g. "growing demand (Q1, Q4)");
    monthly counts are in the CSV exports.
 
+The page walks four steps: **Overview**, **Submit skills**, **Review all checks**, **Summary**.
+
+**Submit skills** is where terms enter the process. Every term carries two tags that travel with
+it: the **discovery source** it came from, and whether a **domain expert** has already validated
+it. The source is how a result is routed back to whoever raised the term; expert validation is an
+alternative route through the market-pulse check. A batch is submitted as a CSV with four columns —
+`Skill Title`, `Skill Description`, `Source`, `Expert-Validated` — and a template is downloadable
+from the page. A description is required: without one the definition check would be assessing a
+title rather than a skill, so rows without one are rejected and the reason is shown.
+
+Terms read from an uploaded file are **staged, not assessed**. The four checks run server-side, so
+an uploaded term has no verdicts; it is listed separately and never joins the assessed cohort.
+
+For the 304 trial terms, both tags are recorded in `data/trial_results.json` as
+`discovery_source` and `expert_validated`, with a `submission_provenance` block stating that the
+source is **inferred** from the cohort's provenance (a bot-trawled batch of job-posting data) and
+was not carried per term by the dedup export. No term in this trial was expert-validated.
+
 A term **PASSES** only when all four checks pass, and **FAILS** if any check fails
 (currently 32 PASS / 272 FAIL).
 

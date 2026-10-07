@@ -42,8 +42,12 @@ function load(htmlPath){
 ;globalThis.__CSV = {};
 download = function(n,t){ globalThis.__CSV[n] = t; };
 globalThis.__api = {
-  TRIAL, GATES, STEPS, CHECK_NAMES, PENDING_TEXT, REV_PAGE_SIZE,
+  TRIAL, GATES, STEPS, CHECK_NAMES, PENDING_TEXT, REV_PAGE_SIZE, REVIEW_PAGE, SOURCES, SUBMIT_COLS,
   toQueue, displayOrder, skillLikeScore, CONTESTED, evalGates, runPipeline, failureReason, evidenceFor, metrics, machineLabel,
+  parseCSV, readSubmission, ingestSubmission, submissionTemplateRows,
+  getStaged(){ return staged; },
+  resetStaged(){ staged = []; uploadMsg = null; },
+  getUploadMsg(){ return uploadMsg; },
   exportPassed, exportFailed, exportSummary, exportAudit, toCSV,
   fns: (n)=> (typeof eval(n)==="function" ? eval(n) : undefined),
   setQueue(q){ queue = q; queueChanged(); return results; },

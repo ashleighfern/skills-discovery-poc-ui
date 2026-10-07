@@ -201,7 +201,9 @@
    "id": "002",
    "overall": "PASS",
    "pending_checks": [],
-   "title": "optimise"
+   "title": "optimise",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   },
   {
    "checks": {
@@ -389,7 +391,9 @@
    "id": "004",
    "overall": "PASS",
    "pending_checks": [],
-   "title": "visualising"
+   "title": "visualising",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   },
   {
    "checks": {
@@ -582,7 +586,9 @@
    "id": "007",
    "overall": "FAIL",
    "pending_checks": [],
-   "title": "change initiatives"
+   "title": "change initiatives",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   },
   {
    "checks": {
@@ -763,7 +769,9 @@
    "id": "003",
    "overall": "FAIL",
    "pending_checks": [],
-   "title": "implementation of continuous improvement initiatives"
+   "title": "implementation of continuous improvement initiatives",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   },
   {
    "checks": {
@@ -956,7 +964,9 @@
    "id": "001",
    "overall": "FAIL",
    "pending_checks": [],
-   "title": "directs and implements strategic trading plans"
+   "title": "directs and implements strategic trading plans",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   },
   {
    "checks": {
@@ -1147,7 +1157,9 @@
    "id": "013",
    "overall": "FAIL",
    "pending_checks": [],
-   "title": "co designing"
+   "title": "co designing",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   },
   {
    "checks": {
@@ -1352,7 +1364,9 @@
    "id": "020",
    "overall": "FAIL",
    "pending_checks": [],
-   "title": "decision making and implements supplier capability development plans"
+   "title": "decision making and implements supplier capability development plans",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   },
   {
    "checks": {
@@ -1548,7 +1562,9 @@
    "id": "033",
    "overall": "FAIL",
    "pending_checks": [],
-   "title": "new processes and technology"
+   "title": "new processes and technology",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   },
   {
    "checks": {
@@ -1727,7 +1743,9 @@
    "id": "018",
    "overall": "FAIL",
    "pending_checks": [],
-   "title": "works with large data sets"
+   "title": "works with large data sets",
+   "discovery_source": "Skills Discovery Algorithm",
+   "expert_validated": "No"
   }
  ]
 }
